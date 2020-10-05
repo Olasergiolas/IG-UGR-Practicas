@@ -22,7 +22,7 @@ Escena::Escena()
     // .......completar: ...
     // .....
 
-    cubo = new Cubo();
+    cubo = new Cubo(50);
 
 }
 
@@ -34,15 +34,15 @@ Escena::Escena()
 
 void Escena::inicializar( int UI_window_width, int UI_window_height )
 {
-	glClearColor( 1.0, 1.0, 1.0, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
+    glClearColor( 1.0, 1.0, 1.0, 1.0 );// se indica cual sera el color para limpiar la ventana	(r,v,a,al)
 
-	glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
+    glEnable( GL_DEPTH_TEST );	// se habilita el z-bufer
 
-	Width  = UI_window_width/10;
-	Height = UI_window_height/10;
+    Width  = UI_window_width/10;
+    Height = UI_window_height/10;
 
    change_projection( float(UI_window_width)/float(UI_window_height) );
-	glViewport( 0, 0, UI_window_width, UI_window_height );
+    glViewport( 0, 0, UI_window_width, UI_window_height );
 }
 
 
@@ -56,18 +56,18 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
 void Escena::dibujar()
 {
-	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
-	change_observer();
+    glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
+    change_observer();
     ejes.draw();
     cubo->draw();
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
-    // y hacer 
+    // y hacer
     // cubo.draw()
     // o
     // tetraedro.draw()
-    
+
 }
 
 //**************************************************************************
@@ -87,14 +87,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    {
       case 'Q' :
          if (modoMenu!=NADA)
-            modoMenu=NADA;            
+            modoMenu=NADA;
          else {
             salir=true ;
          }
          break ;
       case 'O' :
          // ESTAMOS EN MODO SELECCION DE OBJETO
-         modoMenu=SELOBJETO; 
+         modoMenu=SELOBJETO;
          break ;
         case 'V' :
          // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
@@ -114,7 +114,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                dibujado = VBO;
            break;
 
-            
+
    }
    return salir;
 }
@@ -124,27 +124,27 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
 {
    switch ( Tecla1 )
    {
-	   case GLUT_KEY_LEFT:
+       case GLUT_KEY_LEFT:
          Observer_angle_y-- ;
          break;
-	   case GLUT_KEY_RIGHT:
+       case GLUT_KEY_RIGHT:
          Observer_angle_y++ ;
          break;
-	   case GLUT_KEY_UP:
+       case GLUT_KEY_UP:
          Observer_angle_x-- ;
          break;
-	   case GLUT_KEY_DOWN:
+       case GLUT_KEY_DOWN:
          Observer_angle_x++ ;
          break;
-	   case GLUT_KEY_PAGE_UP:
+       case GLUT_KEY_PAGE_UP:
          Observer_distance *=1.2 ;
          break;
-	   case GLUT_KEY_PAGE_DOWN:
+       case GLUT_KEY_PAGE_DOWN:
          Observer_distance /= 1.2 ;
          break;
-	}
+    }
 
-	//std::cout << Observer_distance << std::endl;
+    //std::cout << Observer_distance << std::endl;
 }
 
 //**************************************************************************
