@@ -22,6 +22,8 @@ Escena::Escena()
     // .......completar: ...
     // .....
 
+    cubo = new Cubo();
+
 }
 
 //**************************************************************************
@@ -57,6 +59,7 @@ void Escena::dibujar()
 	glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
 	change_observer();
     ejes.draw();
+    cubo->draw();
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
@@ -97,11 +100,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
          modoMenu=SELVISUALIZACION;
          break ;
-       case 'D' :
+        case 'D' :
          // ESTAMOS EN MODO SELECCION DE DIBUJADO
          modoMenu=SELDIBUJADO;
          break ;
          // COMPLETAR con los diferentes opciones de teclado
+        case '1' :
+            if (modoMenu == SELDIBUJADO)
+                dibujado = INMEDIATO;
+            break;
+        case '2' :
+           if (modoMenu == SELDIBUJADO)
+               dibujado = VBO;
+           break;
+
             
    }
    return salir;

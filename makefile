@@ -35,7 +35,7 @@ all: x
 
 x: $(exe)
 	@echo Enlazando para: $(sistoper)
-	./$(exe)
+	#./$(exe)
 
 $(exe): $(units_o) makefile
 	$(compiler) -o $(exe)  $(units_o) $(ld_libs)
