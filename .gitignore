@@ -1,0 +1,8 @@
+*.o
+IG*
+pracs_exe
+.DS_Store
+.cproject
+.project
+.settings
+
