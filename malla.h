@@ -18,20 +18,23 @@
 //
 // *****************************************************************************
 
+typedef enum {PUNTOS, LINEAS, SOLIDO, AJEDREZ} modo_dibujado;
+typedef enum {INMEDIATO, VBO} modo_visualizacion;
+
 class Malla3D
 {
    public:
 
    // dibuja el objeto en modo inmediato
-   void draw_ModoInmediato();
+   void draw_ModoInmediato(GLenum m);
 
    // dibuja el objeto en modo diferido (usando VBOs)
-   void draw_ModoDiferido();
+   void draw_ModoDiferido(GLenum m);
 
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw() ;
+   void draw(modo_visualizacion v, GLenum m) ;
 
    protected:
 

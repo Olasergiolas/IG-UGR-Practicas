@@ -22,7 +22,14 @@ Escena::Escena()
     // .......completar: ...
     // .....
 
+    visualizacion = INMEDIATO;
+    dibujado = GL_FILL;
+
     cubo = new Cubo(50);
+    cubo_presente = false;
+
+    //tetraedro = new Tetraedro();
+    tetraedro_presente = false;
 
 }
 
@@ -59,7 +66,13 @@ void Escena::dibujar()
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
     ejes.draw();
-    cubo->draw();
+
+    if (cubo_presente)
+        cubo->draw(visualizacion, dibujado);
+
+    else if (tetraedro_presente)
+        tetraedro->draw(visualizacion, dibujado);
+
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
@@ -85,35 +98,58 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    bool salir=false;
    switch( toupper(tecla) )
    {
-      case 'Q' :
+        case 'Q' :
          if (modoMenu!=NADA)
             modoMenu=NADA;
          else {
             salir=true ;
          }
          break ;
-      case 'O' :
-         // ESTAMOS EN MODO SELECCION DE OBJETO
+
+        // ESTAMOS EN MODO SELECCION DE OBJETO
+        case 'O' :
          modoMenu=SELOBJETO;
          break ;
+        case 'C' :
+            if (modoMenu == SELOBJETO)
+                cubo_presente = !cubo_presente;
+        break;
+
+        case 'T' :
+            if (modoMenu == SELOBJETO)
+                tetraedro_presente = !tetraedro_presente;
+        break;
+
+        // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
         case 'V' :
-         // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
          modoMenu=SELVISUALIZACION;
          break ;
+        case 'P':
+            dibujado = GL_POINT;
+            break;
+        case 'L':
+            dibujado = GL_LINE;
+            break;
+        case 'S':
+            dibujado = GL_FILL;
+            break;
+        case 'A':
+            dibujado = GL_FILL;
+            break;
+
+        // ESTAMOS EN MODO SELECCION DE DIBUJADO
         case 'D' :
-         // ESTAMOS EN MODO SELECCION DE DIBUJADO
          modoMenu=SELDIBUJADO;
          break ;
          // COMPLETAR con los diferentes opciones de teclado
-        case '1' :
+        /*case '1' :
             if (modoMenu == SELDIBUJADO)
                 dibujado = INMEDIATO;
             break;
         case '2' :
            if (modoMenu == SELDIBUJADO)
                dibujado = VBO;
-           break;
-
+           break;*/
 
    }
    return salir;
