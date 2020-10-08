@@ -142,14 +142,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          modoMenu=SELDIBUJADO;
          break ;
          // COMPLETAR con los diferentes opciones de teclado
-        /*case '1' :
+        case '1' :
             if (modoMenu == SELDIBUJADO)
-                dibujado = INMEDIATO;
+                visualizacion = INMEDIATO;
             break;
         case '2' :
            if (modoMenu == SELDIBUJADO)
-               dibujado = VBO;
-           break;*/
+               visualizacion = VBO;
+           break;
 
    }
    return salir;
@@ -161,16 +161,16 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
    switch ( Tecla1 )
    {
        case GLUT_KEY_LEFT:
-         Observer_angle_y-- ;
+         Observer_angle_y -= 5;
          break;
        case GLUT_KEY_RIGHT:
-         Observer_angle_y++ ;
+         Observer_angle_y += 5;
          break;
        case GLUT_KEY_UP:
-         Observer_angle_x-- ;
+         Observer_angle_x -= 5 ;
          break;
        case GLUT_KEY_DOWN:
-         Observer_angle_x++ ;
+         Observer_angle_x += 5 ;
          break;
        case GLUT_KEY_PAGE_UP:
          Observer_distance *=1.2 ;
