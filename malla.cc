@@ -100,7 +100,7 @@ void Malla3D::draw(modo_visualizacion v, GLenum m)    //Según parámetro llama 
     //glEnableClientState(GL_COLOR_ARRAY);
     //glColorPointer(3, GL_FLOAT, 0, colores2);
 
-    glPolygonMode(GL_FRONT_AND_BACK, m);
+    glPolygonMode(GL_FRONT, m);
     if (v == INMEDIATO)
         draw_ModoInmediato(m);
 

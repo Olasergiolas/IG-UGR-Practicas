@@ -128,16 +128,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          modoMenu=SELVISUALIZACION;
          break ;
         case 'P':
-            dibujado = GL_POINT;
+            if (modoMenu == SELVISUALIZACION)
+                dibujado = GL_POINT;
             break;
         case 'L':
-            dibujado = GL_LINE;
+            if (modoMenu == SELVISUALIZACION)
+                dibujado = GL_LINE;
             break;
         case 'S':
-            dibujado = GL_FILL;
+            if (modoMenu == SELVISUALIZACION)
+                dibujado = GL_FILL;
             break;
         case 'A':
-            dibujado = GL_FILL;
+            if (modoMenu == SELVISUALIZACION)
+                dibujado = GL_FILL;
             break;
 
         // ESTAMOS EN MODO SELECCION DE DIBUJADO

@@ -29,16 +29,28 @@ Cubo::Cubo(float lado)
     v = auxV;
 
     //Inicializamos tabla de triángulos
+
+    //Frente
     Tupla3i c0(0, 1, 2);
     Tupla3i c1(2, 3, 0);
+
+    //Trasera
     Tupla3i c2(7, 6, 5);
     Tupla3i c3(5, 4, 7);
+
+    //Derecha
     Tupla3i c4(1, 5, 6);
     Tupla3i c5(6, 2, 1);
+
+    //Izquierda
     Tupla3i c6(4, 0, 3);
     Tupla3i c7(3, 7, 4);
+
+    //Superior
     Tupla3i c8(3, 2, 6);
     Tupla3i c9(6, 7, 3);
+
+    //Inferior
     Tupla3i c10(4, 5, 1);
     Tupla3i c11(1, 0, 4);
 
