@@ -35,6 +35,7 @@ class Escena
    menu modoMenu=NADA;
    modo_visualizacion visualizacion;
    GLenum dibujado;
+   bool ajedrez;
    // Objetos de la escena
    Ejes ejes;
    Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'

@@ -24,6 +24,7 @@ Escena::Escena()
 
     visualizacion = INMEDIATO;
     dibujado = GL_FILL;
+    ajedrez = false;
 
     cubo = new Cubo(50);
     cubo_presente = false;
@@ -71,7 +72,7 @@ void Escena::dibujar()
     ejes.draw();
 
     if (cubo_presente)
-        cubo->draw(visualizacion, dibujado);
+        cubo->draw(visualizacion, dibujado, ajedrez);
 
     else if (tetraedro_presente)
         tetraedro->draw(visualizacion, dibujado);
@@ -140,8 +141,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                 dibujado = GL_FILL;
             break;
         case 'A':
-            if (modoMenu == SELVISUALIZACION)
+            if (modoMenu == SELVISUALIZACION){
                 dibujado = GL_FILL;
+                ajedrez = true;
+            }
             break;
 
         // ESTAMOS EN MODO SELECCION DE DIBUJADO

@@ -97,9 +97,6 @@ void Malla3D::draw(modo_visualizacion v, GLenum m)    //Según parámetro llama 
 {
    // completar .....(práctica 1)
 
-    glEnableClientState(GL_COLOR_ARRAY);
-    glColorPointer(3, GL_FLOAT, 0, c.data());
-
     glPolygonMode(GL_FRONT, m);
     if (v == INMEDIATO)
         draw_ModoInmediato(m);
@@ -107,6 +104,9 @@ void Malla3D::draw(modo_visualizacion v, GLenum m)    //Según parámetro llama 
     else if (v == VBO)
         draw_ModoDiferido(m, 0, 0);
 
-    //glDisableClientState(GL_COLOR_ARRAY);
+}
+
+void Malla3D::asignarColores(const std::vector<Tupla3f> &colores){
+    c = colores;
 }
 

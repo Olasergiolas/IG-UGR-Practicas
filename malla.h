@@ -35,7 +35,9 @@ class Malla3D
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw(modo_visualizacion v, GLenum m) ;
+   void draw(modo_visualizacion v, GLenum m);
+
+   void asignarColores(const std::vector<Tupla3f>& colores);
 
    protected:
 
