@@ -62,21 +62,11 @@ void Cubo::draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado){
     if (coloreado == AJEDREZ){
 
         //Estás creando copias del mismo color
-        Tupla3f color0(0.0, 0.0, 0.0);
-        Tupla3f color1(0.0, 0.0, 0.0);
-        Tupla3f color2(1.0, 0.0, 0.0);
-        Tupla3f color3(0.0, 0.0, 0.0);
-        Tupla3f color4(1.0, 0.0, 0.0);
-        Tupla3f color5(1.0, 0.0, 0.0);
-        Tupla3f color6(1.0, 0.0, 0.0);
-        Tupla3f color7(0.0, 0.0, 0.0);
-        Tupla3f color8(0.0, 0.0, 0.0);
-        Tupla3f color9(0.0, 0.0, 0.0);
-        Tupla3f color10(0.0, 0.0, 0.0);
-        Tupla3f color11(0.0, 0.0, 0.0);
+        Tupla3f rojo(1.0, 0.0, 0.0);
+        Tupla3f negro(0.0, 0.0, 0.0);
 
-        std::vector<Tupla3f> auxColor{color0, color1, color2, color3, color4, color5,
-                    color6, color7, color8, color9, color10, color11};
+        std::vector<Tupla3f> auxColor{rojo, negro, negro, negro, rojo, rojo,
+                    rojo, negro, negro, negro, negro, negro};
 
         c = auxColor;
 
