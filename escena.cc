@@ -23,13 +23,13 @@ Escena::Escena()
     // .....
 
     visualizacion = INMEDIATO;
-    dibujado = GL_FILL;
     coloreado = RELLENADO;
+    dibujado = GL_FILL;    
 
     cubo = new Cubo(50);
     cubo_presente = false;
 
-    //tetraedro = new Tetraedro();
+    tetraedro = new Tetraedro();
     tetraedro_presente = false;
 
 }
@@ -75,7 +75,7 @@ void Escena::dibujar()
         cubo->draw(visualizacion, dibujado, coloreado);
 
     else if (tetraedro_presente)
-        tetraedro->draw(visualizacion, dibujado);
+        tetraedro->draw(visualizacion, dibujado, coloreado);
 
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
