@@ -59,8 +59,6 @@ void Malla3D::draw_ModoInmediato(GLenum m)
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT, f.data());
     glDisableClientState(GL_VERTEX_ARRAY);
-
-    glDisableClientState(GL_COLOR_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)

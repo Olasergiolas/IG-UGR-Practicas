@@ -58,8 +58,10 @@ Cubo::Cubo(float lado)
     f = auxC;
 }
 
-void Cubo::draw(modo_visualizacion v, GLenum m, bool ajedrez){
-    if (ajedrez){
+void Cubo::draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado){
+    if (coloreado == AJEDREZ){
+
+        //Estás creando copias del mismo color
         Tupla3f color0(0.0, 0.0, 0.0);
         Tupla3f color1(0.0, 0.0, 0.0);
         Tupla3f color2(1.0, 0.0, 0.0);
@@ -84,6 +86,12 @@ void Cubo::draw(modo_visualizacion v, GLenum m, bool ajedrez){
         glDisableClientState(GL_COLOR_ARRAY);
     }
 
-    else
+    else{
+        Tupla3f color{1.0, 0.0, 0.0};
+        c.assign(12, color);
+        glEnableClientState(GL_COLOR_ARRAY);
+        glColorPointer(3, GL_FLOAT, 0, c.data());
         Malla3D::draw(v, m);
+        glDisableClientState(GL_COLOR_ARRAY);
+    }
 }

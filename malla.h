@@ -18,8 +18,8 @@
 //
 // *****************************************************************************
 
-typedef enum {PUNTOS, LINEAS, SOLIDO, AJEDREZ} modo_dibujado;
 typedef enum {INMEDIATO, VBO} modo_visualizacion;
+typedef enum {AJEDREZ, RELLENADO} modo_coloreado;
 
 class Malla3D
 {

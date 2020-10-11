@@ -11,7 +11,6 @@
 #define CUBO_H_INCLUDED
 
 #include "aux.h"
-#include "malla.h"
 #include "vector"
 
 // *****************************************************************************
@@ -31,7 +30,7 @@ class Cubo : public Malla3D
 
    public:
    Cubo(float l=1.0);
-   void draw(modo_visualizacion v, GLenum m, bool ajedrez);
+   void draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado);
 } ;
 
 
