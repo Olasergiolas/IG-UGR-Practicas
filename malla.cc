@@ -56,10 +56,6 @@ void Malla3D::draw_ModoInmediato(GLenum m)
 
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    glEnableClientState(GL_COLOR_ARRAY);
-    glShadeModel(GL_FLAT);
-    glColorPointer(3, GL_FLOAT, 0, colores2);
-
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT, f.data());
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -101,11 +97,16 @@ void Malla3D::draw(modo_visualizacion v, GLenum m)    //Según parámetro llama 
 {
    // completar .....(práctica 1)
 
+    //glEnableClientState(GL_COLOR_ARRAY);
+    //glColorPointer(3, GL_FLOAT, 0, colores2);
+
     glPolygonMode(GL_FRONT_AND_BACK, m);
     if (v == INMEDIATO)
         draw_ModoInmediato(m);
 
     else if (v == VBO)
         draw_ModoDiferido(m, 0, 0);
+
+    //glDisableClientState(GL_COLOR_ARRAY);
 }
 
