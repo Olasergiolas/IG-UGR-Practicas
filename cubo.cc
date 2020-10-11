@@ -56,5 +56,23 @@ Cubo::Cubo(float lado)
 
     std::vector<Tupla3i> auxC{c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11};
     f = auxC;
+
+    Tupla3f color0(0.0, 0.0, 0.0);
+    Tupla3f color1(0.0, 0.0, 0.0);
+    Tupla3f color2(1.0, 0.0, 0.0);
+    Tupla3f color3(0.0, 0.0, 0.0);
+    Tupla3f color4(1.0, 0.0, 0.0);
+    Tupla3f color5(1.0, 0.0, 0.0);
+    Tupla3f color6(1.0, 0.0, 0.0);
+    Tupla3f color7(0.0, 0.0, 0.0);
+    Tupla3f color8(0.0, 0.0, 0.0);
+    Tupla3f color9(0.0, 0.0, 0.0);
+    Tupla3f color10(0.0, 0.0, 0.0);
+    Tupla3f color11(0.0, 0.0, 0.0);
+
+    std::vector<Tupla3f> auxColor{color0, color1, color2, color3, color4, color5,
+                color6, color7, color8, color9, color10, color11};
+
+    c = auxColor;
 }
 
