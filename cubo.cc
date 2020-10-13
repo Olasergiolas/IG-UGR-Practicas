@@ -56,32 +56,17 @@ Cubo::Cubo(float lado)
 
     std::vector<Tupla3i> auxC{c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11};
     f = auxC;
-}
 
-void Cubo::draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado){
-    if (coloreado == AJEDREZ){
+    //Array de colores modo ajedrez
+    Tupla3f rojo(1.0, 0.0, 0.0);
+    Tupla3f negro(0.0, 0.0, 0.0);
 
-        //Estás creando copias del mismo color
-        Tupla3f rojo(1.0, 0.0, 0.0);
-        Tupla3f negro(0.0, 0.0, 0.0);
+    std::vector<Tupla3f> auxColor{rojo, negro, negro, negro, rojo, rojo,
+                rojo, negro, negro, negro, negro, negro};
 
-        std::vector<Tupla3f> auxColor{rojo, negro, negro, negro, rojo, rojo,
-                    rojo, negro, negro, negro, negro, negro};
+    c_ajedrez = auxColor;
 
-        c = auxColor;
+    //Array de colores para relleno
+    c.assign(12, rojo);
 
-        glEnableClientState(GL_COLOR_ARRAY);
-        glColorPointer(3, GL_FLOAT, 0, c.data());
-        Malla3D::draw(v, m);
-        glDisableClientState(GL_COLOR_ARRAY);
-    }
-
-    else{
-        Tupla3f color{1.0, 0.0, 0.0};
-        c.assign(12, color);
-        glEnableClientState(GL_COLOR_ARRAY);
-        glColorPointer(3, GL_FLOAT, 0, c.data());
-        Malla3D::draw(v, m);
-        glDisableClientState(GL_COLOR_ARRAY);
-    }
 }

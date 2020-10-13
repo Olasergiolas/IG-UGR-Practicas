@@ -30,7 +30,6 @@ class Cubo : public Malla3D
 
    public:
    Cubo(float l=1.0);
-   void draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado);
 } ;
 
 

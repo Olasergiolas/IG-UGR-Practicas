@@ -25,7 +25,6 @@ class Tetraedro: public Malla3D
 {
    public:
       Tetraedro();
-      void draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado);
 
 } ;
 

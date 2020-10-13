@@ -10,33 +10,6 @@
 
 // Visualización en modo inmediato con 'glDrawElements'
 
-static const GLfloat colores2[] = {
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.5, 0.5, 0.5,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0,
-    0.0, 0.0, 0.0
-};
-
 GLuint Malla3D::crearVBO(GLenum tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_ram){
     GLuint id_vbo;
     glGenBuffers(1, &id_vbo);
@@ -91,9 +64,15 @@ void Malla3D::draw_ModoDiferido(GLenum m, GLuint id_vbo_ver, GLuint id_vbo_tri)
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(modo_visualizacion v, GLenum m)    //Según parámetro llama a los dos anteriores
+void Malla3D::draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado)    //Según parámetro llama a los dos anteriores
 {
-   // completar .....(práctica 1)
+    glEnableClientState(GL_COLOR_ARRAY);
+    if (coloreado == AJEDREZ)
+       glColorPointer(3, GL_FLOAT, 0, c_ajedrez.data());
+
+    else
+       glColorPointer(3, GL_FLOAT, 0, c.data());
+
 
     glPolygonMode(GL_FRONT, m);
     if (v == INMEDIATO)
@@ -102,6 +81,7 @@ void Malla3D::draw(modo_visualizacion v, GLenum m)    //Según parámetro llama 
     else if (v == VBO)
         draw_ModoDiferido(m, 0, 0);
 
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 
 void Malla3D::asignarColores(const std::vector<Tupla3f> &colores){
