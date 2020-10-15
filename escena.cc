@@ -24,7 +24,7 @@ Escena::Escena()
 
     visualizacion = INMEDIATO;
     coloreado = RELLENADO;
-    dibujado = GL_FILL;    
+    estado_dibujados.insert(GL_FILL);
 
     cubo = new Cubo(50);
     cubo_presente = false;
@@ -72,10 +72,10 @@ void Escena::dibujar()
     ejes.draw();
 
     if (cubo_presente)
-        cubo->draw(visualizacion, dibujado, coloreado);
+        cubo->draw(visualizacion, estado_dibujados, coloreado);
 
     else if (tetraedro_presente)
-        tetraedro->draw(visualizacion, dibujado, coloreado);
+        tetraedro->draw(visualizacion, estado_dibujados, coloreado);
 
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
@@ -100,6 +100,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    using namespace std ;
    cout << "Tecla pulsada: '" << tecla << "'" << endl;
    bool salir=false;
+
    switch( toupper(tecla) )
    {
         case 'Q' :
@@ -130,21 +131,41 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
          break ;
         case 'P':
             if (modoMenu == SELVISUALIZACION)
-                dibujado = GL_POINT;
+                if (estado_dibujados.find(GL_POINT) != estado_dibujados.end())
+                    estado_dibujados.erase(GL_POINT);
+
+                else
+                    estado_dibujados.insert(GL_POINT);
+
             break;
         case 'L':
             if (modoMenu == SELVISUALIZACION)
-                dibujado = GL_LINE;
+                if (estado_dibujados.find(GL_LINE) != estado_dibujados.end())
+                    estado_dibujados.erase(GL_LINE);
+
+                else
+                    estado_dibujados.insert(GL_LINE);
             break;
         case 'S':
             if (modoMenu == SELVISUALIZACION){
-                dibujado = GL_FILL;
+                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end())
+                    estado_dibujados.erase(GL_FILL);
+
+                else
+                    estado_dibujados.insert(GL_FILL);
+
                 coloreado = RELLENADO;
             }
             break;
         case 'A':
             if (modoMenu == SELVISUALIZACION){
-                dibujado = GL_FILL;
+                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end())
+                    estado_dibujados.erase(GL_FILL);
+
+                else
+                    estado_dibujados.insert(GL_FILL);
+
+
                 coloreado = AJEDREZ;
             }
             break;
