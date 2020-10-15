@@ -21,7 +21,7 @@ GLuint Malla3D::crearVBO(GLenum tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_
     return id_vbo;
 }
 
-void Malla3D::draw_ModoInmediato(GLenum m)
+void Malla3D::draw_ModoInmediato()
 {
   // visualizar la malla usando glDrawElements,
   // completar (práctica 1)
@@ -36,7 +36,7 @@ void Malla3D::draw_ModoInmediato(GLenum m)
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(GLenum m, GLuint id_vbo_ver, GLuint id_vbo_tri)
+void Malla3D::draw_ModoDiferido(GLuint id_vbo_ver, GLuint id_vbo_tri)
 {
    // (la primera vez, se deben crear los VBOs y guardar sus identificadores en el objeto)
    // completar (práctica 1)
@@ -76,10 +76,10 @@ void Malla3D::draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado)    
 
     glPolygonMode(GL_FRONT, m);
     if (v == INMEDIATO)
-        draw_ModoInmediato(m);
+        draw_ModoInmediato();
 
     else if (v == VBO)
-        draw_ModoDiferido(m, 0, 0);
+        draw_ModoDiferido(0, 0);
 
     glDisableClientState(GL_COLOR_ARRAY);
 }
