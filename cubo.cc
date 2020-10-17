@@ -31,24 +31,24 @@ Cubo::Cubo(float lado)
     //Inicializamos tabla de triángulos
 
     //Frente
-    Tupla3i c0(0, 1, 2);
+    Tupla3i c0(2, 0, 1);
     Tupla3i c1(2, 3, 0);
 
     //Trasera
     Tupla3i c2(7, 6, 5);
-    Tupla3i c3(5, 4, 7);
+    Tupla3i c3(7, 5, 4);
 
     //Derecha
-    Tupla3i c4(1, 5, 6);
-    Tupla3i c5(6, 2, 1);
+    Tupla3i c4(5, 6, 1);
+    Tupla3i c5(1, 6, 2);
 
     //Izquierda
-    Tupla3i c6(4, 0, 3);
-    Tupla3i c7(3, 7, 4);
+    Tupla3i c6(0, 3, 4);
+    Tupla3i c7(7, 4, 3);
 
     //Superior
-    Tupla3i c8(3, 2, 6);
-    Tupla3i c9(6, 7, 3);
+    Tupla3i c8(2, 6, 3);
+    Tupla3i c9(3, 6, 7);
 
     //Inferior
     Tupla3i c10(4, 5, 1);
@@ -61,8 +61,8 @@ Cubo::Cubo(float lado)
     Tupla3f rojo(1.0, 0.0, 0.0);
     Tupla3f negro(0.0, 0.0, 0.0);
 
-    std::vector<Tupla3f> auxColor{rojo, negro, negro, negro, rojo, rojo,
-                rojo, negro, negro, negro, negro, negro};
+    std::vector<Tupla3f> auxColor{rojo, negro, rojo, negro, rojo, negro,
+                rojo, rojo, negro, negro, negro, negro};
 
     c_ajedrez = auxColor;
 
