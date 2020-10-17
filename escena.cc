@@ -160,10 +160,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
         case 'A':
             if (modoMenu == SELVISUALIZACION){
                 if (estado_dibujados.find(GL_FILL) != estado_dibujados.end())
-                    estado_dibujados.erase(GL_FILL);
+                    estado_dibujados.clear();
 
-                else
+                else{
+                    estado_dibujados.clear();
                     estado_dibujados.insert(GL_FILL);
+                }
 
 
                 coloreado = AJEDREZ;
