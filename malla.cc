@@ -37,7 +37,7 @@ void Malla3D::draw_ModoInmediato()
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(GLuint id_vbo_ver, GLuint id_vbo_tri)
+void Malla3D::draw_ModoDiferido(GLuint &id_vbo_ver, GLuint &id_vbo_tri)
 {
    // (la primera vez, se deben crear los VBOs y guardar sus identificadores en el objeto)
    // completar (práctica 1)
@@ -84,7 +84,7 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
             draw_ModoInmediato();
 
         else if (v == VBO)
-            draw_ModoDiferido(0, 0);
+            draw_ModoDiferido(id_ver_buffer, id_tri_buffer);
 
         glDisableClientState(GL_COLOR_ARRAY);
     }
@@ -99,7 +99,7 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
                 draw_ModoInmediato();
 
             else if (v == VBO)
-                draw_ModoDiferido(0, 0);
+                draw_ModoDiferido(id_ver_buffer, id_tri_buffer);
         }
     }
 
