@@ -148,7 +148,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             break;
         case 'S':
             if (modoMenu == SELVISUALIZACION){
-                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end())
+                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
+                        coloreado != AJEDREZ)
                     estado_dibujados.erase(GL_FILL);
 
                 else
@@ -159,14 +160,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             break;
         case 'A':
             if (modoMenu == SELVISUALIZACION){
-                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end())
+                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
+                        coloreado != RELLENADO)
                     estado_dibujados.clear();
 
                 else{
                     estado_dibujados.clear();
                     estado_dibujados.insert(GL_FILL);
                 }
-
 
                 coloreado = AJEDREZ;
             }
