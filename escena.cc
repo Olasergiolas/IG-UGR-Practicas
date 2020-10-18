@@ -24,7 +24,6 @@ Escena::Escena()
 
     visualizacion = INMEDIATO;
     coloreado = RELLENADO;
-    estado_dibujados.insert(GL_FILL);
 
     cubo = new Cubo(50);
     cubo_presente = false;
@@ -48,6 +47,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
     Width  = UI_window_width/10;
     Height = UI_window_height/10;
+    estado_dibujados.insert(GL_FILL);
 
    change_projection( float(UI_window_width)/float(UI_window_height) );
     glViewport( 0, 0, UI_window_width, UI_window_height );
