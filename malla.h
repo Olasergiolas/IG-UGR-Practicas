@@ -11,6 +11,7 @@
 #define MALLA3D_H_INCLUDED
 
 #include "aux.h"
+#include "set"
 
 // *****************************************************************************
 //
@@ -30,12 +31,12 @@ class Malla3D
    void draw_ModoInmediato();
 
    // dibuja el objeto en modo diferido (usando VBOs)
-   void draw_ModoDiferido(GLuint id_vbo_ver, GLuint id_vbo_tri);
+   void draw_ModoDiferido(GLuint &id_vbo_ver, GLuint &id_vbo_tri);
 
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado);
+   void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
 
    void asignarColores(const std::vector<Tupla3f>& colores);
 
@@ -47,6 +48,8 @@ class Malla3D
    std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3f> c ;
    std::vector<Tupla3f> c_ajedrez ;
+   GLuint id_ver_buffer = 0;
+   GLuint id_tri_buffer = 0;
 
    // completar: tabla de colores, tabla de normales de vértices
 } ;

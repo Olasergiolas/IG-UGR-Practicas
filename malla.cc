@@ -1,6 +1,7 @@
 #include "aux.h"
 #include "malla.h"
 #include "vector"
+#include "set"
 
 // *****************************************************************************
 //
@@ -36,7 +37,7 @@ void Malla3D::draw_ModoInmediato()
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(GLuint id_vbo_ver, GLuint id_vbo_tri)
+void Malla3D::draw_ModoDiferido(GLuint &id_vbo_ver, GLuint &id_vbo_tri)
 {
    // (la primera vez, se deben crear los VBOs y guardar sus identificadores en el objeto)
    // completar (práctica 1)
@@ -64,8 +65,11 @@ void Malla3D::draw_ModoDiferido(GLuint id_vbo_ver, GLuint id_vbo_tri)
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado)    //Según parámetro llama a los dos anteriores
+void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado)    //Según parámetro llama a los dos anteriores
 {
+    std::vector<Tupla3f> color_alternativo;
+    color_alternativo.assign(8, Tupla3f (0.0, 0.0, 0.0));
+
     glEnableClientState(GL_COLOR_ARRAY);
     if (coloreado == AJEDREZ)
        glColorPointer(3, GL_FLOAT, 0, c_ajedrez.data());
@@ -74,12 +78,30 @@ void Malla3D::draw(modo_visualizacion v, GLenum m, modo_coloreado coloreado)    
        glColorPointer(3, GL_FLOAT, 0, c.data());
 
 
-    glPolygonMode(GL_FRONT, m);
-    if (v == INMEDIATO)
-        draw_ModoInmediato();
+    if (estado_dibujados.find(GL_FILL) != estado_dibujados.end()){
+        glPolygonMode(GL_FRONT, GL_FILL);
+        if (v == INMEDIATO)
+            draw_ModoInmediato();
 
-    else if (v == VBO)
-        draw_ModoDiferido(0, 0);
+        else if (v == VBO)
+            draw_ModoDiferido(id_ver_buffer, id_tri_buffer);
+
+        glDisableClientState(GL_COLOR_ARRAY);
+    }
+
+
+    for (auto it = estado_dibujados.begin(); it != estado_dibujados.end(); ++it){
+        if (*it != GL_FILL){
+            glColorPointer(3, GL_FLOAT, 0, color_alternativo.data());
+            glPolygonMode(GL_FRONT, *it);
+
+            if (v == INMEDIATO)
+                draw_ModoInmediato();
+
+            else if (v == VBO)
+                draw_ModoDiferido(id_ver_buffer, id_tri_buffer);
+        }
+    }
 
     glDisableClientState(GL_COLOR_ARRAY);
 }

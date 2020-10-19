@@ -5,6 +5,7 @@
 #include "malla.h"
 #include "cubo.h"
 #include "tetraedro.h"
+#include "set"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -35,7 +36,7 @@ class Escena
    menu modoMenu=NADA;
    modo_visualizacion visualizacion;
    modo_coloreado coloreado;
-   GLenum dibujado;
+   std::set<GLenum> estado_dibujados;
    // Objetos de la escena
    Ejes ejes;
    Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
