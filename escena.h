@@ -6,8 +6,9 @@
 #include "cubo.h"
 #include "tetraedro.h"
 #include "set"
+#include "objply.h"
 
-typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
+typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, PLY} menu;
 class Escena
 {
 
@@ -39,10 +40,17 @@ class Escena
    std::set<GLenum> estado_dibujados;
    // Objetos de la escena
    Ejes ejes;
+
    Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
    bool cubo_presente;
+
    Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
    bool tetraedro_presente;
+
+   ObjPLY *ply = nullptr;
+   std::string rutaPLY;
+   bool PLYpresente;
+   bool actualizarPLY;
 
    
    public:

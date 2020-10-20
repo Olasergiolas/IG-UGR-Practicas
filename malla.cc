@@ -71,7 +71,7 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
     color_alternativo.assign(8, Tupla3f (0.0, 0.0, 0.0));
 
     glEnableClientState(GL_COLOR_ARRAY);
-    if (coloreado == AJEDREZ)
+    if (coloreado == AJEDREZ && !c_ajedrez.empty())
        glColorPointer(3, GL_FLOAT, 0, c_ajedrez.data());
 
     else
