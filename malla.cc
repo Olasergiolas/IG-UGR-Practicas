@@ -22,39 +22,87 @@ GLuint Malla3D::crearVBO(GLenum tipo_vbo, GLuint tamanio_bytes, GLvoid *puntero_
     return id_vbo;
 }
 
-void Malla3D::draw_ModoInmediato()
+void Malla3D::comprobarVBOs(){
+    if (id_ver_buffer == 0)
+        id_ver_buffer = crearVBO(GL_ARRAY_BUFFER, v.size()*sizeof(float)*3, v.data());
+
+    if (id_tri_buffer == 0)
+        id_tri_buffer = crearVBO(GL_ELEMENT_ARRAY_BUFFER, f.size()*sizeof(int)*3, f.data());
+
+    if (id_c_buffer == 0)
+        id_c_buffer = crearVBO(GL_ARRAY_BUFFER, c.size()*sizeof(float)*3, c.data());
+
+    if (id_ajedrez_buffer == 0)
+        id_ajedrez_buffer = crearVBO(GL_ARRAY_BUFFER, c_ajedrez.size()*sizeof(float)*3, c_ajedrez.data());
+
+    if (id_ALT1_buffer == 0)
+        id_ALT1_buffer = crearVBO(GL_ARRAY_BUFFER, c_alt_1.size()*sizeof(float)*3, c_alt_1.data());
+
+    if (id_ALT2_buffer == 0)
+        id_ALT2_buffer = crearVBO(GL_ARRAY_BUFFER, c_alt_2.size()*sizeof(float)*3, c_alt_2.data());
+
+
+}
+
+void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
 {
   // visualizar la malla usando glDrawElements,
   // completar (práctica 1)
   // ...
 
-    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
 
+    if (coloreado == RELLENADO)
+        glColorPointer(3, GL_FLOAT, 0, c.data());
+
+    else if (coloreado == AJEDREZ)
+        glColorPointer(3, GL_FLOAT, 0, c_ajedrez.data());
+
+    else if (coloreado == ALT1)
+        glColorPointer(3, GL_FLOAT, 0, c_alt_1.data());
+
+    else
+        glColorPointer(3, GL_FLOAT, 0, c_alt_2.data());
+
+    glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
     glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT, f.data());
     glDisableClientState(GL_VERTEX_ARRAY);
+
+    glDisableClientState(GL_COLOR_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(GLuint &id_vbo_ver, GLuint &id_vbo_tri)
+void Malla3D::draw_ModoDiferido(modo_coloreado coloreado)
 {
    // (la primera vez, se deben crear los VBOs y guardar sus identificadores en el objeto)
    // completar (práctica 1)
    // .....
 
-    if (id_vbo_ver == 0)
-        id_vbo_ver = crearVBO(GL_ARRAY_BUFFER, v.size()*sizeof(float)*3, v.data());
+    comprobarVBOs();
 
-    if (id_vbo_tri == 0)
-        id_vbo_tri = crearVBO(GL_ELEMENT_ARRAY_BUFFER, f.size()*sizeof(int)*3, f.data());
+    if (coloreado == AJEDREZ)
+    	glBindBuffer(GL_ARRAY_BUFFER, id_ajedrez_buffer);
 
-    glBindBuffer(GL_ARRAY_BUFFER, id_vbo_ver);
+    else if (coloreado == RELLENADO)
+    	glBindBuffer(GL_ARRAY_BUFFER, id_c_buffer);
+
+    else if (coloreado == ALT1)
+    	glBindBuffer(GL_ARRAY_BUFFER, id_ALT1_buffer);
+
+    else
+    	glBindBuffer(GL_ARRAY_BUFFER, id_ALT2_buffer);
+
+
+    glColorPointer(3, GL_FLOAT, 0, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, id_ver_buffer);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_vbo_tri);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_tri_buffer);
     glDrawElements(GL_TRIANGLES, 3*f.size(), GL_UNSIGNED_INT, 0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -67,46 +115,34 @@ void Malla3D::draw_ModoDiferido(GLuint &id_vbo_ver, GLuint &id_vbo_tri)
 
 void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado)    //Según parámetro llama a los dos anteriores
 {
-    std::vector<Tupla3f> color_alternativo;
-    color_alternativo.assign(8, Tupla3f (0.0, 0.0, 0.0));
+    modo_coloreado coloreado_final = coloreado;
 
     glEnableClientState(GL_COLOR_ARRAY);
-    if (coloreado == AJEDREZ)
-       glColorPointer(3, GL_FLOAT, 0, c_ajedrez.data());
 
-    else
-       glColorPointer(3, GL_FLOAT, 0, c.data());
+        for (auto it = estado_dibujados.begin(); it != estado_dibujados.end(); ++it){
 
-
-    if (estado_dibujados.find(GL_FILL) != estado_dibujados.end()){
-        glPolygonMode(GL_FRONT, GL_FILL);
-        if (v == INMEDIATO)
-            draw_ModoInmediato();
-
-        else if (v == VBO)
-            draw_ModoDiferido(id_ver_buffer, id_tri_buffer);
-
-        glDisableClientState(GL_COLOR_ARRAY);
-    }
-
-
-    for (auto it = estado_dibujados.begin(); it != estado_dibujados.end(); ++it){
-        if (*it != GL_FILL){
-            glColorPointer(3, GL_FLOAT, 0, color_alternativo.data());
             glPolygonMode(GL_FRONT, *it);
 
-            if (v == INMEDIATO)
-                draw_ModoInmediato();
+            if (*it == GL_LINE)
+                coloreado_final = ALT1;
 
-            else if (v == VBO)
-                draw_ModoDiferido(id_ver_buffer, id_tri_buffer);
-        }
+            else if (*it == GL_POINT)
+                coloreado_final = ALT2;
+
+            else if (coloreado == AJEDREZ)
+                coloreado_final = AJEDREZ;
+
+            else
+                coloreado_final = RELLENADO;
+
+
+            if (v == VBO)
+                draw_ModoDiferido(coloreado_final);
+
+            else
+                draw_ModoInmediato(coloreado_final);
+        
     }
 
     glDisableClientState(GL_COLOR_ARRAY);
 }
-
-void Malla3D::asignarColores(const std::vector<Tupla3f> &colores){
-    c = colores;
-}
-
