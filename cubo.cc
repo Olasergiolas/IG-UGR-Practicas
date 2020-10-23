@@ -69,4 +69,10 @@ Cubo::Cubo(float lado)
     //Array de colores para relleno
     c.assign(12, rojo);
 
+    //Array de colores alternativo
+    Tupla3f celeste(0.0, 0.8, 0.8);
+    c_alt_1.assign(12, celeste);
+
+    //Array de colores alternativo 2
+    c_alt_2.assign(12, negro);
 }
