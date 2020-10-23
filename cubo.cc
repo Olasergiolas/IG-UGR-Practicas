@@ -8,6 +8,7 @@
 Cubo::Cubo(float lado)
 {
     this->lado = lado;
+    float pos = lado/2;
 
    // inicializar la tabla de vértices
 
@@ -16,14 +17,14 @@ Cubo::Cubo(float lado)
    //  de las agujas del reloj, cuando esa cara se observa desde el exterior del cubo)
 
     //Inicializamos tabla de vértices
-    Tupla3f v0(-lado, -lado, lado);
-    Tupla3f v1(lado, -lado, lado);
-    Tupla3f v2(lado, lado, lado);
-    Tupla3f v3(-lado, lado, lado);
-    Tupla3f v4(-lado, -lado, -lado);
-    Tupla3f v5(lado, -lado, -lado);
-    Tupla3f v6(lado, lado, -lado);
-    Tupla3f v7(-lado, lado, -lado);
+    Tupla3f v0(-pos, -pos, pos);
+    Tupla3f v1(pos, -pos, pos);
+    Tupla3f v2(pos, pos, pos);
+    Tupla3f v3(-pos, pos, pos);
+    Tupla3f v4(-pos, -pos, -pos);
+    Tupla3f v5(pos, -pos, -pos);
+    Tupla3f v6(pos, pos, -pos);
+    Tupla3f v7(-pos, pos, -pos);
 
     std::vector<Tupla3f> auxV{v0, v1, v2, v3, v4, v5, v6, v7};
     v = auxV;

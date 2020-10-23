@@ -15,10 +15,10 @@ Tetraedro::Tetraedro()
 
     float h = 100.0;
 
-    Tupla3f v0(0.0, -(h/2), (2*h)/3);
-    Tupla3f v1(0.5773*h, -(h/2), -(h/3));
-    Tupla3f v2(-(0.5773*h), -(h/2), -(h/3));
-    Tupla3f v3(0, h/2, 0);
+    Tupla3f v0(0.0, 0, (2*h)/3);
+    Tupla3f v1(0.5773*h, 0, -(h/3));
+    Tupla3f v2(-(0.5773*h), 0, -(h/3));
+    Tupla3f v3(0, h, 0);
 
     std::vector<Tupla3f> auxV{v0, v1, v2, v3};
     v = auxV;

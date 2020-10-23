@@ -25,7 +25,7 @@ Escena::Escena()
     visualizacion = INMEDIATO;
     coloreado = RELLENADO;
 
-    cubo = new Cubo(50);
+    cubo = new Cubo(100);
     cubo_presente = false;
 
     tetraedro = new Tetraedro();
