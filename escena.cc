@@ -3,7 +3,6 @@
 #include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
-#include "objply.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -25,10 +24,6 @@ Escena::Escena()
 
     visualizacion = INMEDIATO;
     coloreado = RELLENADO;
-
-    rutaPLY = "";
-    actualizarPLY = false;
-    PLYpresente = false;
 
     cubo = new Cubo(50);
     cubo_presente = false;
@@ -57,7 +52,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
    change_projection( float(UI_window_width)/float(UI_window_height) );
     glViewport( 0, 0, UI_window_width, UI_window_height );
 
-    //glEnable(GL_CULL_FACE);
+    glEnable(GL_CULL_FACE);
     glShadeModel(GL_FLAT);
 }
 
@@ -76,22 +71,11 @@ void Escena::dibujar()
     change_observer();
     ejes.draw();
 
-    if (PLYpresente && !rutaPLY.empty()){
-        if (ply == nullptr || actualizarPLY){
-            ply = new ObjPLY(rutaPLY);
-            actualizarPLY = false;
-        }
-
-        if (ply != nullptr)
-            ply->draw(visualizacion, estado_dibujados, coloreado);
-    }
-
-    else if (cubo_presente)
+    if (cubo_presente)
         cubo->draw(visualizacion, estado_dibujados, coloreado);
 
     else if (tetraedro_presente)
         tetraedro->draw(visualizacion, estado_dibujados, coloreado);
-
 
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
@@ -202,25 +186,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            if (modoMenu == SELDIBUJADO)
                visualizacion = VBO;
            break;
-
-        //Estamos en modo carga de PLY
-        case '0':
-            modoMenu = PLY;
-        break;
-        case '7':
-            if (modoMenu == PLY){
-                PLYpresente = !PLYpresente;
-                rutaPLY = "/Users/sergiogarcia/QtProjects/Plantilla_PracticasA/plys/ant.ply";
-                actualizarPLY = true;
-            }
-        break;
-        case '8':
-            if (modoMenu == PLY){
-                PLYpresente = !PLYpresente;
-                rutaPLY = "/Users/sergiogarcia/QtProjects/Plantilla_PracticasA/plys/beethoven.ply";
-                actualizarPLY = true;
-            }
-        break;
 
    }
    return salir;
