@@ -49,6 +49,10 @@ class Escena
    bool cambiar_ply;
 
 
+
+   bool perfil = false;
+
+
    
    public:
 
