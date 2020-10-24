@@ -3,6 +3,7 @@
 #include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
+#include "objply.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -31,6 +32,7 @@ Escena::Escena()
     tetraedro = new Tetraedro();
     tetraedro_presente = false;
 
+    ply_presente = false;
 }
 
 //**************************************************************************
@@ -77,6 +79,9 @@ void Escena::dibujar()
     else if (tetraedro_presente)
         tetraedro->draw(visualizacion, estado_dibujados, coloreado);
 
+    else if (ply_presente)
+        ply->draw(visualizacion, estado_dibujados, coloreado);
+
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
     // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
@@ -103,86 +108,104 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
    switch( toupper(tecla) )
    {
-        case 'Q' :
-         if (modoMenu!=NADA)
-            modoMenu=NADA;
-         else {
-            salir=true ;
-         }
-         break ;
+       case 'Q' :
+           if (modoMenu!=NADA)
+               modoMenu=NADA;
+           else {
+               salir=true ;
+           }
+           break ;
 
-        // ESTAMOS EN MODO SELECCION DE OBJETO
-        case 'O' :
-         modoMenu=SELOBJETO;
-         break ;
-        case 'C' :
-            if (modoMenu == SELOBJETO)
-                cubo_presente = !cubo_presente;
-        break;
+           // ESTAMOS EN MODO SELECCION DE OBJETO
+       case 'O' :
+           modoMenu=SELOBJETO;
+           break ;
+       case 'C' :
+           if (modoMenu == SELOBJETO)
+               cubo_presente = !cubo_presente;
+           break;
 
-        case 'T' :
-            if (modoMenu == SELOBJETO)
-                tetraedro_presente = !tetraedro_presente;
-        break;
+       case 'T' :
+           if (modoMenu == SELOBJETO)
+               tetraedro_presente = !tetraedro_presente;
+           break;
 
-        // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
-        case 'V' :
-         modoMenu=SELVISUALIZACION;
-         break ;
-        case 'P':
-            if (modoMenu == SELVISUALIZACION)
-                if (estado_dibujados.find(GL_POINT) != estado_dibujados.end())
-                    estado_dibujados.erase(GL_POINT);
+        case 'B' :
+            if (modoMenu == SELOBJETO){
+                ply_presente = !ply_presente;
 
-                else
-                    estado_dibujados.insert(GL_POINT);
-
-            break;
-        case 'L':
-            if (modoMenu == SELVISUALIZACION)
-                if (estado_dibujados.find(GL_LINE) != estado_dibujados.end())
-                    estado_dibujados.erase(GL_LINE);
-
-                else
-                    estado_dibujados.insert(GL_LINE);
-            break;
-        case 'S':
-            if (modoMenu == SELVISUALIZACION){
-                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
-                        coloreado != AJEDREZ)
-                    estado_dibujados.erase(GL_FILL);
-
-                else
-                    estado_dibujados.insert(GL_FILL);
-
-                coloreado = RELLENADO;
-            }
-            break;
-        case 'A':
-            if (modoMenu == SELVISUALIZACION){
-                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
-                        coloreado != RELLENADO)
-                    estado_dibujados.clear();
-
-                else{
-                    estado_dibujados.clear();
-                    estado_dibujados.insert(GL_FILL);
-                }
-
-                coloreado = AJEDREZ;
+                if (ply_presente)
+                    ply = new ObjPLY("./plys/beethoven.ply");
             }
             break;
 
-        // ESTAMOS EN MODO SELECCION DE DIBUJADO
-        case 'D' :
-         modoMenu=SELDIBUJADO;
-         break ;
-         // COMPLETAR con los diferentes opciones de teclado
-        case '1' :
-            if (modoMenu == SELDIBUJADO)
-                visualizacion = INMEDIATO;
+        case 'H' :
+            if (modoMenu == SELOBJETO){
+                ply_presente = !ply_presente;
+
+                if (ply_presente)
+                    ply = new ObjPLY("./plys/ant.ply");
+            }
             break;
-        case '2' :
+
+           // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
+       case 'V' :
+           modoMenu=SELVISUALIZACION;
+           break ;
+       case 'P':
+           if (modoMenu == SELVISUALIZACION)
+               if (estado_dibujados.find(GL_POINT) != estado_dibujados.end())
+                   estado_dibujados.erase(GL_POINT);
+
+               else
+                   estado_dibujados.insert(GL_POINT);
+
+           break;
+       case 'L':
+           if (modoMenu == SELVISUALIZACION)
+               if (estado_dibujados.find(GL_LINE) != estado_dibujados.end())
+                   estado_dibujados.erase(GL_LINE);
+
+               else
+                   estado_dibujados.insert(GL_LINE);
+           break;
+       case 'S':
+           if (modoMenu == SELVISUALIZACION){
+               if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
+                       coloreado != AJEDREZ)
+                   estado_dibujados.erase(GL_FILL);
+
+               else
+                   estado_dibujados.insert(GL_FILL);
+
+               coloreado = RELLENADO;
+           }
+           break;
+       case 'A':
+           if (modoMenu == SELVISUALIZACION){
+               if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
+                       coloreado != RELLENADO)
+                   estado_dibujados.clear();
+
+               else{
+                   estado_dibujados.clear();
+                   estado_dibujados.insert(GL_FILL);
+               }
+
+               coloreado = AJEDREZ;
+           }
+           break;
+
+           // ESTAMOS EN MODO SELECCION DE DIBUJADO
+       case 'D' :
+           modoMenu=SELDIBUJADO;
+           break ;
+           // COMPLETAR con los diferentes opciones de teclado
+       case '1' :
+           if (modoMenu == SELDIBUJADO)
+               visualizacion = INMEDIATO;
+           break;
+       case '2' :
            if (modoMenu == SELDIBUJADO)
                visualizacion = VBO;
            break;
