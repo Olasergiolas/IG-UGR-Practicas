@@ -146,3 +146,27 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
 
     glDisableClientState(GL_COLOR_ARRAY);
 }
+
+void Malla3D::inicializarColores(bool ajedrez){
+    Tupla3f rojo(1.0, 0.0, 0.0);
+    Tupla3f negro(0.0, 0.0, 0.0);
+    Tupla3f celeste(0.0, 0.8, 0.8);
+
+    c.assign(v.size(), rojo);
+    c_alt_1.assign(v.size(), celeste);
+    c_alt_2.assign(v.size(), negro);
+
+    if (ajedrez){
+        std::vector<Tupla3f> ajedrez_aux;
+
+        for (unsigned i = 0; i < v.size(); ++i){
+            if (i%2)
+                ajedrez_aux.push_back(rojo);
+
+            else
+                ajedrez_aux.push_back(negro);
+        }
+
+        c_ajedrez = ajedrez_aux;
+    }
+}

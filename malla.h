@@ -41,6 +41,8 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
 
+   void inicializarColores(bool ajedrez=true);
+
    protected:
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)

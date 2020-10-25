@@ -4,6 +4,7 @@
 #include "escena.h"
 #include "malla.h" // objetos: Cubo y otros....
 #include "objply.h"
+#include "objrevolucion.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -33,6 +34,8 @@ Escena::Escena()
     tetraedro_presente = false;
 
     ply_presente = false;
+
+    obj_rev_presente = false;
 }
 
 //**************************************************************************
@@ -81,6 +84,9 @@ void Escena::dibujar()
 
     else if (ply_presente)
         ply->draw(visualizacion, estado_dibujados, coloreado);
+
+    else if (obj_rev_presente)
+        obj_rev->draw(visualizacion, estado_dibujados, coloreado);
 
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena
@@ -147,6 +153,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                     ply = new ObjPLY("./plys/ant.ply");
             }
             break;
+
+   case 'R':
+       if (modoMenu == SELOBJETO){
+           obj_rev_presente = !obj_rev_presente;
+
+           if (obj_rev_presente)
+               obj_rev = new ObjRevolucion("./plys/peon.ply", 1000, false, false);
+       }
+       break;
 
            // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
        case 'V' :

@@ -7,6 +7,7 @@
 #include "tetraedro.h"
 #include "set"
 #include "objply.h"
+#include "objrevolucion.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -47,6 +48,8 @@ class Escena
    ObjPLY *ply = nullptr;
    bool ply_presente;
    bool cambiar_ply;
+   ObjRevolucion *obj_rev = nullptr;
+   bool obj_rev_presente;
 
 
 
