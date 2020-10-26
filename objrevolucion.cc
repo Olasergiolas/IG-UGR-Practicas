@@ -22,8 +22,8 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
     std::vector<Tupla3f> perfil_original;
     ply::read_vertices(archivo, perfil_original);
 
-    Tupla3f p_norte = *(perfil_original.end() - 1);
-    Tupla3f p_sur = *(perfil_original.begin());
+    Tupla3f p_sur = *(perfil_original.end() - 1);
+    Tupla3f p_norte = *(perfil_original.begin());
 
     if (p_norte(X) == 0 && p_norte(Z) == 0)
         perfil_original.erase(perfil_original.end() - 1);
@@ -32,6 +32,7 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
         perfil_original.erase(perfil_original.begin());
 
     crearMalla(perfil_original, num_instancias);
+    crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size());
 
 
 
@@ -56,6 +57,31 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
 
     c_ajedrez = ajedrez_aux;
 
+}
+
+void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte,
+                               unsigned num_instancias, unsigned num_vertices){
+    Tupla3i cara_aux;
+    if (sup){
+        v.push_back(p_sur);
+        for (unsigned i = 0; i < num_instancias; ++i){
+            cara_aux(0) = num_instancias;
+            cara_aux(1) = num_vertices * i;
+            cara_aux(2) = num_vertices * ((i+1)%num_instancias);
+            f.push_back(cara_aux);
+        }
+    }
+
+    if (inf){
+        v.push_back(p_norte);
+        for (unsigned i = 0; i < num_instancias; ++i){
+            cara_aux(0) = num_instancias + 1;
+            cara_aux(1) = num_vertices * (i + 1) - 1;
+            cara_aux(2) = num_vertices * (i + 2) - 1;
+            f.push_back(cara_aux);
+        }
+
+    }
 }
 
 // *****************************************************************************

@@ -159,7 +159,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            obj_rev_presente = !obj_rev_presente;
 
            if (obj_rev_presente)
-               obj_rev = new ObjRevolucion("./plys/peon.ply", 100, false, false);
+               obj_rev = new ObjRevolucion("./plys/peon.ply", 100, true, true);
        }
        break;
 
