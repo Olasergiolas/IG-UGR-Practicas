@@ -57,7 +57,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
    change_projection( float(UI_window_width)/float(UI_window_height) );
     glViewport( 0, 0, UI_window_width, UI_window_height );
 
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
     glShadeModel(GL_FLAT);
 }
 
@@ -159,7 +159,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            obj_rev_presente = !obj_rev_presente;
 
            if (obj_rev_presente)
-               obj_rev = new ObjRevolucion("./plys/peon.ply", 1000, false, false);
+               obj_rev = new ObjRevolucion("./plys/peon.ply", 100, false, false);
        }
        break;
 

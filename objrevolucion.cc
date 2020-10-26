@@ -31,7 +31,6 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
     if (p_sur(X) == 0 && p_norte(Z) == 0)
         perfil_original.erase(perfil_original.begin());
 
-    v = perfil_original;
     crearMalla(perfil_original, num_instancias);
 
 
@@ -69,11 +68,16 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, unsigned num_instanci
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias) {
     Tupla3f vertice_aux;
+    float old_x, old_z;
+    float angulo;
     for (unsigned i = 0; i < num_instancias; ++i){
+        angulo = (2*M_PI*i)/num_instancias;
         for (unsigned j = 0; j < perfil_original.size(); ++j){
             vertice_aux = perfil_original[j];
-            vertice_aux(X) = vertice_aux(X) * cos((2*M_PI*i)/num_instancias) + vertice_aux(Z) * sin((2*M_PI*i)/num_instancias);
-            vertice_aux(Z) = -vertice_aux(X) * sin((2*M_PI*i)/num_instancias) + vertice_aux(Z) * cos((2*M_PI*i)/num_instancias);
+            old_x = vertice_aux(X);
+            old_z = vertice_aux(Z);
+            vertice_aux(X) = old_x * cos(angulo) + old_z * sin(angulo);
+            vertice_aux(Z) = -old_x * sin(angulo) + old_z * cos(angulo);
             v.push_back(vertice_aux);
         }
     }
