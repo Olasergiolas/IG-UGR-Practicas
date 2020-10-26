@@ -62,22 +62,30 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
 void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte,
                                unsigned num_instancias, unsigned num_vertices){
     Tupla3i cara_aux;
-    if (sup){
-        v.push_back(p_sur);
-        for (unsigned i = 0; i < num_instancias; ++i){
-            cara_aux(0) = num_instancias;
-            cara_aux(1) = num_vertices * i;
-            cara_aux(2) = num_vertices * ((i+1)%num_instancias);
-            f.push_back(cara_aux);
-        }
-    }
+
+    p_sur(X) = 0;
+    p_sur(Z) = 0;
+    p_norte(X) = 0;
+    p_norte(Z) = 0;
+
+    v.push_back(p_sur);
+    v.push_back(p_norte);
 
     if (inf){
-        v.push_back(p_norte);
         for (unsigned i = 0; i < num_instancias; ++i){
-            cara_aux(0) = num_instancias + 1;
+            cara_aux(0) = v.size() - 1;
+            cara_aux(2) = num_vertices * i;
+            cara_aux(1) = num_vertices * ((i + 1)%num_instancias);
+            f.push_back(cara_aux);
+        }
+
+    }
+//std::cout << v.size() << std::endl;
+    if (sup){
+        for (unsigned i = 0; i < num_instancias; ++i){
+            cara_aux(0) = v.size() - 2;
             cara_aux(1) = num_vertices * (i + 1) - 1;
-            cara_aux(2) = num_vertices * (i + 2) - 1;
+            cara_aux(2) = (num_vertices * (i + 2) - 1)%v.size();
             f.push_back(cara_aux);
         }
 
