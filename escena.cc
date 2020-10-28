@@ -75,6 +75,8 @@ void Escena::dibujar()
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
     ejes.draw();
+    //glMatrixMode(GL_MODELVIEW);
+    //glLoadIdentity();
 
     if (cubo_presente)
         cubo->draw(visualizacion, estado_dibujados, coloreado);
@@ -82,11 +84,19 @@ void Escena::dibujar()
     else if (tetraedro_presente)
         tetraedro->draw(visualizacion, estado_dibujados, coloreado);
 
-    else if (ply_presente)
-        ply->draw(visualizacion, estado_dibujados, coloreado);
+    else if (ply_presente){
+        glPushMatrix();
+            glScalef(10.0,10.0,10.0);
+            ply->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
 
-    else if (obj_rev_presente)
-        obj_rev->draw(visualizacion, estado_dibujados, coloreado);
+    else if (obj_rev_presente){
+        glPushMatrix();
+            glScalef(50.0,50.0,50.0);
+            obj_rev->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
 
     // COMPLETAR
     //   Dibujar los diferentes elementos de la escena

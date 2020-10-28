@@ -116,7 +116,6 @@ void Malla3D::draw_ModoDiferido(modo_coloreado coloreado)
 void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado)    //Según parámetro llama a los dos anteriores
 {
     modo_coloreado coloreado_final = coloreado;
-    glScalef(10.0, 10.0, 10.0);
 
     glEnableClientState(GL_COLOR_ARRAY);
 
