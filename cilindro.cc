@@ -16,4 +16,7 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
         altura_actual = punto_aux(Y);
         perfil_original.push_back(punto_aux);
     }
+
+    crearMalla(perfil_original, num_instancias_perf);
+    inicializarColores();
 }
