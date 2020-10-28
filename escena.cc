@@ -5,6 +5,9 @@
 #include "malla.h" // objetos: Cubo y otros....
 #include "objply.h"
 #include "objrevolucion.h"
+#include "cilindro.h"
+#include "esfera.h"
+#include "cono.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
