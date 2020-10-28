@@ -113,7 +113,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
         // ESTAMOS EN MODO SELECCION DE OBJETO
         case 'O' :
-         modoMenu=SELOBJETO;
+            std::cout << "Modo selección de objeto" << endl <<
+                         "\tC: Activar cubo" << endl <<
+                         "\tT: Activar tetraedro" << endl;
+            modoMenu=SELOBJETO;
          break ;
         case 'C' :
             if (modoMenu == SELOBJETO)
@@ -127,7 +130,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
         // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
         case 'V' :
-         modoMenu=SELVISUALIZACION;
+            std::cout << "Modo selección de modo de visualización" << endl <<
+                        "\tP: Activar modo puntos" << endl <<
+                        "\tL: Activar modo lineas" << endl <<
+                        "\tS: Activar modo rellenado" << endl <<
+                        "\tA: Activar modo ajedrez" << endl;
+            modoMenu=SELVISUALIZACION;
          break ;
         case 'P':
             if (modoMenu == SELVISUALIZACION)
@@ -175,7 +183,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
         // ESTAMOS EN MODO SELECCION DE DIBUJADO
         case 'D' :
-         modoMenu=SELDIBUJADO;
+            std::cout << "Modo selección de dibujado" << endl <<
+                        "\t1: Modo directo" << endl <<
+                        "\t2: Modo diferido" << endl;
+            modoMenu=SELDIBUJADO;
          break ;
          // COMPLETAR con los diferentes opciones de teclado
         case '1' :
