@@ -8,6 +8,9 @@
 #include "set"
 #include "objply.h"
 #include "objrevolucion.h"
+#include "esfera.h"
+#include "cilindro.h"
+#include "cono.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
 class Escena
@@ -50,6 +53,11 @@ class Escena
    bool cambiar_ply;
    ObjRevolucion *obj_rev = nullptr;
    bool obj_rev_presente;
+
+
+   bool obj_test_presente;
+   Esfera *test = nullptr;
+
 
 
 

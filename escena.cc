@@ -39,6 +39,8 @@ Escena::Escena()
     ply_presente = false;
 
     obj_rev_presente = false;
+
+    obj_test_presente = false;
 }
 
 //**************************************************************************
@@ -98,6 +100,13 @@ void Escena::dibujar()
         glPushMatrix();
             glScalef(50.0,50.0,50.0);
             obj_rev->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
+
+    else if (obj_test_presente){
+        glPushMatrix();
+            glScalef(50.0,50.0,50.0);
+            test->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
@@ -173,14 +182,24 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             }
             break;
 
-   case 'R':
-       if (modoMenu == SELOBJETO){
-           obj_rev_presente = !obj_rev_presente;
+        case 'R':
+           if (modoMenu == SELOBJETO){
+               obj_rev_presente = !obj_rev_presente;
 
-           if (obj_rev_presente)
-               obj_rev = new ObjRevolucion("./plys/peon.ply", 25, true, true);
-       }
-       break;
+               if (obj_rev_presente)
+                   obj_rev = new ObjRevolucion("./plys/peon.ply", 25, true, true);
+           }
+           break;
+
+        case '9':                           //For testing purposes
+          if (modoMenu == SELOBJETO){
+              obj_test_presente = !obj_test_presente;
+
+              if (obj_test_presente)
+                  test = new Esfera(10, 25, 0.35);
+          }
+          break;
+
 
            // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
        case 'V' :
