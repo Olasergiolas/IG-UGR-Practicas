@@ -196,7 +196,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
               obj_test_presente = !obj_test_presente;
 
               if (obj_test_presente)
-                  test = new Esfera(10, 25, 0.35);
+                  test = new Cono(4, 25, 1, 0.35);
           }
           break;
 

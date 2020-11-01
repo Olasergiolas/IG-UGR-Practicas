@@ -56,7 +56,7 @@ class Escena
 
 
    bool obj_test_presente;
-   Esfera *test = nullptr;
+   Cono *test = nullptr;
 
 
 
