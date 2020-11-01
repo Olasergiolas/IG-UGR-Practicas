@@ -6,7 +6,8 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
 {
     std::vector<Tupla3f> perfil_original;
     Tupla3f punto_aux(radio, 0, 0);
-    float incrementos = altura/num_vert_perfil;
+    Tupla3f p_norte, p_sur;
+    float incrementos = altura/(num_vert_perfil - 1);
     float altura_actual = 0;
 
     perfil_original.push_back(punto_aux);
@@ -17,6 +18,10 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
         perfil_original.push_back(punto_aux);
     }
 
+    p_norte = perfil_original[perfil_original.size() - 1];
+    p_sur = perfil_original[0];
+
     crearMalla(perfil_original, num_instancias_perf);
+    crearTapas(true, true, p_sur, p_norte, num_instancias_perf, num_vert_perfil);
     inicializarColores();
 }

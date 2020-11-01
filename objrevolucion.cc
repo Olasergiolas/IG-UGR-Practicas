@@ -22,8 +22,8 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
     std::vector<Tupla3f> perfil_original;
     ply::read_vertices(archivo, perfil_original);
 
-    Tupla3f p_sur = *(perfil_original.end() - 1);
-    Tupla3f p_norte = *(perfil_original.begin());
+    Tupla3f p_norte = *(perfil_original.end() - 1);
+    Tupla3f p_sur = *(perfil_original.begin());
 
     if (p_norte(X) == 0 && p_norte(Z) == 0)
         perfil_original.erase(perfil_original.end() - 1);
@@ -49,24 +49,31 @@ void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_nort
     v.push_back(p_sur);
     v.push_back(p_norte);
 
+    std::cout << v[v.size() - 1] << std::endl;
+    std::cout << v[v.size() - 2] << std::endl;
     if (inf){
         for (unsigned i = 0; i < num_instancias; ++i){
-            cara_aux(0) = v.size() - 1;
+            cara_aux(0) = v.size() - 2;
             cara_aux(2) = num_vertices * i;
             cara_aux(1) = num_vertices * ((i + 1)%num_instancias);
             f.push_back(cara_aux);
         }
-
     }
-//std::cout << v.size() << std::endl;
+
     if (sup){
         for (unsigned i = 0; i < num_instancias; ++i){
-            cara_aux(0) = v.size() - 2;
+
+            cara_aux(0) = v.size() - 1;
             cara_aux(1) = num_vertices * (i + 1) - 1;
-            cara_aux(2) = (num_vertices * (i + 2) - 1)%v.size();
+
+            if (i == num_instancias - 1)
+                cara_aux(2) = num_vertices - 1;             //Último punto de la primera instancia
+
+            else
+                cara_aux(2) = num_vertices * (i + 2) - 1;
+
             f.push_back(cara_aux);
         }
-
     }
 }
 
