@@ -34,23 +34,25 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
     crearMalla(perfil_original, num_instancias);
     crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size());
     inicializarColores();
-
 }
 
 void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte,
                                unsigned num_instancias, unsigned num_vertices){
     Tupla3i cara_aux;
 
-    p_sur(X) = 0;
-    p_sur(Z) = 0;
-    p_norte(X) = 0;
-    p_norte(Z) = 0;
+    if (p_sur(X) != 0 || p_sur(Z) != 0){
+        p_sur(X) = 0;
+        p_sur(Z) = 0;
+    }
+
+    if (p_norte(X) != 0 || p_norte(Z) != 0){
+        p_norte(X) = 0;
+        p_norte(Z) = 0;
+    }
 
     v.push_back(p_sur);
     v.push_back(p_norte);
 
-    std::cout << v[v.size() - 1] << std::endl;
-    std::cout << v[v.size() - 2] << std::endl;
     if (inf){
         for (unsigned i = 0; i < num_instancias; ++i){
             cara_aux(0) = v.size() - 2;

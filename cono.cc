@@ -27,9 +27,10 @@ Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float
 
         perfil_original.push_back(aux);
     }
+    perfil_original.erase(perfil_original.end() - 1);
     //perfil_original.push_back(p_norte);
 
     crearMalla(perfil_original, num_instancias_perf);
-    crearTapas(false, true, p_sur, p_norte, num_instancias_perf, num_vert_perfil);
+    crearTapas(true, true, p_sur, p_norte, num_instancias_perf, perfil_original.size());
     inicializarColores();
 }
