@@ -89,21 +89,22 @@ void Escena::dibujar()
 
     if (cubo_presente){
         glPushMatrix();
-            glTranslatef(150, 0, 0);
+            glTranslatef(150, 0, -100);
             cubo->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
     if (tetraedro_presente){
         glPushMatrix();
-            glTranslatef(-150, 0, 0);
+            glTranslatef(-150, 0, -100);
             tetraedro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
     if (ply_presente){
         glPushMatrix();
-            glScalef(10.0,10.0,10.0);
+            glTranslatef(0, 0, -100);
+            glScalef(5.0,5.0,5.0);
             ply->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
@@ -115,6 +116,7 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
+            glTranslatef(0, 0, -100);
             glScalef(50.0,50.0,50.0);
             obj_rev->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -127,6 +129,7 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
+            glTranslatef(0, 0, 0);
             glScalef(50.0,50.0,50.0);
             esfera->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -139,6 +142,7 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
+            glTranslatef(150, 0, 0);
             glScalef(50.0,50.0,50.0);
             cono->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -151,6 +155,7 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
+            glTranslatef(-150, 0, 0);
             glScalef(50.0,50.0,50.0);
             cilindro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
