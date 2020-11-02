@@ -13,6 +13,7 @@ Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float
     float base_actual = 0;
     float hip_actual = 0;
     float h_actual = 0;
+    s = CRECIENTE;
 
     perfil_original.push_back(p_sur);
     for (int i = 0; i < num_vert_perfil - 1; ++i){  //Para que no añada p_norte

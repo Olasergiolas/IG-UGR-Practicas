@@ -26,11 +26,13 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
     if ((*(perfil_original.end() - 1))(Y) > (*(perfil_original.begin()))(Y)){
         p_norte = *(perfil_original.end() - 1);
         p_sur = *(perfil_original.begin());
+        s = CRECIENTE;
     }
 
     else{
         p_sur = *(perfil_original.end() - 1);
         p_norte = *(perfil_original.begin());
+        s = DECRECIENTE;
     }
 
     if (p_norte(X) == 0 && p_norte(Z) == 0)
@@ -61,28 +63,57 @@ void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_nort
     v.push_back(p_sur);
     v.push_back(p_norte);
 
-    if (inf){
-        for (unsigned i = 0; i < num_instancias; ++i){
-            cara_aux(0) = v.size() - 2;
-            cara_aux(2) = num_vertices * i;
-            cara_aux(1) = num_vertices * ((i + 1)%num_instancias);
-            f.push_back(cara_aux);
+    if (s == CRECIENTE){
+        if (inf){
+            for (unsigned i = 0; i < num_instancias; ++i){
+                cara_aux(0) = v.size() - 2;
+                cara_aux(2) = num_vertices * i;
+                cara_aux(1) = num_vertices * ((i + 1)%num_instancias);
+                f.push_back(cara_aux);
+            }
+        }
+
+        if (sup){
+            for (unsigned i = 0; i < num_instancias; ++i){
+
+                cara_aux(0) = v.size() - 1;
+                cara_aux(1) = num_vertices * (i + 1) - 1;
+
+                if (i == num_instancias - 1)
+                    cara_aux(2) = num_vertices - 1;             //Último punto de la primera instancia
+
+                else
+                    cara_aux(2) = num_vertices * (i + 2) - 1;
+
+                f.push_back(cara_aux);
+            }
         }
     }
 
-    if (sup){
-        for (unsigned i = 0; i < num_instancias; ++i){
+    else{
+        if (sup){
+            for (unsigned i = 0; i < num_instancias; ++i){
+                cara_aux(0) = v.size() - 1;
+                cara_aux(1) = num_vertices * i;
+                cara_aux(2) = num_vertices * ((i + 1)%num_instancias);
+                f.push_back(cara_aux);
+            }
+        }
 
-            cara_aux(0) = v.size() - 1;
-            cara_aux(1) = num_vertices * (i + 1) - 1;
+        if (inf){
+            for (unsigned i = 0; i < num_instancias; ++i){
 
-            if (i == num_instancias - 1)
-                cara_aux(2) = num_vertices - 1;             //Último punto de la primera instancia
+                cara_aux(0) = v.size() - 2;
+                cara_aux(2) = num_vertices * (i + 1) - 1;
 
-            else
-                cara_aux(2) = num_vertices * (i + 2) - 1;
+                if (i == num_instancias - 1)
+                    cara_aux(1) = num_vertices - 1;             //Último punto de la primera instancia
 
-            f.push_back(cara_aux);
+                else
+                    cara_aux(1) = num_vertices * (i + 2) - 1;
+
+                f.push_back(cara_aux);
+            }
         }
     }
 }
@@ -91,6 +122,7 @@ void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_nort
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
 
+//ACTUALIZAR ESTE CONSTRUCTOR
 ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
     std::vector<Tupla3f> perfil_original = perfil;
 
@@ -130,14 +162,28 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned nu
         for (unsigned j = 0; j < perfil_original.size() - 1; ++j){
             a = perfil_original.size() * i + j;
             b = perfil_original.size() * ((i + 1)%num_instancias) + j;
-            cara_aux(0) = a;
-            cara_aux(1) = b;
-            cara_aux(2) = b + 1;
-            f.push_back(cara_aux);
 
-            cara_aux(0) = a;
-            cara_aux(1) = b + 1;
-            cara_aux(2) = a + 1;
+            if (s == CRECIENTE){
+                cara_aux(0) = a;
+                cara_aux(1) = b;
+                cara_aux(2) = b + 1;
+                f.push_back(cara_aux);
+
+                cara_aux(0) = a;
+                cara_aux(1) = b + 1;
+                cara_aux(2) = a + 1;
+            }
+
+            else{
+                cara_aux(0) = a;
+                cara_aux(2) = b;
+                cara_aux(1) = b + 1;
+                f.push_back(cara_aux);
+
+                cara_aux(0) = a;
+                cara_aux(2) = b + 1;
+                cara_aux(1) = a + 1;
+            }
             f.push_back(cara_aux);
         }
     }

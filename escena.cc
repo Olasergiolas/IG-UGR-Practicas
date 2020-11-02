@@ -110,7 +110,7 @@ void Escena::dibujar()
 
     if (obj_rev_presente){
         if (actualizar_revolucion || obj_rev == nullptr){
-            obj_rev = new ObjRevolucion("./plys/peon.ply", 20, tapas.first, tapas.second);
+            obj_rev = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
             actualizar_revolucion = false;
         }
 

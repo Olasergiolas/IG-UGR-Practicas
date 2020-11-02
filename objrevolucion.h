@@ -23,8 +23,13 @@
 // Cubo con centro en el origen y lado unidad por defecto
 // (tiene 9 vertices y 6 caras)
 
+typedef enum {CRECIENTE, DECRECIENTE} sentido;
+
 class ObjRevolucion : public Malla3D
 {
+    protected:
+        sentido s;
+
    public:
        ObjRevolucion();
    ObjRevolucion(const std::string & archivo, unsigned num_instancias, bool tapa_sup=true, bool tapa_inf=true) ;

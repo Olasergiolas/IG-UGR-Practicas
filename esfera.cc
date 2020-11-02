@@ -8,6 +8,7 @@ Esfera::Esfera(const int num_vert_perfil, const int num_instancias_perf, const f
     float x_old = 0,
             y_old = radio;
     std::vector<Tupla3f> perfil_original;
+    s = CRECIENTE;
 
     perfil_original.push_back(Tupla3f(0, radio, 0));
     for (int i = 0; i < num_vert_perfil - 1; ++i){

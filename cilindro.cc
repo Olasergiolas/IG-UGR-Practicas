@@ -9,6 +9,7 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
     Tupla3f p_norte, p_sur;
     float incrementos = altura/(num_vert_perfil - 1);
     float altura_actual = 0;
+    s = CRECIENTE;
 
     perfil_original.push_back(punto_aux);
     for (int i = 0; i < num_vert_perfil - 1; ++i){
