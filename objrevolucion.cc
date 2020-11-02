@@ -20,10 +20,18 @@ ObjRevolucion::ObjRevolucion() {}
 ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
    // completar ......(práctica 2)
     std::vector<Tupla3f> perfil_original;
+    Tupla3f p_norte, p_sur;
     ply::read_vertices(archivo, perfil_original);
 
-    Tupla3f p_norte = *(perfil_original.end() - 1);
-    Tupla3f p_sur = *(perfil_original.begin());
+    if ((*(perfil_original.end() - 1))(Y) > (*(perfil_original.begin()))(Y)){
+        p_norte = *(perfil_original.end() - 1);
+        p_sur = *(perfil_original.begin());
+    }
+
+    else{
+        p_sur = *(perfil_original.end() - 1);
+        p_norte = *(perfil_original.begin());
+    }
 
     if (p_norte(X) == 0 && p_norte(Z) == 0)
         perfil_original.erase(perfil_original.end() - 1);

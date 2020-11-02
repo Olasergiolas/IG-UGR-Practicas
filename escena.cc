@@ -182,7 +182,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break ;
 
            // ESTAMOS EN MODO SELECCION DE OBJETO
-       case 'O' :
+        case 'O' :
            std::cout << "Modo selección de objeto" << endl <<
                         "\tC: Activar cubo" << endl <<
                         "\tT: Activar tetraedro" << endl <<
@@ -191,12 +191,13 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                         "\tR: Activar ObjRevolucion" << endl;
            modoMenu=SELOBJETO;
            break ;
-       case 'C' :
+
+        case 'C' :
            if (modoMenu == SELOBJETO)
                cubo_presente = !cubo_presente;
            break;
 
-       case 'T' :
+        case 'T' :
            if (modoMenu == SELOBJETO)
                tetraedro_presente = !tetraedro_presente;
            break;
@@ -220,27 +221,27 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             break;
 
         case 'R':
-           if (modoMenu == SELOBJETO){
+            if (modoMenu == SELOBJETO){
                obj_rev_presente = !obj_rev_presente;
-           }
+            }
            break;
 
         case '3':
-          if (modoMenu == SELOBJETO){
+            if (modoMenu == SELOBJETO){
               esfera_presente = !esfera_presente;
-          }
+            }
           break;
 
-       case '4':
-         if (modoMenu == SELOBJETO){
+        case '4':
+            if (modoMenu == SELOBJETO){
              cono_presente = !cono_presente;
-         }
+            }
          break;
 
-       case '5':
-         if (modoMenu == SELOBJETO){
+        case '5':
+            if (modoMenu == SELOBJETO){
              cilindro_presente = !cilindro_presente;
-         }
+            }
          break;
 
 
