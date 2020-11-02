@@ -12,7 +12,7 @@
 #include "cilindro.h"
 #include "cono.h"
 
-typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO} menu;
+typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS} menu;
 class Escena
 {
 

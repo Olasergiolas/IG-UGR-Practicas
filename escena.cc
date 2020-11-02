@@ -193,7 +193,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                         "\tT: Activar tetraedro" << endl <<
                         "\tB: Activar Beethoven" << endl <<
                         "\tH: Activar Hormiga" << endl <<
-                        "\tR: Activar ObjRevolucion" << endl;
+                        "\tR: Activar ObjRevolucion" << endl <<
+                        "\t3: Activar Esfera" << endl <<
+                        "\t4: Activar Cono" << endl <<
+                        "\t5: Activar Cilindro" << endl;
            modoMenu=SELOBJETO;
            break ;
 
@@ -322,14 +325,26 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
 
            //Interruptores de las tapaderas
-       case 'M':
-           tapas.first = !tapas.first;
-           actualizar_revolucion = true;
+
+        case 'U':
+           std::cout << "Modo selección de dibujado" << endl <<
+                       "\tN: Tapa inferior" << endl <<
+                       "\tM: Tapa superior" << endl;
+           modoMenu = TAPAS;
            break;
 
-       case 'N':
-           tapas.second = !tapas.second;
-           actualizar_revolucion = true;
+        case 'M':
+            if (modoMenu == TAPAS){
+                tapas.first = !tapas.first;
+                actualizar_revolucion = true;
+            }
+           break;
+
+        case 'N':
+            if (modoMenu == TAPAS){
+                tapas.second = !tapas.second;
+                actualizar_revolucion = true;
+            }
            break;
 
    }
