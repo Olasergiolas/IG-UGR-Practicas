@@ -29,6 +29,8 @@ Escena::Escena()
 
     visualizacion = INMEDIATO;
     coloreado = RELLENADO;
+    tapas.first = true;
+    tapas.second = true;
 
     cubo = new Cubo(100);
     cubo_presente = false;
@@ -37,10 +39,12 @@ Escena::Escena()
     tetraedro_presente = false;
 
     ply_presente = false;
-
     obj_rev_presente = false;
+    cilindro_presente = false;
+    cono_presente = false;
+    esfera_presente = false;
 
-    obj_test_presente = false;
+    actualizar_revolucion = false;
 }
 
 //**************************************************************************
@@ -83,41 +87,74 @@ void Escena::dibujar()
     //glMatrixMode(GL_MODELVIEW);
     //glLoadIdentity();
 
-    if (cubo_presente)
-        cubo->draw(visualizacion, estado_dibujados, coloreado);
+    if (cubo_presente){
+        glPushMatrix();
+            glTranslatef(150, 0, 0);
+            cubo->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
 
-    else if (tetraedro_presente)
-        tetraedro->draw(visualizacion, estado_dibujados, coloreado);
+    if (tetraedro_presente){
+        glPushMatrix();
+            glTranslatef(-150, 0, 0);
+            tetraedro->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
 
-    else if (ply_presente){
+    if (ply_presente){
         glPushMatrix();
             glScalef(10.0,10.0,10.0);
             ply->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
-    else if (obj_rev_presente){
+    if (obj_rev_presente){
+        if (actualizar_revolucion || obj_rev == nullptr){
+            obj_rev = new ObjRevolucion("./plys/peon.ply", 20, tapas.first, tapas.second);
+            actualizar_revolucion = false;
+        }
+
         glPushMatrix();
             glScalef(50.0,50.0,50.0);
             obj_rev->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
-    else if (obj_test_presente){
+    if (esfera_presente){
+        if (actualizar_revolucion || esfera == nullptr){
+            esfera = new Esfera(10, 25, 0.35, tapas);
+            actualizar_revolucion = false;
+        }
+
         glPushMatrix();
             glScalef(50.0,50.0,50.0);
-            test->draw(visualizacion, estado_dibujados, coloreado);
+            esfera->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
-    // COMPLETAR
-    //   Dibujar los diferentes elementos de la escena
-    // Habrá que tener en esta primera práctica una variable que indique qué objeto se ha de visualizar
-    // y hacer
-    // cubo.draw()
-    // o
-    // tetraedro.draw()
+    if (cono_presente){
+        if (actualizar_revolucion || cono == nullptr){
+            cono = new Cono(6, 25, 1, 0.35, tapas);
+            actualizar_revolucion = false;
+        }
 
+        glPushMatrix();
+            glScalef(50.0,50.0,50.0);
+            cono->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
+
+    if (cilindro_presente){
+        if (actualizar_revolucion || cilindro == nullptr){
+            cilindro = new Cilindro(6, 25, 1, 0.35, tapas);
+            actualizar_revolucion = false;
+        }
+
+        glPushMatrix();
+            glScalef(50.0,50.0,50.0);
+            cilindro->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
 }
 
 //**************************************************************************
@@ -185,20 +222,26 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
         case 'R':
            if (modoMenu == SELOBJETO){
                obj_rev_presente = !obj_rev_presente;
-
-               if (obj_rev_presente)
-                   obj_rev = new ObjRevolucion("./plys/peon.ply", 20, true, true);
            }
            break;
 
-        case '9':                           //For testing purposes
+        case '3':
           if (modoMenu == SELOBJETO){
-              obj_test_presente = !obj_test_presente;
-
-              if (obj_test_presente)
-                  test = new Esfera(10, 25, 0.35);
+              esfera_presente = !esfera_presente;
           }
           break;
+
+       case '4':
+         if (modoMenu == SELOBJETO){
+             cono_presente = !cono_presente;
+         }
+         break;
+
+       case '5':
+         if (modoMenu == SELOBJETO){
+             cilindro_presente = !cilindro_presente;
+         }
+         break;
 
 
            // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
@@ -269,6 +312,18 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case '2' :
            if (modoMenu == SELDIBUJADO)
                visualizacion = VBO;
+           break;
+
+
+           //Interruptores de las tapaderas
+       case 'M':
+           tapas.first = !tapas.first;
+           actualizar_revolucion = true;
+           break;
+
+       case 'N':
+           tapas.second = !tapas.second;
+           actualizar_revolucion = true;
            break;
 
    }

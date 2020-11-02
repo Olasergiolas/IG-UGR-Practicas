@@ -1,7 +1,7 @@
 #include "cono.h"
 
 Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float altura,
-           const float radio)
+           const float radio, std::pair<bool, bool> tapas)
 {
     Tupla3f p_norte(0, altura, 0);
     Tupla3f p_sur(radio, 0, 0);
@@ -28,9 +28,8 @@ Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float
         perfil_original.push_back(aux);
     }
     perfil_original.erase(perfil_original.end() - 1);
-    //perfil_original.push_back(p_norte);
 
     crearMalla(perfil_original, num_instancias_perf);
-    crearTapas(true, true, p_sur, p_norte, num_instancias_perf, perfil_original.size());
+    crearTapas(tapas.first, tapas.second, p_sur, p_norte, num_instancias_perf, perfil_original.size());
     inicializarColores();
 }

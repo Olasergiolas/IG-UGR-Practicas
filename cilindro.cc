@@ -2,7 +2,7 @@
 #include "objrevolucion.h"
 
 Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, const float altura,
-                   const float radio)
+                   const float radio, std::pair<bool, bool> tapas)
 {
     std::vector<Tupla3f> perfil_original;
     Tupla3f punto_aux(radio, 0, 0);
@@ -22,6 +22,6 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
     p_sur = perfil_original[0];
 
     crearMalla(perfil_original, num_instancias_perf);
-    crearTapas(true, true, p_sur, p_norte, num_instancias_perf, num_vert_perfil);
+    crearTapas(tapas.first, tapas.second, p_sur, p_norte, num_instancias_perf, num_vert_perfil);
     inicializarColores();
 }

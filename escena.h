@@ -42,22 +42,32 @@ class Escena
    modo_visualizacion visualizacion;
    modo_coloreado coloreado;
    std::set<GLenum> estado_dibujados;
+   std::pair<bool, bool> tapas;
+   bool actualizar_revolucion;
    // Objetos de la escena
    Ejes ejes;
+
    Cubo * cubo = nullptr ; // es importante inicializarlo a 'nullptr'
    bool cubo_presente;
+
    Tetraedro * tetraedro= nullptr ; // es importante inicializarlo a 'nullptr'
    bool tetraedro_presente;
+
    ObjPLY *ply = nullptr;
    bool ply_presente;
    bool cambiar_ply;
+
    ObjRevolucion *obj_rev = nullptr;
    bool obj_rev_presente;
 
+   bool esfera_presente;
+   Esfera *esfera = nullptr;
 
-   bool obj_test_presente;
-   Esfera *test = nullptr;
+   bool cono_presente;
+   Cono *cono = nullptr;
 
+   bool cilindro_presente;
+   Cilindro *cilindro = nullptr;
 
 
 

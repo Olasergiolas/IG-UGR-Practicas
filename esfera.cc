@@ -1,7 +1,7 @@
 #include "esfera.h"
 #include "math.h"
 
-Esfera::Esfera(const int num_vert_perfil, const int num_instancias_perf, const float radio)
+Esfera::Esfera(const int num_vert_perfil, const int num_instancias_perf, const float radio, std::pair<bool, bool> tapas)
 {
     float angulo = M_PI/(num_vert_perfil-1);
     Tupla3f aux, p_norte, p_sur;
@@ -28,6 +28,6 @@ Esfera::Esfera(const int num_vert_perfil, const int num_instancias_perf, const f
     perfil_original.erase(perfil_original.end() - 1);
 
     crearMalla(perfil_original, num_instancias_perf);
-    crearTapas(true, true, p_sur, p_norte, num_instancias_perf, perfil_original.size());
+    crearTapas(tapas.first, tapas.second, p_sur, p_norte, num_instancias_perf, perfil_original.size());
     inicializarColores();
 }

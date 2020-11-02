@@ -83,8 +83,21 @@ void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_nort
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
 
-ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> archivo, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
+ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
+    std::vector<Tupla3f> perfil_original = perfil;
 
+    Tupla3f p_norte = *(perfil_original.end() - 1);
+    Tupla3f p_sur = *(perfil_original.begin());
+
+    if (p_norte(X) == 0 && p_norte(Z) == 0)
+        perfil_original.erase(perfil_original.end() - 1);
+
+    if (p_sur(X) == 0 && p_norte(Z) == 0)
+        perfil_original.erase(perfil_original.begin());
+
+    crearMalla(perfil_original, num_instancias);
+    crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size());
+    inicializarColores();
 }
 
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias) {
