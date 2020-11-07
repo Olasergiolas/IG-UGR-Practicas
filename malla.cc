@@ -195,7 +195,7 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void Malla3D::inicializarColores(bool ajedrez){
+void Malla3D::inicializarColores(){
     Tupla3f rojo(1.0, 0.0, 0.0);
     Tupla3f negro(0.0, 0.0, 0.0);
     Tupla3f celeste(0.0, 0.8, 0.8);

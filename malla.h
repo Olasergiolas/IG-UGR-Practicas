@@ -41,7 +41,7 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
 
-   void inicializarColores(bool ajedrez=true);
+   void inicializarColores();
 
    protected:
 
