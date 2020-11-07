@@ -58,22 +58,5 @@ Cubo::Cubo(float lado)
     std::vector<Tupla3i> auxC{c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11};
     f = auxC;
 
-    //Array de colores modo ajedrez
-    Tupla3f rojo(1.0, 0.0, 0.0);
-    Tupla3f negro(0.0, 0.0, 0.0);
-
-    std::vector<Tupla3f> auxColor{rojo, negro, rojo, negro, rojo, negro,
-                rojo, rojo, negro, negro, negro, negro};
-
-    c_ajedrez = auxColor;
-
-    //Array de colores para relleno
-    c.assign(12, rojo);
-
-    //Array de colores alternativo
-    Tupla3f celeste(0.0, 0.8, 0.8);
-    c_alt_1.assign(12, celeste);
-
-    //Array de colores alternativo 2
-    c_alt_2.assign(12, negro);
+    inicializarColores();
 }

@@ -29,11 +29,20 @@ void Malla3D::comprobarVBOs(){
     if (id_tri_buffer == 0)
         id_tri_buffer = crearVBO(GL_ELEMENT_ARRAY_BUFFER, f.size()*sizeof(int)*3, f.data());
 
+    if (id_tri0_buffer == 0)
+        id_tri0_buffer = crearVBO(GL_ELEMENT_ARRAY_BUFFER, f0.size()*sizeof(int)*3, f0.data());
+
+    if (id_tri1_buffer == 0)
+        id_tri1_buffer = crearVBO(GL_ELEMENT_ARRAY_BUFFER, f1.size()*sizeof(int)*3, f1.data());
+
     if (id_c_buffer == 0)
         id_c_buffer = crearVBO(GL_ARRAY_BUFFER, c.size()*sizeof(float)*3, c.data());
 
-    if (id_ajedrez_buffer == 0)
-        id_ajedrez_buffer = crearVBO(GL_ARRAY_BUFFER, c_ajedrez.size()*sizeof(float)*3, c_ajedrez.data());
+    if (id_ajedrez0_buffer == 0)
+        id_ajedrez0_buffer = crearVBO(GL_ARRAY_BUFFER, c_ajedrez0.size()*sizeof(float)*3, c_ajedrez0.data());
+
+    if (id_ajedrez1_buffer == 0)
+        id_ajedrez1_buffer = crearVBO(GL_ARRAY_BUFFER, c_ajedrez1.size()*sizeof(float)*3, c_ajedrez1.data());
 
     if (id_ALT1_buffer == 0)
         id_ALT1_buffer = crearVBO(GL_ARRAY_BUFFER, c_alt_1.size()*sizeof(float)*3, c_alt_1.data());
@@ -51,24 +60,39 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
   // ...
 
     glEnableClientState(GL_COLOR_ARRAY);
-
-    if (coloreado == RELLENADO)
-        glColorPointer(3, GL_FLOAT, 0, c.data());
-
-    else if (coloreado == AJEDREZ)
-        glColorPointer(3, GL_FLOAT, 0, c_ajedrez.data());
-
-    else if (coloreado == ALT1)
-        glColorPointer(3, GL_FLOAT, 0, c_alt_1.data());
-
-    else
-        glColorPointer(3, GL_FLOAT, 0, c_alt_2.data());
-
     glEnableClientState(GL_VERTEX_ARRAY);
     glVertexPointer(3, GL_FLOAT, 0, v.data());
-    glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT, f.data());
-    glDisableClientState(GL_VERTEX_ARRAY);
 
+    if (coloreado == AJEDREZ){
+        if (f0.empty() || f1.empty()){
+            for (unsigned i = 0; i < f.size(); ++i){
+                if (i%2)
+                    f0.push_back(f[i]);
+                else
+                    f1.push_back(f[i]);
+            }
+        }
+
+        glColorPointer(3, GL_FLOAT, 0, c_ajedrez0.data());
+        glDrawElements(GL_TRIANGLES, f0.size()*3, GL_UNSIGNED_INT, f0.data());
+        glColorPointer(3, GL_FLOAT, 0, c_ajedrez1.data());
+        glDrawElements(GL_TRIANGLES, f1.size()*3, GL_UNSIGNED_INT, f1.data());
+    }
+
+    else{
+        if (coloreado == RELLENADO)
+            glColorPointer(3, GL_FLOAT, 0, c.data());
+
+        else if (coloreado == ALT1)
+            glColorPointer(3, GL_FLOAT, 0, c_alt_1.data());
+
+        else
+            glColorPointer(3, GL_FLOAT, 0, c_alt_2.data());
+
+        glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT, f.data());
+    }
+
+    glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
 // -----------------------------------------------------------------------------
@@ -76,38 +100,62 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
 
 void Malla3D::draw_ModoDiferido(modo_coloreado coloreado)
 {
-   // (la primera vez, se deben crear los VBOs y guardar sus identificadores en el objeto)
-   // completar (práctica 1)
-   // .....
+    if (f0.empty() || f1.empty()){
+        for (unsigned i = 0; i < f.size(); ++i){
+            if (i%2)
+                f0.push_back(f[i]);
+            else
+                f1.push_back(f[i]);
+        }
+    }
 
     comprobarVBOs();
-
-    if (coloreado == AJEDREZ)
-    	glBindBuffer(GL_ARRAY_BUFFER, id_ajedrez_buffer);
-
-    else if (coloreado == RELLENADO)
-    	glBindBuffer(GL_ARRAY_BUFFER, id_c_buffer);
-
-    else if (coloreado == ALT1)
-    	glBindBuffer(GL_ARRAY_BUFFER, id_ALT1_buffer);
-
-    else
-    	glBindBuffer(GL_ARRAY_BUFFER, id_ALT2_buffer);
-
-
-    glColorPointer(3, GL_FLOAT, 0, 0);
+    glEnableClientState(GL_COLOR_ARRAY);
 
     glBindBuffer(GL_ARRAY_BUFFER, id_ver_buffer);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glEnableClientState(GL_VERTEX_ARRAY);
 
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_tri_buffer);
-    glDrawElements(GL_TRIANGLES, 3*f.size(), GL_UNSIGNED_INT, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    if (coloreado == AJEDREZ){
+
+        glBindBuffer(GL_ARRAY_BUFFER, id_ajedrez0_buffer);
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_tri0_buffer);
+        glDrawElements(GL_TRIANGLES, 3*f0.size(), GL_UNSIGNED_INT, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+        glBindBuffer(GL_ARRAY_BUFFER, id_ajedrez1_buffer);
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_tri1_buffer);
+        glDrawElements(GL_TRIANGLES, 3*f1.size(), GL_UNSIGNED_INT, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        glDisableClientState(GL_VERTEX_ARRAY);
+    }
+
+    else{
+
+        if (coloreado == RELLENADO)
+            glBindBuffer(GL_ARRAY_BUFFER, id_c_buffer);
+
+        else if (coloreado == ALT1)
+            glBindBuffer(GL_ARRAY_BUFFER, id_ALT1_buffer);
+
+        else
+            glBindBuffer(GL_ARRAY_BUFFER, id_ALT2_buffer);
+
+        glColorPointer(3, GL_FLOAT, 0, 0);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_tri_buffer);
+        glDrawElements(GL_TRIANGLES, 3*f.size(), GL_UNSIGNED_INT, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    }
+
+    glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
-
-
 }
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
@@ -147,26 +195,16 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
     glDisableClientState(GL_COLOR_ARRAY);
 }
 
-void Malla3D::inicializarColores(bool ajedrez){
+void Malla3D::inicializarColores(){
     Tupla3f rojo(1.0, 0.0, 0.0);
     Tupla3f negro(0.0, 0.0, 0.0);
     Tupla3f celeste(0.0, 0.8, 0.8);
+    Tupla3f verde(0.5, 0.0, 1.0);
+    Tupla3f naranja(1.0, 0.5, 0.0);
 
     c.assign(v.size(), rojo);
     c_alt_1.assign(v.size(), celeste);
     c_alt_2.assign(v.size(), negro);
-
-    if (ajedrez){
-        std::vector<Tupla3f> ajedrez_aux;
-
-        for (unsigned i = 0; i < v.size(); ++i){
-            if (i%2)
-                ajedrez_aux.push_back(rojo);
-
-            else
-                ajedrez_aux.push_back(negro);
-        }
-
-        c_ajedrez = ajedrez_aux;
-    }
+    c_ajedrez0.assign(v.size(), verde);
+    c_ajedrez1.assign(v.size(), naranja);
 }
