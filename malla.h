@@ -49,14 +49,20 @@ class Malla3D
 
    std::vector<Tupla3f> v ;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f ; // una terna de 3 enteros por cada cara o triángulo
+   std::vector<Tupla3i> f0 ;
+   std::vector<Tupla3i> f1 ;
    std::vector<Tupla3f> c ;
-   std::vector<Tupla3f> c_ajedrez ;
+   std::vector<Tupla3f> c_ajedrez0 ;
+   std::vector<Tupla3f> c_ajedrez1 ;
    std::vector<Tupla3f> c_alt_1 ;
    std::vector<Tupla3f> c_alt_2 ;
    GLuint id_ver_buffer = 0;
    GLuint id_tri_buffer = 0;
+   GLuint id_tri0_buffer = 0;
+   GLuint id_tri1_buffer = 0;
    GLuint id_c_buffer = 0;
-   GLuint id_ajedrez_buffer = 0;
+   GLuint id_ajedrez0_buffer = 0;
+   GLuint id_ajedrez1_buffer = 0;
    GLuint id_ALT1_buffer = 0;
    GLuint id_ALT2_buffer = 0;
 

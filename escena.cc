@@ -84,8 +84,6 @@ void Escena::dibujar()
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
     ejes.draw();
-    //glMatrixMode(GL_MODELVIEW);
-    //glLoadIdentity();
 
     if (cubo_presente){
         glPushMatrix();
