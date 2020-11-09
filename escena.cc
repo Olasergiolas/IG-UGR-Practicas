@@ -68,6 +68,12 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
     glEnable(GL_CULL_FACE);
     glShadeModel(GL_FLAT);
+
+    std::cout << "Bienvenido! Seleccione un menú" << std::endl <<
+                 "\tO: Selección de objeto" << std::endl <<
+                 "\tV: Selección de modo de visualización" << std::endl <<
+                 "\tD: Selección de dibujado" << std::endl <<
+                 "\tU: Tapas" << std::endl;
 }
 
 
@@ -110,7 +116,6 @@ void Escena::dibujar()
     if (obj_rev_presente){
         if (actualizar_revolucion || obj_rev == nullptr){
             obj_rev = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
-            actualizar_revolucion = false;
         }
 
         glPushMatrix();
@@ -123,7 +128,6 @@ void Escena::dibujar()
     if (esfera_presente){
         if (actualizar_revolucion || esfera == nullptr){
             esfera = new Esfera(10, 25, 0.35, tapas);
-            actualizar_revolucion = false;
         }
 
         glPushMatrix();
@@ -136,7 +140,6 @@ void Escena::dibujar()
     if (cono_presente){
         if (actualizar_revolucion || cono == nullptr){
             cono = new Cono(6, 25, 1, 0.35, tapas);
-            actualizar_revolucion = false;
         }
 
         glPushMatrix();
@@ -149,7 +152,6 @@ void Escena::dibujar()
     if (cilindro_presente){
         if (actualizar_revolucion || cilindro == nullptr){
             cilindro = new Cilindro(6, 25, 1, 0.35, tapas);
-            actualizar_revolucion = false;
         }
 
         glPushMatrix();
@@ -158,6 +160,8 @@ void Escena::dibujar()
             cilindro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
+
+    actualizar_revolucion = false;
 }
 
 //**************************************************************************

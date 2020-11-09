@@ -17,13 +17,18 @@
 
 ObjRevolucion::ObjRevolucion() {}
 
-ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
-   // completar ......(práctica 2)
+ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancias, bool tapa_sup, bool tapa_inf) :
+    ObjRevolucion(getPerfiloriginal(archivo), num_instancias, tapa_sup, tapa_inf){}
+
+// *****************************************************************************
+// objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
+
+ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
     std::vector<Tupla3f> perfil_original;
     Tupla3f p_norte, p_sur;
-    ply::read_vertices(archivo, perfil_original);
+    perfil_original = perfil;
 
-    if ((*(perfil_original.end() - 1))(Y) > (*(perfil_original.begin()))(Y)){
+   if ((*(perfil_original.end() - 1))(Y) > (*(perfil_original.begin()))(Y)){
         p_norte = *(perfil_original.end() - 1);
         p_sur = *(perfil_original.begin());
         s = CRECIENTE;
@@ -35,11 +40,21 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
         s = DECRECIENTE;
     }
 
-    if (p_norte(X) == 0 && p_norte(Z) == 0)
-        perfil_original.erase(perfil_original.end() - 1);
+   if (p_norte(X) == 0 && p_norte(Z) == 0){
+       if (s == CRECIENTE)
+           perfil_original.erase(perfil_original.end() - 1);
 
-    if (p_sur(X) == 0 && p_norte(Z) == 0)
-        perfil_original.erase(perfil_original.begin());
+       else
+           perfil_original.erase(perfil_original.begin());
+   }
+
+   if (p_sur(X) == 0 && p_sur(Z) == 0){
+       if (s == CRECIENTE)
+           perfil_original.erase(perfil_original.begin());
+
+       else
+           perfil_original.erase(perfil_original.end() - 1);
+   }
 
     crearMalla(perfil_original, num_instancias);
     crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size());
@@ -118,28 +133,6 @@ void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_nort
     }
 }
 
-// *****************************************************************************
-// objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
-
-
-//ACTUALIZAR ESTE CONSTRUCTOR
-ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
-    std::vector<Tupla3f> perfil_original = perfil;
-
-    Tupla3f p_norte = *(perfil_original.end() - 1);
-    Tupla3f p_sur = *(perfil_original.begin());
-
-    if (p_norte(X) == 0 && p_norte(Z) == 0)
-        perfil_original.erase(perfil_original.end() - 1);
-
-    if (p_sur(X) == 0 && p_norte(Z) == 0)
-        perfil_original.erase(perfil_original.begin());
-
-    crearMalla(perfil_original, num_instancias);
-    crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size());
-    inicializarColores();
-}
-
 void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias) {
     Tupla3f vertice_aux;
     float old_x, old_z;
@@ -187,4 +180,11 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned nu
             f.push_back(cara_aux);
         }
     }
+}
+
+std::vector<Tupla3f> ObjRevolucion::getPerfiloriginal(std::string archivo){
+    std::vector<Tupla3f> perfil;
+    ply::read_vertices(archivo, perfil);
+
+    return perfil;
 }

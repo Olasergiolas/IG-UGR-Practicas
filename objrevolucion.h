@@ -39,6 +39,7 @@ class ObjRevolucion : public Malla3D
 
    void crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias);
 
+   std::vector<Tupla3f> getPerfiloriginal(std::string archivo);
 } ;
 
 
