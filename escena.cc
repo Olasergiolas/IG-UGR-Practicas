@@ -67,6 +67,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
     glViewport( 0, 0, UI_window_width, UI_window_height );
 
     glEnable(GL_CULL_FACE);
+    glEnable(GL_NORMALIZE);
     glShadeModel(GL_FLAT);
 
     std::cout << "Bienvenido! Seleccione un menú" << std::endl <<

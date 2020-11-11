@@ -31,6 +31,7 @@ Tetraedro::Tetraedro()
     std::vector<Tupla3i> auxC{c0, c1, c2, c3};
     f = auxC;
 
+    calcular_normales();
     inicializarColores();
 }
 

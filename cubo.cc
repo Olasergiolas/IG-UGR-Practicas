@@ -3,8 +3,6 @@
 #include "cubo.h"
 #include "vector"
 
-//Dibujar el cubo a papel y ver dónde están los vértices del cubo
-
 Cubo::Cubo(float lado)
 {
     this->lado = lado;
@@ -58,5 +56,6 @@ Cubo::Cubo(float lado)
     std::vector<Tupla3i> auxC{c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11};
     f = auxC;
 
+    calcular_normales();
     inicializarColores();
 }

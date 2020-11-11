@@ -208,3 +208,33 @@ void Malla3D::inicializarColores(){
     c_ajedrez0.assign(v.size(), verde);
     c_ajedrez1.assign(v.size(), naranja);
 }
+
+void Malla3D::calcular_normales(){
+    //Tabla de normales de las caras
+    Tupla3f a, b, mc;
+    Tupla3i caraActual;
+    std::vector<Tupla3f> tabla_normales_c;
+    for (unsigned i = 0; i < f.size(); ++i){
+        caraActual = f[i];
+
+        a = v[caraActual(1)] - v[caraActual(0)];
+        b = v[caraActual(2)] - v[caraActual(0)];
+        mc = a.cross(b);
+        mc = mc.normalized();
+
+        tabla_normales_c.push_back(mc);
+    }
+
+    //Tabla de normales de los vértices
+    nv.assign(v.size(), Tupla3f(0.0, 0.0, 0.0));
+    for (unsigned i = 0; i < f.size(); ++i){
+        caraActual = f[i];
+        nv[caraActual(0)] = nv[caraActual(0)] + tabla_normales_c[i];
+        nv[caraActual(1)] = nv[caraActual(1)] + tabla_normales_c[i];
+        nv[caraActual(2)] = nv[caraActual(2)] + tabla_normales_c[i];
+    }
+
+    for (unsigned i = 0; i < nv.size(); ++i)
+        nv[i] = nv[i].normalized();
+
+}
