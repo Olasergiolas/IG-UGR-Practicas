@@ -45,6 +45,7 @@ Escena::Escena()
     esfera_presente = false;
 
     actualizar_revolucion = false;
+    iluminacion_activa = false;
 }
 
 //**************************************************************************
@@ -262,28 +263,37 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                        "\tP: Activar modo puntos" << endl <<
                        "\tL: Activar modo lineas" << endl <<
                        "\tS: Activar modo rellenado" << endl <<
-                       "\tA: Activar modo ajedrez" << endl;
+                       "\tA: Activar modo ajedrez" << endl <<
+                       "\tI: Activar iluminación" << endl;
            modoMenu=SELVISUALIZACION;
            break ;
        case 'P':
-           if (modoMenu == SELVISUALIZACION)
+           if (modoMenu == SELVISUALIZACION){
+               iluminacion_activa = false;
+
                if (estado_dibujados.find(GL_POINT) != estado_dibujados.end())
                    estado_dibujados.erase(GL_POINT);
 
                else
                    estado_dibujados.insert(GL_POINT);
+           }
 
            break;
        case 'L':
-           if (modoMenu == SELVISUALIZACION)
+           if (modoMenu == SELVISUALIZACION){
+               iluminacion_activa = false;
+
                if (estado_dibujados.find(GL_LINE) != estado_dibujados.end())
                    estado_dibujados.erase(GL_LINE);
 
                else
                    estado_dibujados.insert(GL_LINE);
+           }
            break;
        case 'S':
            if (modoMenu == SELVISUALIZACION){
+               iluminacion_activa = false;
+
                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
                        coloreado != AJEDREZ)
                    estado_dibujados.erase(GL_FILL);
@@ -296,6 +306,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
        case 'A':
            if (modoMenu == SELVISUALIZACION){
+               iluminacion_activa = false;
+
                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
                        coloreado != RELLENADO)
                    estado_dibujados.clear();
@@ -307,6 +319,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
                coloreado = AJEDREZ;
            }
+           break;
+
+        case 'I':
+           iluminacion_activa = true;
            break;
 
            // ESTAMOS EN MODO SELECCION DE DIBUJADO
@@ -350,6 +366,34 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
             }
            break;
 
+   }
+
+   if (iluminacion_activa){
+       char tecla_m = toupper(tecla);
+       if (tecla_m >= '0' && tecla_m <= '7'){
+           int luzid = tecla_m - '0';
+
+           //Activar luz
+
+       }
+
+       switch (toupper(tecla)) {
+       case 'A':
+
+           break;
+
+       case 'B':
+
+           break;
+
+       case '>':
+
+           break;
+
+       case '<':
+
+           break;
+       }
    }
    return salir;
 }

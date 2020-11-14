@@ -12,6 +12,7 @@
 
 #include "aux.h"
 #include "set"
+#include "material.h"
 
 // *****************************************************************************
 //
@@ -30,6 +31,8 @@ class Malla3D
 
    void comprobarVBOs();
 
+   void setMaterial(Material m);
+
    // dibuja el objeto en modo inmediato
    void draw_ModoInmediato(modo_coloreado coloreado=RELLENADO);
 
@@ -47,6 +50,7 @@ class Malla3D
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
 
+   Material m;
    std::vector<Tupla3f> v;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3i> f0;

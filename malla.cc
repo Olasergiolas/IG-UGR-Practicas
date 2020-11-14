@@ -238,3 +238,7 @@ void Malla3D::calcular_normales(){
         nv[i] = nv[i].normalized();
 
 }
+
+void Malla3D::setMaterial(Material m){
+    this->m = m;
+}

@@ -12,6 +12,7 @@ private:
     float brillo;
 
 public:
+    Material();
     Material(Tupla4f ambiente, Tupla4f difuso, Tupla4f especular, float brillo);
     void aplicar();
 };

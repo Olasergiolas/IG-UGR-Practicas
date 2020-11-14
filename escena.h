@@ -43,6 +43,7 @@ class Escena
    modo_coloreado coloreado;
    std::set<GLenum> estado_dibujados;
    std::pair<bool, bool> tapas;
+   bool iluminacion_activa;
    bool actualizar_revolucion;
    // Objetos de la escena
    Ejes ejes;

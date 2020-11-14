@@ -1,6 +1,5 @@
 #include "luz.h"
 
-Luz::Luz()
-{
+void Luz::activar(){
 
 }
