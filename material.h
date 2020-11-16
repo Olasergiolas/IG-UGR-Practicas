@@ -15,6 +15,10 @@ public:
     Material();
     Material(Tupla4f ambiente, Tupla4f difuso, Tupla4f especular, float brillo);
     void aplicar();
+    Tupla4f getAmbiente();
+    Tupla4f getDifusa();
+    Tupla4f getEspecular();
+    float getBrillo();
 };
 
 #endif // MATERIAL_H

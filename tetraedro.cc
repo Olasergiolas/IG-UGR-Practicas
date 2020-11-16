@@ -33,5 +33,6 @@ Tetraedro::Tetraedro()
 
     calcular_normales();
     inicializarColores();
+    inicializarMaterial();
 }
 

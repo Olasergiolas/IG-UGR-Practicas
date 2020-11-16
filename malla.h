@@ -44,13 +44,15 @@ class Malla3D
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
 
-   void inicializarColores();
-
    protected:
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
 
-   Material m;
+   void inicializarColores();
+
+   void inicializarMaterial();
+
+   Material *m = nullptr;
    std::vector<Tupla3f> v;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3i> f0;

@@ -58,4 +58,5 @@ Cubo::Cubo(float lado)
 
     calcular_normales();
     inicializarColores();
+    inicializarMaterial();
 }

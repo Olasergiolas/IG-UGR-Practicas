@@ -61,7 +61,10 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
 
     glEnableClientState(GL_COLOR_ARRAY);
     glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
+
     glVertexPointer(3, GL_FLOAT, 0, v.data());
+    glNormalPointer(GL_FLOAT, 0, nv.data());
 
     if (coloreado == AJEDREZ){
         if (f0.empty() || f1.empty()){
@@ -93,6 +96,7 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
     }
 
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_COLOR_ARRAY);
 }
 // -----------------------------------------------------------------------------
@@ -183,6 +187,8 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
             else
                 coloreado_final = RELLENADO;
 
+            if (m != nullptr)
+                m->aplicar();
 
             if (v == VBO)
                 draw_ModoDiferido(coloreado_final);
@@ -239,6 +245,13 @@ void Malla3D::calcular_normales(){
 
 }
 
+void Malla3D::inicializarMaterial(){
+
+    Tupla4f color(1.0, 1.0, 1.0, 1.0);
+    Material aux(color, color, color, 1.0);
+    setMaterial(aux);
+}
+
 void Malla3D::setMaterial(Material m){
-    this->m = m;
+    this->m = new Material(m.getAmbiente(), m.getDifusa(), m.getEspecular(), m.getBrillo());
 }

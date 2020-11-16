@@ -11,6 +11,8 @@
 #include "esfera.h"
 #include "cilindro.h"
 #include "cono.h"
+#include "luzposicional.h"
+#include "luzdireccional.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS} menu;
 class Escena
@@ -38,6 +40,7 @@ class Escena
 
    void clear_window();
 
+   std::vector<LuzPosicional*> luces;
    menu modoMenu=NADA;
    modo_visualizacion visualizacion;
    modo_coloreado coloreado;
@@ -88,6 +91,8 @@ class Escena
 	// Interacción con la escena
 	bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
 	void teclaEspecial( int Tecla1, int x, int y );
+    GLenum getIdLuz(unsigned char c);
+    void inicializarLuces();
 
 };
 #endif

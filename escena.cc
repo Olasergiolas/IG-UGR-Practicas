@@ -2,12 +2,6 @@
 
 #include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
 #include "escena.h"
-#include "malla.h" // objetos: Cubo y otros....
-#include "objply.h"
-#include "objrevolucion.h"
-#include "cilindro.h"
-#include "esfera.h"
-#include "cono.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -69,7 +63,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
     glEnable(GL_CULL_FACE);
     glEnable(GL_NORMALIZE);
-    glShadeModel(GL_FLAT);
+    glShadeModel(GL_SMOOTH);
 
     std::cout << "Bienvenido! Seleccione un menú" << std::endl <<
                  "\tO: Selección de objeto" << std::endl <<
@@ -270,6 +264,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case 'P':
            if (modoMenu == SELVISUALIZACION){
                iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
 
                if (estado_dibujados.find(GL_POINT) != estado_dibujados.end())
                    estado_dibujados.erase(GL_POINT);
@@ -282,6 +277,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case 'L':
            if (modoMenu == SELVISUALIZACION){
                iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
 
                if (estado_dibujados.find(GL_LINE) != estado_dibujados.end())
                    estado_dibujados.erase(GL_LINE);
@@ -293,6 +289,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case 'S':
            if (modoMenu == SELVISUALIZACION){
                iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
 
                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
                        coloreado != AJEDREZ)
@@ -307,6 +304,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case 'A':
            if (modoMenu == SELVISUALIZACION){
                iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
 
                if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
                        coloreado != RELLENADO)
@@ -323,6 +321,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
         case 'I':
            iluminacion_activa = true;
+           glEnable(GL_LIGHTING);
            break;
 
            // ESTAMOS EN MODO SELECCION DE DIBUJADO
@@ -370,11 +369,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
    if (iluminacion_activa){
        char tecla_m = toupper(tecla);
+       int tecla_n = tecla_m - '0';
        if (tecla_m >= '0' && tecla_m <= '7'){
-           int luzid = tecla_m - '0';
-
-           //Activar luz
-
+           GLenum luzId = getIdLuz(tecla_m);
+           glEnable(luzId);
+           luces[tecla_n]->activar();               //ARREGLAAAAAAAAAAAAR
        }
 
        switch (toupper(tecla)) {
@@ -464,4 +463,54 @@ void Escena::change_observer()
    glTranslatef( 0.0, 0.0, -Observer_distance );
    glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
    glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
+}
+
+GLenum Escena::getIdLuz(unsigned char c){
+    GLenum ret;
+
+    switch(c){
+    case '0':
+        ret = GL_LIGHT0;
+        break;
+
+    case '1':
+        ret = GL_LIGHT1;
+        break;
+
+    case '2':
+        ret = GL_LIGHT2;
+        break;
+
+    case '3':
+        ret = GL_LIGHT3;
+        break;
+
+    case '4':
+        ret = GL_LIGHT4;
+        break;
+
+    case '5':
+        ret = GL_LIGHT5;
+        break;
+
+    case '6':
+        ret = GL_LIGHT6;
+        break;
+
+    case '7':
+        ret = GL_LIGHT7;
+        break;
+    }
+
+    return ret;
+}
+
+void Escena::inicializarLuces(){
+    Tupla4f rojo(1.0, 0.0, 0.0, 1.0);
+    Tupla4f blanco(1.0, 1.0, 1.0, 1.0);
+    Tupla4f negro(0.0, 0.0, 0.0, 1.0);
+    Tupla3f pos(0.0, 0.0, 0.0);
+
+    LuzPosicional *luz1 = new LuzPosicional (pos, GL_LIGHT1, negro, rojo, negro);
+    luces.push_back(luz1);
 }
