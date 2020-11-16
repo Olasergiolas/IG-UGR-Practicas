@@ -41,6 +41,7 @@ class Escena
    void clear_window();
 
    std::vector<LuzPosicional*> luces;
+   std::vector<bool> estado_luces;
    menu modoMenu=NADA;
    modo_visualizacion visualizacion;
    modo_coloreado coloreado;
@@ -82,6 +83,7 @@ class Escena
    public:
 
     Escena();
+    ~Escena();
 	void inicializar( int UI_window_width, int UI_window_height );
 	void redimensionar( int newWidth, int newHeight ) ;
 

@@ -32,6 +32,8 @@ Escena::Escena()
     tetraedro = new Tetraedro();
     tetraedro_presente = false;
 
+    inicializarLuces();
+
     ply_presente = false;
     obj_rev_presente = false;
     cilindro_presente = false;
@@ -85,7 +87,11 @@ void Escena::dibujar()
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
+    glDisable(GL_LIGHTING);
     ejes.draw();
+
+    if (iluminacion_activa)
+        glEnable(GL_LIGHTING);
 
     if (cubo_presente){
         glPushMatrix();
@@ -321,7 +327,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
         case 'I':
            iluminacion_activa = true;
-           glEnable(GL_LIGHTING);
            break;
 
            // ESTAMOS EN MODO SELECCION DE DIBUJADO
@@ -370,10 +375,28 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    if (iluminacion_activa){
        char tecla_m = toupper(tecla);
        int tecla_n = tecla_m - '0';
-       if (tecla_m >= '0' && tecla_m <= '7'){
+       if (tecla_m > '0' && tecla_m <= '7'){
            GLenum luzId = getIdLuz(tecla_m);
-           glEnable(luzId);
-           luces[tecla_n]->activar();               //ARREGLAAAAAAAAAAAAR
+
+           if (!estado_luces[tecla_n]){
+               glEnable(luzId);
+               luces[tecla_n-1]->activar();
+           }
+
+           else
+               glDisable(luzId);
+
+           estado_luces[tecla_n] = !estado_luces[tecla_n];
+       }
+
+       else if (tecla_m == '0'){
+           if (!estado_luces[0])
+                glEnable(GL_LIGHT0);
+
+           else
+               glDisable(GL_LIGHT0);
+
+           estado_luces[0] = !estado_luces[0];
        }
 
        switch (toupper(tecla)) {
@@ -511,6 +534,13 @@ void Escena::inicializarLuces(){
     Tupla4f negro(0.0, 0.0, 0.0, 1.0);
     Tupla3f pos(0.0, 0.0, 0.0);
 
+    estado_luces.assign(8, false);
+
     LuzPosicional *luz1 = new LuzPosicional (pos, GL_LIGHT1, negro, rojo, negro);
     luces.push_back(luz1);
+}
+
+Escena::~Escena(){
+    for (unsigned i = 0; i < luces.size(); ++i)
+        delete luces[i];
 }

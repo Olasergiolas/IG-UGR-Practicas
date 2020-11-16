@@ -58,6 +58,7 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancia
 
     crearMalla(perfil_original, num_instancias);
     crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size());
+    calcular_normales();
     inicializarColores();
     inicializarMaterial();
 }
