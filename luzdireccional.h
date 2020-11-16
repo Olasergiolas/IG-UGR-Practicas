@@ -19,6 +19,8 @@ public:
 
     void variarAnguloAlpha(float incremento);
     void variarAnguloBeta(float incremento);
+    float getAlpha() {return alpha;};
+    float getBeta() {return beta;};
 };
 
 #endif // LUZDIRECCIONAL_H

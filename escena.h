@@ -14,7 +14,7 @@
 #include "luzposicional.h"
 #include "luzdireccional.h"
 
-typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS} menu;
+typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION} menu;
 class Escena
 {
 
@@ -47,6 +47,7 @@ class Escena
    modo_coloreado coloreado;
    std::set<GLenum> estado_dibujados;
    std::pair<bool, bool> tapas;
+   std::pair<bool, bool> rotaciones;
    bool iluminacion_activa;
    bool actualizar_revolucion;
    // Objetos de la escena

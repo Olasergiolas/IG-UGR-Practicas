@@ -11,3 +11,11 @@ LuzDireccional::LuzDireccional(Tupla2f direccion, GLenum idLuzOpenGL, Tupla4f co
     this->colorDifuso = colorDifuso;
     this->colorEspecular = colorEspecular;
 }
+
+void LuzDireccional::variarAnguloAlpha(float incremento){
+    alpha += incremento;
+}
+
+void LuzDireccional::variarAnguloBeta(float incremento){
+    beta += incremento;
+}

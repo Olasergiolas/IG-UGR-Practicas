@@ -25,6 +25,8 @@ Escena::Escena()
     coloreado = RELLENADO;
     tapas.first = true;
     tapas.second = true;
+    rotaciones.first = false;
+    rotaciones.second = false;
 
     cubo = new Cubo(100);
     cubo_presente = false;
@@ -93,10 +95,14 @@ void Escena::dibujar()
     if (iluminacion_activa)
         glEnable(GL_LIGHTING);
 
-    for (unsigned i = 0; i < luces.size(); ++i){
-        if (estado_luces[i+1])
-            luces[i]->activar();
-    }
+    glPushMatrix();
+    glRotatef(static_cast<LuzDireccional*>(luces[1])->getAlpha(), -1.0, 0.0, 0.0);
+    glRotatef(static_cast<LuzDireccional*>(luces[1])->getBeta(), 0.0, 1.0, 0.0);
+        for (unsigned i = 0; i < luces.size(); ++i){
+            if (estado_luces[i+1])
+                luces[i]->activar();
+        }
+    glPopMatrix();
 
     if (cubo_presente){
         glPushMatrix();
@@ -332,6 +338,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
         case 'I':
            iluminacion_activa = true;
+           modoMenu = ILUMINACION;
            break;
 
            // ESTAMOS EN MODO SELECCION DE DIBUJADO
@@ -377,16 +384,14 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
    }
 
-   if (iluminacion_activa){
+   if (modoMenu == ILUMINACION){
        char tecla_m = toupper(tecla);
        int tecla_n = tecla_m - '0';
        if (tecla_m > '0' && tecla_m <= '7'){
            GLenum luzId = getIdLuz(tecla_m);
 
-           if (!estado_luces[tecla_n]){
+           if (!estado_luces[tecla_n])
                glEnable(luzId);
-               //luces[tecla_n-1]->activar();
-           }
 
            else
                glDisable(luzId);
@@ -406,18 +411,34 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
        switch (toupper(tecla)) {
        case 'A':
-
+           rotaciones.first = !rotaciones.first;
            break;
 
        case 'B':
-
+           rotaciones.second = !rotaciones.second;
            break;
 
        case '>':
+           if (rotaciones.first){
+               LuzDireccional *aux = static_cast<LuzDireccional*>(luces[1]);
+               aux->variarAnguloAlpha(0.2);
+               std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
+           }
+
+           else if (rotaciones.second){
+               //luces[1]->variarAnguloBeta(0.2);
+           }
 
            break;
 
        case '<':
+           if (rotaciones.first){
+               //luces[1]->variarAnguloAlpha(-0.2);
+           }
+
+           else if (rotaciones.second){
+               //luces[1]->variarAnguloBeta(-0.2);
+           }
 
            break;
        }
