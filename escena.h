@@ -40,7 +40,7 @@ class Escena
 
    void clear_window();
 
-   std::vector<LuzPosicional*> luces;
+   std::vector<Luz*> luces;
    std::vector<bool> estado_luces;
    menu modoMenu=NADA;
    modo_visualizacion visualizacion;

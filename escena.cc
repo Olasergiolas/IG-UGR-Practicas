@@ -93,6 +93,11 @@ void Escena::dibujar()
     if (iluminacion_activa)
         glEnable(GL_LIGHTING);
 
+    for (unsigned i = 0; i < luces.size(); ++i){
+        if (estado_luces[i+1])
+            luces[i]->activar();
+    }
+
     if (cubo_presente){
         glPushMatrix();
             glTranslatef(150, 0, -100);
@@ -380,7 +385,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
            if (!estado_luces[tecla_n]){
                glEnable(luzId);
-               luces[tecla_n-1]->activar();
+               //luces[tecla_n-1]->activar();
            }
 
            else
@@ -530,14 +535,18 @@ GLenum Escena::getIdLuz(unsigned char c){
 
 void Escena::inicializarLuces(){
     Tupla4f rojo(1.0, 0.0, 0.0, 1.0);
-    Tupla4f blanco(1.0, 1.0, 1.0, 1.0);
+    Tupla4f azul(0.0, 0.0, 1.0, 1.0);
+    Tupla4f blanco(1.0, 1.0, 1.0, 0.1);
     Tupla4f negro(0.0, 0.0, 0.0, 1.0);
     Tupla3f pos(0.0, 0.0, 0.0);
 
     estado_luces.assign(8, false);
 
-    LuzPosicional *luz1 = new LuzPosicional (pos, GL_LIGHT1, negro, rojo, negro);
+    LuzPosicional *luz1 = new LuzPosicional(pos, GL_LIGHT1, negro, rojo, negro);
     luces.push_back(luz1);
+
+    LuzDireccional *luz2 = new LuzDireccional(Tupla2f(0.0, 0.0), GL_LIGHT2, azul, blanco, rojo);
+    luces.push_back(luz2);
 }
 
 Escena::~Escena(){
