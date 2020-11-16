@@ -33,4 +33,6 @@ Cono::Cono(const int num_vert_perfil, const int num_instancias_perf, const float
     crearMalla(perfil_original, num_instancias_perf);
     crearTapas(tapas.first, tapas.second, p_sur, p_norte, num_instancias_perf, perfil_original.size());
     inicializarColores();
+    calcular_normales();
+    inicializarMaterial();
 }

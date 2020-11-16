@@ -25,4 +25,6 @@ Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, con
     crearMalla(perfil_original, num_instancias_perf);
     crearTapas(tapas.first, tapas.second, p_sur, p_norte, num_instancias_perf, num_vert_perfil);
     inicializarColores();
+    calcular_normales();
+    inicializarMaterial();
 }
