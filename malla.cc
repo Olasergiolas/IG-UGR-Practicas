@@ -247,8 +247,10 @@ void Malla3D::calcular_normales(){
 
 void Malla3D::inicializarMaterial(){
 
-    Tupla4f color(1.0, 1.0, 1.0, 1.0);
-    Material aux(color, color, color, 1.0);
+    Tupla4f negro(0.0, 0.0, 0.0, 1.0);
+    Tupla4f blanco(1.0, 1.0, 1.0, 1.0);
+    Tupla4f rojo(0.0, 0.0, 0.0, 1.0);
+    Material aux(negro, blanco, rojo, 1.0);
     setMaterial(aux);
 }
 
