@@ -72,6 +72,7 @@ class Malla3D
    GLuint id_ajedrez1_buffer = 0;
    GLuint id_ALT1_buffer = 0;
    GLuint id_ALT2_buffer = 0;
+   GLuint id_norm_buffer = 0;
 
 
    // completar: tabla de colores, tabla de normales de vértices

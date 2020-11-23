@@ -50,7 +50,8 @@ void Malla3D::comprobarVBOs(){
     if (id_ALT2_buffer == 0)
         id_ALT2_buffer = crearVBO(GL_ARRAY_BUFFER, c_alt_2.size()*sizeof(float)*3, c_alt_2.data());
 
-
+    if (id_norm_buffer == 0)
+        id_norm_buffer = crearVBO(GL_ARRAY_BUFFER, nv.size()*sizeof(float)*3, nv.data());
 }
 
 void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
@@ -115,10 +116,16 @@ void Malla3D::draw_ModoDiferido(modo_coloreado coloreado)
 
     comprobarVBOs();
     glEnableClientState(GL_COLOR_ARRAY);
+    glEnableClientState(GL_NORMAL_ARRAY);
 
     glBindBuffer(GL_ARRAY_BUFFER, id_ver_buffer);
     glVertexPointer(3, GL_FLOAT, 0, 0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, id_norm_buffer);
+    glNormalPointer(GL_FLOAT, 0, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     glEnableClientState(GL_VERTEX_ARRAY);
 
     if (coloreado == AJEDREZ){
@@ -160,6 +167,7 @@ void Malla3D::draw_ModoDiferido(modo_coloreado coloreado)
 
     glDisableClientState(GL_COLOR_ARRAY);
     glDisableClientState(GL_VERTEX_ARRAY);
+    glDisableClientState(GL_NORMAL_ARRAY);
 }
 // -----------------------------------------------------------------------------
 // Función de visualización de la malla,
