@@ -18,6 +18,12 @@ void Material::aplicar(){
     glMaterialf(GL_FRONT_AND_BACK, GL_SHININESS, brillo);
 }
 
+void Material::actualizar(Tupla4f ambiente, Tupla4f difuso, Tupla4f especular){
+    this->ambiente = ambiente;
+    this->difuso = difuso;
+    this->especular = especular;
+}
+
 Tupla4f Material::getAmbiente(){
     return ambiente;
 }

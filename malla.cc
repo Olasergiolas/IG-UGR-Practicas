@@ -202,17 +202,11 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
 }
 
 void Malla3D::inicializarColores(){
-    Tupla3f rojo(1.0, 0.0, 0.0);
-    Tupla3f negro(0.0, 0.0, 0.0);
-    Tupla3f celeste(0.0, 0.8, 0.8);
-    Tupla3f verde(0.5, 0.0, 1.0);
-    Tupla3f naranja(1.0, 0.5, 0.0);
-
-    c.assign(v.size(), rojo);
-    c_alt_1.assign(v.size(), celeste);
-    c_alt_2.assign(v.size(), negro);
-    c_ajedrez0.assign(v.size(), verde);
-    c_ajedrez1.assign(v.size(), naranja);
+    c.assign(v.size(), rojo3);
+    c_alt_1.assign(v.size(), celeste3);
+    c_alt_2.assign(v.size(), negro3);
+    c_ajedrez0.assign(v.size(), verde3);
+    c_ajedrez1.assign(v.size(), naranja3);
 }
 
 void Malla3D::calcular_normales(){
@@ -246,11 +240,7 @@ void Malla3D::calcular_normales(){
 }
 
 void Malla3D::inicializarMaterial(){
-
-    Tupla4f negro(0.0, 0.0, 0.0, 1.0);
-    Tupla4f blanco(1.0, 1.0, 1.0, 1.0);
-    Tupla4f rojo(0.0, 0.0, 0.0, 1.0);
-    Material aux(negro, blanco, rojo, 1.0);
+    Material aux(negro, rosa, blanco, 80.0);
     setMaterial(aux);
 }
 

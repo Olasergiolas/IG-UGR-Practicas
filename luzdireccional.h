@@ -12,8 +12,8 @@ protected:
     float beta;
 
 public:
-    LuzDireccional(Tupla2f direccion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorEspecular,
-                   Tupla4f colorDifuso);
+    LuzDireccional(Tupla2f direccion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorDifuso,
+                   Tupla4f colorEspecular);
 
     LuzDireccional(const Tupla2f& orientacion);
 

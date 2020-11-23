@@ -66,6 +66,9 @@ class Escena
    ObjRevolucion *obj_rev = nullptr;
    bool obj_rev_presente;
 
+   ObjRevolucion *obj_rev2 = nullptr;
+   bool obj_rev2_presente;
+
    bool esfera_presente;
    Esfera *esfera = nullptr;
 

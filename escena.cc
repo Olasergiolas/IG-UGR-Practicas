@@ -11,7 +11,7 @@ Escena::Escena()
 {
     Front_plane       = 50.0;
     Back_plane        = 2000.0;
-    Observer_distance = 4*Front_plane;
+    Observer_distance = 7*Front_plane;
     Observer_angle_x  = 0.0 ;
     Observer_angle_y  = 0.0 ;
 
@@ -29,18 +29,27 @@ Escena::Escena()
     rotaciones.second = false;
 
     cubo = new Cubo(100);
-    cubo_presente = false;
+    Material aux(negro, rojo, blanco, 90.0);
+    cubo->setMaterial(aux);
+    cubo_presente = true;
 
     tetraedro = new Tetraedro();
-    tetraedro_presente = false;
+    aux.actualizar(negro, verde, azul);
+    tetraedro->setMaterial(aux);
+    tetraedro_presente = true;
+
+    ply = new ObjPLY("./plys/big_dodge.ply");
+    aux.actualizar(negro, celeste, naranja);
+    ply->setMaterial(aux);
+    ply_presente = true;
 
     inicializarLuces();
 
-    ply_presente = false;
-    obj_rev_presente = false;
-    cilindro_presente = false;
-    cono_presente = false;
-    esfera_presente = false;
+    obj_rev_presente = true;
+    obj_rev2_presente = true;
+    cilindro_presente = true;
+    cono_presente = true;
+    esfera_presente = true;
 
     actualizar_revolucion = false;
     iluminacion_activa = false;
@@ -106,22 +115,22 @@ void Escena::dibujar()
 
     if (cubo_presente){
         glPushMatrix();
-            glTranslatef(150, 0, -100);
+            glTranslatef(-150.0, 150.0, 0.0);
             cubo->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
     if (tetraedro_presente){
         glPushMatrix();
-            glTranslatef(-150, 0, -100);
+            glTranslatef(0.0, 150.0, 0.0);
             tetraedro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
     if (ply_presente){
         glPushMatrix();
-            glTranslatef(0, 0, -100);
-            glScalef(5.0,5.0,5.0);
+            glTranslatef(-150.0, -150.0, 0.0);
+            glScalef(20.0,20.0,20.0);
             ply->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
@@ -129,23 +138,41 @@ void Escena::dibujar()
     if (obj_rev_presente){
         if (actualizar_revolucion || obj_rev == nullptr){
             obj_rev = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
+            Material m1(negro, blanco, negro, 90.0);
+            obj_rev->setMaterial(m1);
         }
 
         glPushMatrix();
-            glTranslatef(0, 0, -100);
-            glScalef(50.0,50.0,50.0);
+            glTranslatef(150.0, 150.0, 0.0);
+            glScalef(40.0,40.0,40.0);
             obj_rev->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+    }
+
+    if (obj_rev2_presente){
+        if (actualizar_revolucion || obj_rev2 == nullptr){
+            obj_rev2 = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
+            Material m2(negro, negro, blanco, 10.0);
+            obj_rev2->setMaterial(m2);
+        }
+
+        glPushMatrix();
+            glTranslatef(150.0, -150.0, 0.0);
+            glScalef(40.0,40.0,40.0);
+            obj_rev2->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
     if (esfera_presente){
         if (actualizar_revolucion || esfera == nullptr){
-            esfera = new Esfera(10, 25, 0.35, tapas);
+            esfera = new Esfera(80, 200, 0.35, tapas);
+            Material m3(negro, naranja, blanco, 90.0f);
+            esfera->setMaterial(m3);
         }
 
         glPushMatrix();
             glTranslatef(0, 0, 0);
-            glScalef(50.0,50.0,50.0);
+            glScalef(70.0,70.0,70.0);
             esfera->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
@@ -156,8 +183,8 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
-            glTranslatef(150, 0, 0);
-            glScalef(50.0,50.0,50.0);
+            glTranslatef(-150, 0, 0);
+            glScalef(70.0,70.0,70.0);
             cono->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
@@ -168,8 +195,8 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
-            glTranslatef(-150, 0, 0);
-            glScalef(50.0,50.0,50.0);
+            glTranslatef(150, 0, 0);
+            glScalef(70.0,70.0,70.0);
             cilindro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
@@ -207,7 +234,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                         "\tC: Activar cubo" << endl <<
                         "\tT: Activar tetraedro" << endl <<
                         "\tB: Activar Beethoven" << endl <<
-                        "\tH: Activar Hormiga" << endl <<
                         "\tR: Activar ObjRevolucion" << endl <<
                         "\t3: Activar Esfera" << endl <<
                         "\t4: Activar Cono" << endl <<
@@ -228,24 +254,13 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
         case 'B' :
             if (modoMenu == SELOBJETO){
                 ply_presente = !ply_presente;
-
-                if (ply_presente)
-                    ply = new ObjPLY("./plys/beethoven.ply");
-            }
-            break;
-
-        case 'H' :
-            if (modoMenu == SELOBJETO){
-                ply_presente = !ply_presente;
-
-                if (ply_presente)
-                    ply = new ObjPLY("./plys/ant.ply");
             }
             break;
 
         case 'R':
             if (modoMenu == SELOBJETO){
                obj_rev_presente = !obj_rev_presente;
+               obj_rev2_presente = !obj_rev2_presente;
             }
            break;
 
@@ -565,18 +580,13 @@ GLenum Escena::getIdLuz(unsigned char c){
 }
 
 void Escena::inicializarLuces(){
-    Tupla4f rojo(1.0, 0.0, 0.0, 1.0);
-    Tupla4f azul(0.0, 0.0, 1.0, 1.0);
-    Tupla4f blanco(1.0, 1.0, 1.0, 0.1);
-    Tupla4f negro(0.0, 0.0, 0.0, 1.0);
     Tupla3f pos(0.0, 0.0, 0.0);
-
     estado_luces.assign(8, false);
 
     LuzPosicional *luz1 = new LuzPosicional(pos, GL_LIGHT1, negro, rojo, azul);
     luces.push_back(luz1);
 
-    LuzDireccional *luz2 = new LuzDireccional(Tupla2f(0.0, 0.0), GL_LIGHT2, azul, blanco, rojo);
+    LuzDireccional *luz2 = new LuzDireccional(Tupla2f(0.0, 0.0), GL_LIGHT2, negro, blanco, blanco);
     luces.push_back(luz2);
 }
 

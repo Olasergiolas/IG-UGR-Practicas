@@ -1,11 +1,11 @@
 #include "luzdireccional.h"
 
-LuzDireccional::LuzDireccional(Tupla2f direccion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorEspecular,
-                               Tupla4f colorDifuso)
+LuzDireccional::LuzDireccional(Tupla2f direccion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorDifuso,
+                               Tupla4f colorEspecular)
 {
     alpha = direccion(0);
     beta = direccion(1);
-    posicion = Tupla4f(1.0, 1.0, 0.0, 0.0);
+    posicion = Tupla4f(0.0, 0.0, 1.0, 0.0);
     id = idLuzOpenGL;
     this->colorAmbiente = colorAmbiente;
     this->colorDifuso = colorDifuso;
