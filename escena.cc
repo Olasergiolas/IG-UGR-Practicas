@@ -580,10 +580,10 @@ GLenum Escena::getIdLuz(unsigned char c){
 }
 
 void Escena::inicializarLuces(){
-    Tupla3f pos(0.0, 0.0, 0.0);
+    Tupla3f pos(0.0f, 150.0f, 150.0f);
     estado_luces.assign(8, false);
 
-    LuzPosicional *luz1 = new LuzPosicional(pos, GL_LIGHT1, negro, rojo, azul);
+    LuzPosicional *luz1 = new LuzPosicional(pos, GL_LIGHT1, negro, naranja, celeste);
     luces.push_back(luz1);
 
     LuzDireccional *luz2 = new LuzDireccional(Tupla2f(0.0, 0.0), GL_LIGHT2, negro, blanco, blanco);

@@ -1,7 +1,7 @@
 #include "luzposicional.h"
 
-LuzPosicional::LuzPosicional(Tupla3f posicion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorEspecular,
-                             Tupla4f colorDifuso)
+LuzPosicional::LuzPosicional(Tupla3f posicion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorDifuso,
+                             Tupla4f colorEspecular)
 {
     Tupla4f aux(posicion(X), posicion(Y), posicion(Z), 1);
     this->posicion = aux;
