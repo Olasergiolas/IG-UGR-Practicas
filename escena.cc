@@ -165,7 +165,7 @@ void Escena::dibujar()
 
     if (esfera_presente){
         if (actualizar_revolucion || esfera == nullptr){
-            esfera = new Esfera(80, 200, 0.35, tapas);
+            esfera = new Esfera(20, 200, 0.5, tapas);
             Material m3(negro, naranja, blanco, 90.0f);
             esfera->setMaterial(m3);
         }
@@ -179,7 +179,7 @@ void Escena::dibujar()
 
     if (cono_presente){
         if (actualizar_revolucion || cono == nullptr){
-            cono = new Cono(6, 25, 1, 0.35, tapas);
+            cono = new Cono(12, 50, 1, 0.35, tapas);
         }
 
         glPushMatrix();
@@ -191,7 +191,7 @@ void Escena::dibujar()
 
     if (cilindro_presente){
         if (actualizar_revolucion || cilindro == nullptr){
-            cilindro = new Cilindro(6, 25, 1, 0.35, tapas);
+            cilindro = new Cilindro(12, 50, 1, 0.35, tapas);
         }
 
         glPushMatrix();
