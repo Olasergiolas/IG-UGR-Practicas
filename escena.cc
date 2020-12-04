@@ -105,8 +105,8 @@ void Escena::dibujar()
         glEnable(GL_LIGHTING);
 
     glPushMatrix();
-    glRotatef(static_cast<LuzDireccional*>(luces[1])->getAlpha(), 0.0, 1.0, 0.0);
-    glRotatef(static_cast<LuzDireccional*>(luces[1])->getBeta(), 1.0, 0.0, 0.0);
+    //glRotatef(static_cast<LuzDireccional*>(luces[1])->getAlpha(), 0.0, 1.0, 0.0);
+    //glRotatef(static_cast<LuzDireccional*>(luces[1])->getBeta(), 1.0, 0.0, 0.0);
         for (unsigned i = 0; i < luces.size(); ++i){
             if (estado_luces[i+1])
                 luces[i]->activar();
@@ -408,7 +408,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    if (modoMenu == ILUMINACION){
        char tecla_m = toupper(tecla);
        int tecla_n = tecla_m - '0';
-       if (tecla_m > '0' && tecla_m <= '7'){
+       if (tecla_m > '0' && tecla_m <= '2'){
            GLenum luzId = getIdLuz(tecla_m);
 
            if (!estado_luces[tecla_n])
@@ -443,12 +443,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
        case '>':
            if (rotaciones.first){
-               static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(10.0);
+               static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(0.5f);
                std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
            }
 
            else if (rotaciones.second){
-               static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(10.0);
+               static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(0.5f);
                std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
            }
 
@@ -456,13 +456,13 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
        case '<':
            if (rotaciones.first){
-               static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(-10.0);
-               std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
+               static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(-0.5f);
+               //std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
            }
 
            else if (rotaciones.second){
-               static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(-10.0);
-               std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
+               static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(-0.5f);
+               //std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
            }
 
            break;
