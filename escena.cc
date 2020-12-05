@@ -17,10 +17,6 @@ Escena::Escena()
 
     ejes.changeAxisSize( 5000 );
 
-    // crear los objetos de la escena....
-    // .......completar: ...
-    // .....
-
     visualizacion = INMEDIATO;
     coloreado = RELLENADO;
     tapas.first = true;
@@ -104,14 +100,10 @@ void Escena::dibujar()
     if (iluminacion_activa)
         glEnable(GL_LIGHTING);
 
-    glPushMatrix();
-    //glRotatef(static_cast<LuzDireccional*>(luces[1])->getAlpha(), 0.0, 1.0, 0.0);
-    //glRotatef(static_cast<LuzDireccional*>(luces[1])->getBeta(), 1.0, 0.0, 0.0);
-        for (unsigned i = 0; i < luces.size(); ++i){
-            if (estado_luces[i+1])
-                luces[i]->activar();
-        }
-    glPopMatrix();
+    for (unsigned i = 0; i < luces.size(); ++i){
+        if (estado_luces[i+1])
+            luces[i]->activar();
+    }
 
     if (cubo_presente){
         glPushMatrix();
