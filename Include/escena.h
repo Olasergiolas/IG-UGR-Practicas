@@ -83,7 +83,6 @@ class Escena
    Cabina *cabina = nullptr;
 
 
-
    
    public:
 
