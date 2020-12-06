@@ -22,6 +22,7 @@ public:
     void setAlphaAlerones(float value);
     void setBetaAlerones(float value);
     void setRotacionCapsula(float value);
+    float getExtAlas();
 };
 
 #endif // SWORDFISH_H

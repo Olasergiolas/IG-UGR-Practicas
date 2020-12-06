@@ -45,14 +45,13 @@ void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, mo
 }
 
 void Swordfish::setExtAlas(float value){
-    //if (value < 30.0f && value >= 0.0f)
 
-    if (value > 0.0f && ext_alas < 30.0f)
-        ext_alas += value;
+    ext_alas += value;
+    std::cout << ext_alas << std::endl;
+}
 
-    //else if (value < 0.0f && ext_alas > 30.0f)
-
-
+float Swordfish::getExtAlas(){
+    return ext_alas;
 }
 
 void Swordfish::setAlphaAlerones(float value){

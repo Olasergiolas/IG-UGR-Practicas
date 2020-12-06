@@ -268,6 +268,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                modoMenu = MOVIMIENTO_2;
 
            break;
+
+       case '6' :
+           if (modoMenu == MOVIMIENTO)
+               modoMenu = MOVIMIENTO_3;
+
+           break;
    }
 
    if (modoMenu == MOVIMIENTO_0){
@@ -297,15 +303,28 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    if (modoMenu == MOVIMIENTO_2){
        switch (toupper(tecla)){
        case '+' :
-           swordfish->setExtAlas(10);
+           if (swordfish->getExtAlas() < 40.0f)
+                swordfish->setExtAlas(10.0f);
            break;
 
        case '-' :
-           swordfish->setExtAlas(-10);
+           if (swordfish->getExtAlas() > -50.0f)
+           swordfish->setExtAlas(-10.0f);
            break;
        }
    }
 
+   if (modoMenu == MOVIMIENTO_3){
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setRotacionCapsula(10.0f);
+           break;
+
+       case '-' :
+           swordfish->setRotacionCapsula(-10.0f);
+           break;
+       }
+   }
 
    if (modoMenu == ILUMINACION){
        char tecla_m = toupper(tecla);

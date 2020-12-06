@@ -16,7 +16,7 @@
 #include "Include/swordfish.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION, MOVIMIENTO,
-             MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2} menu;
+             MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2, MOVIMIENTO_3} menu;
 class Escena
 {
 
