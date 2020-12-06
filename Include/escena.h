@@ -13,6 +13,7 @@
 #include "cono.h"
 #include "luzposicional.h"
 #include "luzdireccional.h"
+#include "canon.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION} menu;
 class Escena
@@ -79,8 +80,8 @@ class Escena
    Cilindro *cilindro = nullptr;
 
 
+   Canon *foco = nullptr;
 
-   bool perfil = false;
 
 
    

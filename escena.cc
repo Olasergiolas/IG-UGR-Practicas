@@ -1,7 +1,7 @@
 
 
-#include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
-#include "escena.h"
+#include "Include/aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
+#include "Include/escena.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)
@@ -23,30 +23,7 @@ Escena::Escena()
     tapas.second = true;
     rotaciones.first = false;
     rotaciones.second = false;
-
-    cubo = new Cubo(100);
-    Material aux(negro, rojo, blanco, 90.0);
-    cubo->setMaterial(aux);
-    cubo_presente = true;
-
-    tetraedro = new Tetraedro();
-    aux.actualizar(negro, verde, azul);
-    tetraedro->setMaterial(aux);
-    tetraedro_presente = true;
-
-    ply = new ObjPLY("./plys/big_dodge.ply");
-    aux.actualizar(negro, celeste, naranja);
-    ply->setMaterial(aux);
-    ply_presente = true;
-
     inicializarLuces();
-
-    obj_rev_presente = true;
-    obj_rev2_presente = true;
-    cilindro_presente = true;
-    cono_presente = true;
-    esfera_presente = true;
-
     actualizar_revolucion = false;
     iluminacion_activa = false;
 }
@@ -105,94 +82,8 @@ void Escena::dibujar()
             luces[i]->activar();
     }
 
-    if (cubo_presente){
-        glPushMatrix();
-            glTranslatef(-150.0, 150.0, 0.0);
-            cubo->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
-    if (tetraedro_presente){
-        glPushMatrix();
-            glTranslatef(0.0, 150.0, 0.0);
-            tetraedro->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
-    if (ply_presente){
-        glPushMatrix();
-            glTranslatef(-150.0, -150.0, 0.0);
-            glScalef(20.0,20.0,20.0);
-            ply->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
-    if (obj_rev_presente){
-        if (actualizar_revolucion || obj_rev == nullptr){
-            obj_rev = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
-            Material m1(negro, blanco, negro, 90.0);
-            obj_rev->setMaterial(m1);
-        }
-
-        glPushMatrix();
-            glTranslatef(150.0, 150.0, 0.0);
-            glScalef(40.0,40.0,40.0);
-            obj_rev->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
-    if (obj_rev2_presente){
-        if (actualizar_revolucion || obj_rev2 == nullptr){
-            obj_rev2 = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
-            Material m2(negro, negro, blanco, 10.0);
-            obj_rev2->setMaterial(m2);
-        }
-
-        glPushMatrix();
-            glTranslatef(150.0, -150.0, 0.0);
-            glScalef(40.0,40.0,40.0);
-            obj_rev2->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
-    if (esfera_presente){
-        if (actualizar_revolucion || esfera == nullptr){
-            esfera = new Esfera(20, 200, 0.5, tapas);
-            Material m3(negro, naranja, blanco, 90.0f);
-            esfera->setMaterial(m3);
-        }
-
-        glPushMatrix();
-            glTranslatef(0, 0, 0);
-            glScalef(70.0,70.0,70.0);
-            esfera->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
-    if (cono_presente){
-        if (actualizar_revolucion || cono == nullptr){
-            cono = new Cono(12, 50, 1, 0.35, tapas);
-        }
-
-        glPushMatrix();
-            glTranslatef(-150, 0, 0);
-            glScalef(70.0,70.0,70.0);
-            cono->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
-    if (cilindro_presente){
-        if (actualizar_revolucion || cilindro == nullptr){
-            cilindro = new Cilindro(12, 50, 1, 0.35, tapas);
-        }
-
-        glPushMatrix();
-            glTranslatef(150, 0, 0);
-            glScalef(70.0,70.0,70.0);
-            cilindro->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }
-
+    foco = new Canon();
+    foco->draw(visualizacion, estado_dibujados, coloreado);
     actualizar_revolucion = false;
 }
 
