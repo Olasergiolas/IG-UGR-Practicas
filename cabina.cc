@@ -3,12 +3,12 @@
 Cabina::Cabina(){
     cabina = new Cilindro(25, 25, 15, 10, std::pair<bool, bool>(true, true));
     semiesfera = new Esfera(20, 50, 10, std::pair<bool, bool>(true, true) ,false);
-    alpha = 90.0f;
+    alpha = 0.0f;
 }
 
 void Cabina::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){
     glPushMatrix();
-        glScalef(5.0f, 3.0f, 5.0f);
+        glScalef(4.0f, 3.0f, 4.0f);
         cabina->draw(v, estado_dibujados, coloreado);
     glPopMatrix();
 
@@ -18,4 +18,8 @@ void Cabina::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_
         glScalef(4.0f, 4.0f, 4.0f);
         semiesfera->draw(v, estado_dibujados, coloreado);
     glPopMatrix();
+}
+
+void Cabina::setAlpha(float value){
+    alpha += value;
 }

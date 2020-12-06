@@ -31,3 +31,11 @@ void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_col
         cubo->draw(v, estado_dibujados, coloreado);
     glPopMatrix();
 }
+
+void Ala::setAlpha(float value){
+    alpha += value;
+}
+
+void Ala::setBeta(float value){
+    beta += value;
+}

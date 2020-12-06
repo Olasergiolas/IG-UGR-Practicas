@@ -14,6 +14,8 @@ private:
 public:
     Ala();
     void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
+    void setAlpha(float value);
+    void setBeta(float value);
 };
 
 #endif // ALA_H

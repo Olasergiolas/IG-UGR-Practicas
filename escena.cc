@@ -27,7 +27,7 @@ Escena::Escena()
     actualizar_revolucion = false;
     iluminacion_activa = false;
 
-    cabina = new Cabina();
+    swordfish = new Swordfish();
 }
 
 //**************************************************************************
@@ -84,7 +84,7 @@ void Escena::dibujar()
             luces[i]->activar();
     }
 
-    cabina->draw(visualizacion, estado_dibujados, coloreado);
+    swordfish->draw(visualizacion, estado_dibujados, coloreado);
     actualizar_revolucion = false;
 }
 
@@ -147,24 +147,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                obj_rev2_presente = !obj_rev2_presente;
             }
            break;
-
-        case '3':
-            if (modoMenu == SELOBJETO){
-              esfera_presente = !esfera_presente;
-            }
-          break;
-
-        case '4':
-            if (modoMenu == SELOBJETO){
-             cono_presente = !cono_presente;
-            }
-         break;
-
-        case '5':
-            if (modoMenu == SELOBJETO){
-             cilindro_presente = !cilindro_presente;
-            }
-         break;
 
 
            // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
@@ -264,30 +246,66 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
 
 
-           //Interruptores de las tapaderas
+         // Utilización de grados de libertad
+        case 'M' :
+            modoMenu = MOVIMIENTO;
+            break;
 
-        case 'U':
-           std::cout << "Modo selección de dibujado" << endl <<
-                       "\tN: Tapa inferior" << endl <<
-                       "\tM: Tapa superior" << endl;
-           modoMenu = TAPAS;
+        case '3' :
+            if (modoMenu == MOVIMIENTO)
+                modoMenu = MOVIMIENTO_0;
+
+            break;
+
+       case '4' :
+               if (modoMenu == MOVIMIENTO)
+                   modoMenu = MOVIMIENTO_1;
+
+               break;
+
+       case '5' :
+           if (modoMenu == MOVIMIENTO)
+               modoMenu = MOVIMIENTO_2;
+
            break;
-
-        case 'M':
-            if (modoMenu == TAPAS){
-                tapas.first = !tapas.first;
-                actualizar_revolucion = true;
-            }
-           break;
-
-        case 'N':
-            if (modoMenu == TAPAS){
-                tapas.second = !tapas.second;
-                actualizar_revolucion = true;
-            }
-           break;
-
    }
+
+   if (modoMenu == MOVIMIENTO_0){
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setAlphaAlerones(10);
+           break;
+
+       case '-' :
+           swordfish->setAlphaAlerones(-10);
+           break;
+       }
+   }
+
+   if (modoMenu == MOVIMIENTO_1){
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setBetaAlerones(10);
+           break;
+
+       case '-' :
+           swordfish->setBetaAlerones(-10);
+           break;
+       }
+   }
+
+   if (modoMenu == MOVIMIENTO_2){
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setExtAlas(10);
+           break;
+
+       case '-' :
+           swordfish->setExtAlas(-10);
+           break;
+       }
+   }
+
 
    if (modoMenu == ILUMINACION){
        char tecla_m = toupper(tecla);

@@ -13,9 +13,10 @@
 #include "cono.h"
 #include "luzposicional.h"
 #include "luzdireccional.h"
-#include "Include/cabina.h"
+#include "Include/swordfish.h"
 
-typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION} menu;
+typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION, MOVIMIENTO,
+             MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2} menu;
 class Escena
 {
 
@@ -80,7 +81,7 @@ class Escena
    Cilindro *cilindro = nullptr;
 
 
-   Cabina *cabina = nullptr;
+   Swordfish *swordfish = nullptr;
 
 
    
