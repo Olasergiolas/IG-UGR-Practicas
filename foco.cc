@@ -3,7 +3,7 @@
 Foco::Foco()
 {
     cono = new Cono(20, 50, 20, 10, std::pair<bool, bool>(true, true));
-    esfera = new Esfera(20, 50, 10, std::pair<bool, bool>(true, true));
+    esfera = new Esfera(20, 50, 10, std::pair<bool, bool>(true, true), true);
 }
 
 

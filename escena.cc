@@ -26,6 +26,8 @@ Escena::Escena()
     inicializarLuces();
     actualizar_revolucion = false;
     iluminacion_activa = false;
+
+    cabina = new Cabina();
 }
 
 //**************************************************************************
@@ -82,8 +84,7 @@ void Escena::dibujar()
             luces[i]->activar();
     }
 
-    foco = new Canon();
-    foco->draw(visualizacion, estado_dibujados, coloreado);
+    cabina->draw(visualizacion, estado_dibujados, coloreado);
     actualizar_revolucion = false;
 }
 
