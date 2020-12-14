@@ -7,8 +7,8 @@
 //**************************************************************************
 
 
-#include "aux.h" // includes de OpenGL, windows, y librería std de C++
-#include "escena.h"
+#include "Include/aux.h" // includes de OpenGL, windows, y librería std de C++
+#include "Include/escena.h"
 
 // variable que contiene un puntero a la escena
 Escena *escena = nullptr ;
@@ -87,6 +87,12 @@ void special_keys( int tecla, int x, int y )
 	glutPostRedisplay();
 }
 
+void funcion_idle(){
+    if (escena != nullptr)
+        escena->animarModeloJerarquico();
+    glutPostRedisplay();
+}
+
 //***************************************************************************
 // Programa principal
 //
@@ -152,6 +158,8 @@ int main( int argc, char **argv )
    // funcion de inicialización de la escena (necesita que esté la ventana creada)
    escena->inicializar( UI_window_width, UI_window_height );
 
+
+    glutIdleFunc(funcion_idle);
 
 
    // ejecutar del bucle de eventos

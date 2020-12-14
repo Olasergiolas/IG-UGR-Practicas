@@ -274,6 +274,15 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                modoMenu = MOVIMIENTO_3;
 
            break;
+
+       case '7' :
+           if (modoMenu == MOVIMIENTO)
+               modoMenu = MOVIMIENTO_AUTO;
+
+           else if (modoMenu == MOVIMIENTO_AUTO)
+               modoMenu = MOVIMIENTO;
+
+           break;
    }
 
    if (modoMenu == MOVIMIENTO_0){
@@ -288,7 +297,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        }
    }
 
-   if (modoMenu == MOVIMIENTO_1){
+   else if (modoMenu == MOVIMIENTO_1){
        switch (toupper(tecla)){
        case '+' :
            swordfish->setBetaAlerones(10);
@@ -300,7 +309,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        }
    }
 
-   if (modoMenu == MOVIMIENTO_2){
+   else if (modoMenu == MOVIMIENTO_2){
        switch (toupper(tecla)){
        case '-' :
            if (swordfish->getExtAlas() < 10.0f)
@@ -314,7 +323,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        }
    }
 
-   if (modoMenu == MOVIMIENTO_3){
+   else if (modoMenu == MOVIMIENTO_3){
        switch (toupper(tecla)){
        case '+' :
            swordfish->setRotacionCapsula(10.0f);
@@ -325,6 +334,20 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
        }
    }
+
+   /*else if (modoMenu == MOVIMIENTO_AUTO){
+       animarModeloJerarquico();
+
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setRotacionCapsula(10.0f);
+           break;
+
+       case '-' :
+           swordfish->setRotacionCapsula(-10.0f);
+           break;
+       }
+   }*/
 
    if (modoMenu == ILUMINACION){
        char tecla_m = toupper(tecla);
@@ -509,6 +532,23 @@ void Escena::inicializarLuces(){
 
     LuzDireccional *luz2 = new LuzDireccional(Tupla2f(0.0, 0.0), GL_LIGHT2, negro, blanco, blanco);
     luces.push_back(luz2);
+}
+
+void Escena::animarModeloJerarquico(){
+    if (modoMenu == MOVIMIENTO_AUTO){
+        if (swordfish->getExtAlas() > -50.0f){
+            swordfish->setExtAlas(-5.0f);
+        }
+
+        else{
+            for (unsigned i = 0; i < 6; ++i)
+                swordfish->setExtAlas(10.0f);
+        }
+
+        swordfish->setAlphaAlerones(10.0f);
+        swordfish->setBetaAlerones(10.0f);
+        swordfish->setRotacionCapsula(10.0f);
+    }
 }
 
 Escena::~Escena(){

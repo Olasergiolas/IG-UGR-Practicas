@@ -45,9 +45,7 @@ void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, mo
 }
 
 void Swordfish::setExtAlas(float value){
-
     ext_alas += value;
-    std::cout << ext_alas << std::endl;
 }
 
 float Swordfish::getExtAlas(){

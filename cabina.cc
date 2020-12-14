@@ -6,7 +6,7 @@ Cabina::Cabina(){
     alpha = 0.0f;
 
     Material m(negro, rojo, blanco, 90.0f);
-    Material m1(negro, cobre, blanco, 90.0f);
+    Material m1(negro, cobre, negro, 90.0f);
 
     cabina->setMaterial(m);
     semiesfera->setMaterial(m1);

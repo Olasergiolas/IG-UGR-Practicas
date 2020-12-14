@@ -16,7 +16,7 @@
 #include "Include/swordfish.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION, MOVIMIENTO,
-             MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2, MOVIMIENTO_3} menu;
+             MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2, MOVIMIENTO_3, MOVIMIENTO_AUTO} menu;
 class Escena
 {
 
@@ -100,6 +100,7 @@ class Escena
 	void teclaEspecial( int Tecla1, int x, int y );
     GLenum getIdLuz(unsigned char c);
     void inicializarLuces();
+    void animarModeloJerarquico();
 
 };
 #endif
