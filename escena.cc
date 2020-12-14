@@ -54,10 +54,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
     glShadeModel(GL_SMOOTH);
 
     std::cout << "Bienvenido! Seleccione un menú" << std::endl <<
-                 "\tO: Selección de objeto" << std::endl <<
                  "\tV: Selección de modo de visualización" << std::endl <<
-                 "\tD: Selección de dibujado" << std::endl <<
-                 "\tU: Tapas" << std::endl;
+                 "\tD: Selección de dibujado" << std::endl;
 }
 
 
@@ -111,42 +109,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                salir=true ;
            }
            break ;
-
-           // ESTAMOS EN MODO SELECCION DE OBJETO
-        case 'O' :
-           std::cout << "Modo selección de objeto" << endl <<
-                        "\tC: Activar cubo" << endl <<
-                        "\tT: Activar tetraedro" << endl <<
-                        "\tB: Activar Beethoven" << endl <<
-                        "\tR: Activar ObjRevolucion" << endl <<
-                        "\t3: Activar Esfera" << endl <<
-                        "\t4: Activar Cono" << endl <<
-                        "\t5: Activar Cilindro" << endl;
-           modoMenu=SELOBJETO;
-           break ;
-
-        case 'C' :
-           if (modoMenu == SELOBJETO)
-               cubo_presente = !cubo_presente;
-           break;
-
-        case 'T' :
-           if (modoMenu == SELOBJETO)
-               tetraedro_presente = !tetraedro_presente;
-           break;
-
-        case 'B' :
-            if (modoMenu == SELOBJETO){
-                ply_presente = !ply_presente;
-            }
-            break;
-
-        case 'R':
-            if (modoMenu == SELOBJETO){
-               obj_rev_presente = !obj_rev_presente;
-               obj_rev2_presente = !obj_rev2_presente;
-            }
-           break;
 
 
            // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
@@ -248,7 +210,19 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
          // Utilización de grados de libertad
         case 'M' :
+           std::cout << "Menú de movimiento" << endl <<
+                       "\t3: Rotación en X de alerones" << endl <<
+                       "\t4: Rotación en Z de alerones" << endl <<
+                       "\t5: Extensión de alas" << endl <<
+                       "\t6: Rotación de la cápsula" << endl <<
+                       "\t7: Movimiento automático" << endl;
             modoMenu = MOVIMIENTO;
+
+            std::cout << std::endl;
+            std::cout << "Interacción con el movimiento" << endl <<
+                        "\t+: Incremento del valor" << endl <<
+                        "\t-: Decremento del valor" << endl;
+
             break;
 
         case '3' :
@@ -388,12 +362,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case '>':
            if (rotaciones.first){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(0.5f);
-               //std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
            }
 
            else if (rotaciones.second){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(0.5f);
-               //std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
            }
 
            break;
@@ -401,12 +373,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case '<':
            if (rotaciones.first){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(-0.5f);
-               //std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
            }
 
            else if (rotaciones.second){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(-0.5f);
-               //std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
            }
 
            break;
