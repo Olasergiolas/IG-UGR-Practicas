@@ -302,12 +302,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
    if (modoMenu == MOVIMIENTO_2){
        switch (toupper(tecla)){
-       case '+' :
-           if (swordfish->getExtAlas() < 40.0f)
+       case '-' :
+           if (swordfish->getExtAlas() < 10.0f)
                 swordfish->setExtAlas(10.0f);
            break;
 
-       case '-' :
+       case '+' :
            if (swordfish->getExtAlas() > -50.0f)
            swordfish->setExtAlas(-10.0f);
            break;
@@ -365,12 +365,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case '>':
            if (rotaciones.first){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(0.5f);
-               std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
+               //std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
            }
 
            else if (rotaciones.second){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(0.5f);
-               std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
+               //std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
            }
 
            break;

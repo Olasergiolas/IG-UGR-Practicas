@@ -5,6 +5,10 @@ Cuerpo::Cuerpo(){
     foco = new Foco();
     esfera = new Esfera(25, 50, 10, std::pair<bool, bool>(true, true));
     cabina = new Cabina();
+
+    Material m(negro, rojo, blanco, 90.0f);
+    morro->setMaterial(m);
+    esfera->setMaterial(m);
 }
 
 void Cuerpo::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){

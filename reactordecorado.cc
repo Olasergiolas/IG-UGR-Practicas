@@ -4,6 +4,12 @@ ReactorDecorado::ReactorDecorado()
 {
     reactor = new Cilindro(25, 25, 50, 25, std::pair<bool, bool>(true, true));
     aleron = new Tetraedro();
+
+    Material m(negro, gris, gris, 90.0f);
+    Material m1(negro, rojo, blanco, 90.0f);
+
+    reactor->setMaterial(m);
+    aleron->setMaterial(m1);
 }
 
 void ReactorDecorado::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){

@@ -5,6 +5,10 @@ Ala::Ala(){
     pico = new Tetraedro();
     alpha = 0.0f;
     beta = 0.0f;
+
+    Material m(negro, rojo, blanco, 90.0f);
+    cubo->setMaterial(m);
+    pico->setMaterial(m);
 }
 
 void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){

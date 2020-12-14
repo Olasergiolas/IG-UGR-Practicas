@@ -3,6 +3,10 @@
 Canon::Canon(){
     cilindro = new Cilindro(25, 25, 20, 10, std::pair<bool, bool>(true, true));
     base = new Cono(20, 50, 20, 10, std::pair<bool, bool>(true, true));
+
+    Material m(negro, gris, blanco, 90.0f);
+    base->setMaterial(m);
+    cilindro->setMaterial(m);
 }
 
 void Canon::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){
