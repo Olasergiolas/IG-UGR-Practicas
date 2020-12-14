@@ -30,7 +30,7 @@ void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_col
 
     //plataforma
     glPushMatrix();
-        glTranslatef(60.0f, 0.0f, 0.0f);
+        glTranslatef(62.5f, 0.0f, 0.0f);
         glScalef(12.0f, 0.5f, 1.0f);
         cubo->draw(v, estado_dibujados, coloreado);
     glPopMatrix();

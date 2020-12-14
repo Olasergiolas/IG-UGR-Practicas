@@ -55,10 +55,12 @@ float Swordfish::getExtAlas(){
 
 void Swordfish::setAlphaAlerones(float value){
     ala->setAlpha(value);
+    ala1->setAlpha(value);
 }
 
 void Swordfish::setBetaAlerones(float value){
     ala->setBeta(value);
+    ala1->setBeta(value);
 }
 
 void Swordfish::setRotacionCapsula(float value){
