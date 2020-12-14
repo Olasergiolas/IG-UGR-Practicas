@@ -1,9 +1,9 @@
-#include "aux.h"
-#include "malla.h"
-#include "cubo.h"
+#include "Include/aux.h"
+#include "Include/malla.h"
+#include "Include/cubo.h"
 #include "vector"
 
-Cubo::Cubo(float lado)
+Cubo::Cubo(float lado, bool invertir_normales)
 {
     this->lado = lado;
     float pos = lado/2;
@@ -56,7 +56,7 @@ Cubo::Cubo(float lado)
     std::vector<Tupla3i> auxC{c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11};
     f = auxC;
 
-    calcular_normales();
+    calcular_normales(invertir_normales);
     inicializarColores();
     inicializarMaterial();
 }

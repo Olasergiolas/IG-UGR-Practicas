@@ -1,4 +1,4 @@
-#include "luz.h"
+#include "Include/luz.h"
 
 void Luz::activar(){
     glLightfv(id, GL_POSITION, posicion);

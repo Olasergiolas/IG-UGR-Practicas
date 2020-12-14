@@ -1,8 +1,8 @@
 #include "Include/ala.h"
 
-Ala::Ala(){
-    cubo = new Cubo(10);
-    pico = new Tetraedro();
+Ala::Ala(bool invertir_normales){
+    cubo = new Cubo(10, invertir_normales);
+    pico = new Tetraedro(invertir_normales);
     alpha = 0.0f;
     beta = 0.0f;
 

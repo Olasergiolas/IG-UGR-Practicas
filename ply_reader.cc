@@ -31,7 +31,7 @@
 #include <limits>
 #include <assert.h>
 
-#include "ply_reader.h"
+#include "Include/ply_reader.h"
 
 // modelos ply en:
    // http://graphics.im.ntu.edu.tw/~robin/courses/cg03/model/

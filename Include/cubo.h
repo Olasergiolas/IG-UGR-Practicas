@@ -29,7 +29,7 @@ class Cubo : public Malla3D
     unsigned lado;
 
    public:
-   Cubo(float l=1.0);
+   Cubo(float l=1.0, bool invertir_normales=false);
 } ;
 
 

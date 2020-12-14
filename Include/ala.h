@@ -12,7 +12,7 @@ private:
     float alpha, beta;
 
 public:
-    Ala();
+    Ala(bool invertir_normales=false);
     void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
     void setAlpha(float value);
     void setBeta(float value);

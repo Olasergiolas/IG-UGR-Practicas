@@ -46,7 +46,7 @@ class Malla3D
 
    protected:
 
-   void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)
+   void calcular_normales(bool invertir=false) ; // calcula tabla de normales de vértices (práctica 3)
 
    void inicializarColores();
 

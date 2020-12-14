@@ -217,7 +217,7 @@ void Malla3D::inicializarColores(){
     c_ajedrez1.assign(v.size(), naranja3);
 }
 
-void Malla3D::calcular_normales(){
+void Malla3D::calcular_normales(bool invertir){
     //Tabla de normales de las caras
     Tupla3f a, b, mc;
     Tupla3i caraActual;
@@ -227,7 +227,11 @@ void Malla3D::calcular_normales(){
 
         a = v[caraActual(1)] - v[caraActual(0)];
         b = v[caraActual(2)] - v[caraActual(0)];
-        mc = a.cross(b);
+        if (!invertir)
+            mc = a.cross(b);
+
+        else
+            mc = b.cross(a);
         mc = mc.normalized();
 
         tabla_normales_c.push_back(mc);

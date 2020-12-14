@@ -13,6 +13,7 @@ private:
     ReactorDecorado *reactor = nullptr;
     Canon *canon = nullptr;
     Ala *ala = nullptr;
+    Ala *ala1 = nullptr;
     float ext_alas;
 
 public:
