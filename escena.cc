@@ -309,19 +309,23 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        }
    }
 
-   /*else if (modoMenu == MOVIMIENTO_AUTO){
+   else if (modoMenu == MOVIMIENTO_AUTO){
+       std::cout << std::endl << "Modificación de la animación" << endl <<
+                   "\t+: Incrementar velocidad" << endl <<
+                   "\t-: Reducir velocidad" << endl;
+
        animarModeloJerarquico();
 
        switch (toupper(tecla)){
        case '+' :
-           swordfish->setRotacionCapsula(10.0f);
+           swordfish->increaseSpeedUp();
            break;
 
        case '-' :
-           swordfish->setRotacionCapsula(-10.0f);
+           swordfish->reduceSpeedUp();
            break;
        }
-   }*/
+   }
 
    if (modoMenu == ILUMINACION){
        char tecla_m = toupper(tecla);
@@ -506,18 +510,22 @@ void Escena::inicializarLuces(){
 
 void Escena::animarModeloJerarquico(){
     if (modoMenu == MOVIMIENTO_AUTO){
-        if (swordfish->getExtAlas() > -50.0f){
-            swordfish->setExtAlas(-5.0f);
+        if ((swordfish->getExtAlas() -
+             (swordfish->getSpeedUp())) > -50.0f){
+            swordfish->setExtAlas(-swordfish->getSpeedUp());
         }
 
         else{
-            for (unsigned i = 0; i < 6; ++i)
-                swordfish->setExtAlas(10.0f);
+            /*for (unsigned i = 0; i < 12; ++i)
+                swordfish->setExtAlas(swordfish->getSpeedUp());*/
+
+            while (swordfish->getExtAlas() < 0)
+                swordfish->setExtAlas(swordfish->getSpeedUp());
         }
 
-        swordfish->setAlphaAlerones(10.0f);
-        swordfish->setBetaAlerones(10.0f);
-        swordfish->setRotacionCapsula(10.0f);
+        swordfish->setAlphaAlerones(swordfish->getSpeedUp() * 10.0f);
+        swordfish->setBetaAlerones(swordfish->getSpeedUp() * 10.0f);
+        swordfish->setRotacionCapsula(swordfish->getSpeedUp() * 10.0f);
     }
 }
 

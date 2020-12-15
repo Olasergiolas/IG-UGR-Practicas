@@ -15,6 +15,7 @@ private:
     Ala *ala = nullptr;
     Ala *ala1 = nullptr;
     float ext_alas;
+    float speedUp;
 
 public:
     Swordfish();
@@ -24,6 +25,9 @@ public:
     void setBetaAlerones(float value);
     void setRotacionCapsula(float value);
     float getExtAlas();
+    int getSpeedUp();
+    void increaseSpeedUp();
+    void reduceSpeedUp();
 };
 
 #endif // SWORDFISH_H
