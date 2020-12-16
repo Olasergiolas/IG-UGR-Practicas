@@ -314,15 +314,44 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                    "\t+: Incrementar velocidad" << endl <<
                    "\t-: Reducir velocidad" << endl;
 
+       std::cout << std::endl << "Selección del grado de libertad a alterar" << endl <<
+                   "\t0: General" << endl <<
+                   "\t1: Extensión alas" << endl <<
+                   "\t2: Rotación alfa alerones" << endl <<
+                   "\t3: Rotación beta alerones" << endl <<
+                   "\t4: Rotación cápsula" << endl;
+
        animarModeloJerarquico();
 
        switch (toupper(tecla)){
+       case '0' :
+           gradoLibertad = 0;
+           break;
+
+       case '1' :
+           gradoLibertad = 1;
+           break;
+
+       case '2' :
+           gradoLibertad = 2;
+           break;
+
+       case '3' :
+           gradoLibertad = 3;
+           break;
+
+       case '4' :
+           gradoLibertad = 4;
+           break;
+       }
+
+       switch (toupper(tecla)){
        case '+' :
-           swordfish->increaseSpeedUp();
+           swordfish->increaseSpeedUp(gradoLibertad);
            break;
 
        case '-' :
-           swordfish->reduceSpeedUp();
+           swordfish->reduceSpeedUp(gradoLibertad);
            break;
        }
    }
@@ -510,22 +539,38 @@ void Escena::inicializarLuces(){
 
 void Escena::animarModeloJerarquico(){
     if (modoMenu == MOVIMIENTO_AUTO){
-        if ((swordfish->getExtAlas() -
-             (swordfish->getSpeedUp())) > -50.0f){
-            swordfish->setExtAlas(-swordfish->getSpeedUp());
+
+        if (gradoLibertad == 0){
+            if ((swordfish->getExtAlas() -
+                 (swordfish->getSpeedUp())) > -50.0f){
+                swordfish->setExtAlas(-swordfish->getSpeedUp());
+            }
+
+            else{
+                while (swordfish->getExtAlas() < 0)
+                    swordfish->setExtAlas(swordfish->getSpeedUp());
+            }
+
+            swordfish->setAlphaAlerones(swordfish->getSpeedUp() * 10.0f);
+            swordfish->setBetaAlerones(swordfish->getSpeedUp() * 10.0f);
+            swordfish->setRotacionCapsula(swordfish->getSpeedUp() * 10.0f);
         }
 
         else{
-            /*for (unsigned i = 0; i < 12; ++i)
-                swordfish->setExtAlas(swordfish->getSpeedUp());*/
+            if ((swordfish->getExtAlas() -
+                 (swordfish->getSpeedUp(1))) > -50.0f){
+                swordfish->setExtAlas(-swordfish->getSpeedUp(1));
+            }
 
-            while (swordfish->getExtAlas() < 0)
-                swordfish->setExtAlas(swordfish->getSpeedUp());
+            else{
+                while (swordfish->getExtAlas() < 0)
+                    swordfish->setExtAlas(swordfish->getSpeedUp(1));
+            }
+
+            swordfish->setAlphaAlerones(swordfish->getSpeedUp(2) * 10.0f);
+            swordfish->setBetaAlerones(swordfish->getSpeedUp(3) * 10.0f);
+            swordfish->setRotacionCapsula(swordfish->getSpeedUp(4) * 10.0f);
         }
-
-        swordfish->setAlphaAlerones(swordfish->getSpeedUp() * 10.0f);
-        swordfish->setBetaAlerones(swordfish->getSpeedUp() * 10.0f);
-        swordfish->setRotacionCapsula(swordfish->getSpeedUp() * 10.0f);
     }
 }
 

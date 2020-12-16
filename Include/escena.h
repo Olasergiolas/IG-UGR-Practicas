@@ -17,6 +17,7 @@
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION, MOVIMIENTO,
              MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2, MOVIMIENTO_3, MOVIMIENTO_AUTO} menu;
+
 class Escena
 {
 
@@ -45,6 +46,7 @@ class Escena
    std::vector<Luz*> luces;
    std::vector<bool> estado_luces;
    menu modoMenu=NADA;
+   unsigned gradoLibertad = 0;
    modo_visualizacion visualizacion;
    modo_coloreado coloreado;
    std::set<GLenum> estado_dibujados;

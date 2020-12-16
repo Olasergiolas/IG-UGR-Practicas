@@ -7,7 +7,6 @@ Swordfish::Swordfish(){
     ala = new Ala();
     ala1 = new Ala(true);
     ext_alas = 0.0f;
-    speedUp = 1.0f;
 }
 
 void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){
@@ -68,19 +67,20 @@ void Swordfish::setRotacionCapsula(float value){
     cuerpo->setRotacionCabina(value);
 }
 
-int Swordfish::getSpeedUp(){
-    return speedUp;
+int Swordfish::getSpeedUp(unsigned ind){
+    return partSpeedUp[ind];
 }
 
-void Swordfish::increaseSpeedUp(){
-        speedUp += 0.5f;
-
-    std::cout << std::endl << speedUp << std::endl;
+void Swordfish::increaseSpeedUp(unsigned ind){
+    partSpeedUp[ind] += 0.5f;
+    std::cout << std::endl << partSpeedUp[ind] << std::endl;
 }
 
-void Swordfish::reduceSpeedUp(){
-    if (speedUp > 0.5f)
-        speedUp -= 0.5f;
+void Swordfish::reduceSpeedUp(unsigned ind){
+    if (partSpeedUp[ind] > 0.5f){
+        partSpeedUp[ind] -= 0.5f;
+    }
 
-    std::cout << std::endl << speedUp << std::endl;
+
+    std::cout << std::endl << partSpeedUp[ind] << std::endl;
 }
