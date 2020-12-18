@@ -25,8 +25,9 @@ Escena::Escena()
     rotaciones.second = false;
 
     cubo = new Cubo(100);
-    Material aux(negro, rojo, blanco, 90.0);
+    Material aux(negro, blanco, blanco, 90.0);
     cubo->setMaterial(aux);
+    cubo->set_textura("text-madera.jpg");
     cubo_presente = true;
 
     tetraedro = new Tetraedro();
@@ -72,6 +73,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
     glEnable(GL_CULL_FACE);
     glEnable(GL_NORMALIZE);
+    glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_SMOOTH);
 
     std::cout << "Bienvenido! Seleccione un menú" << std::endl <<
@@ -106,8 +108,8 @@ void Escena::dibujar()
     }
 
     if (cubo_presente){
+        cubo->activar_textura();
         glPushMatrix();
-            //glTranslatef(-150.0, 150.0, 0.0);
             glScalef(1.0f, 1.0f, 0.2f);
             cubo->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();

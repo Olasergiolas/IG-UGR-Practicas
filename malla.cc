@@ -217,7 +217,7 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
 }
 
 void Malla3D::inicializarColores(){
-    c.assign(v.size(), rojo3);
+    c.assign(v.size(), blanco3);
     c_alt_1.assign(v.size(), celeste3);
     c_alt_2.assign(v.size(), negro3);
     c_ajedrez0.assign(v.size(), verde3);
@@ -261,4 +261,12 @@ void Malla3D::inicializarMaterial(){
 
 void Malla3D::setMaterial(Material m){
     this->m = new Material(m.getAmbiente(), m.getDifusa(), m.getEspecular(), m.getBrillo());
+}
+
+void Malla3D::set_textura(std::string archivo){
+    textura = new Textura(archivo);
+}
+
+void Malla3D::activar_textura(){
+    textura->activar();
 }

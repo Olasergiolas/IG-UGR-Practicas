@@ -15,3 +15,4 @@ static const Tupla3f negro3(0.0f, 0.0f, 0.0f);
 static const Tupla3f celeste3(0.0f, 0.8f, 0.8f);
 static const Tupla3f verde3(0.5f, 0.0f, 1.0f);
 static const Tupla3f naranja3(1.0f, 0.5f, 0.0f);
+static const Tupla3f blanco3(1.0f, 1.0f, 1.0f);

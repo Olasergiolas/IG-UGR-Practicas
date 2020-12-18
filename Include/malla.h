@@ -34,6 +34,10 @@ class Malla3D
 
    void setMaterial(Material m);
 
+   void set_textura(std::string archivo);
+
+   void activar_textura();
+
    // dibuja el objeto en modo inmediato
    void draw_ModoInmediato(modo_coloreado coloreado=RELLENADO);
 

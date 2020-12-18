@@ -8,7 +8,7 @@ class Textura
 {
 private:
     GLuint textura_id = 0;
-    std::vector<unsigned char> data;
+    unsigned char* data = nullptr;
     int width, height;
 
 public:

@@ -56,6 +56,16 @@ Cubo::Cubo(float lado)
     std::vector<Tupla3i> auxC{c0, c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11};
     f = auxC;
 
+    //Coordenadas de textura para un cuadro
+    ct.push_back(Tupla2f(0.0f, 0.0f));
+    ct.push_back(Tupla2f(1.0f, 0.0f));
+    ct.push_back(Tupla2f(1.0f, 1.0f));
+    ct.push_back(Tupla2f(0.0f, 1.0f));
+    ct.push_back(Tupla2f(0.0f, 0.0f));
+    ct.push_back(Tupla2f(1.0f, 0.0f));
+    ct.push_back(Tupla2f(1.0f, 1.0f));
+    ct.push_back(Tupla2f(0.0f, 1.0f));
+
     calcular_normales();
     inicializarColores();
     inicializarMaterial();
