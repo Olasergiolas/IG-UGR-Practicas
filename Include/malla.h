@@ -13,6 +13,7 @@
 #include "Include/aux.h"
 #include "set"
 #include "Include/material.h"
+#include "Include/textura.h"
 
 // *****************************************************************************
 //
@@ -53,6 +54,7 @@ class Malla3D
    void inicializarMaterial();
 
    Material *m = nullptr;
+   Textura *textura = nullptr;
    std::vector<Tupla3f> v;   // tabla de coordenadas de vértices (una tupla por vértice, con tres floats)
    std::vector<Tupla3i> f; // una terna de 3 enteros por cada cara o triángulo
    std::vector<Tupla3i> f0;
@@ -63,6 +65,7 @@ class Malla3D
    std::vector<Tupla3f> c_alt_1;
    std::vector<Tupla3f> c_alt_2;
    std::vector<Tupla3f> nv;
+   std::vector<Tupla2f> ct;
    GLuint id_ver_buffer = 0;
    GLuint id_tri_buffer = 0;
    GLuint id_tri0_buffer = 0;

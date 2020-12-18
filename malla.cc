@@ -179,32 +179,39 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
 
     glEnableClientState(GL_COLOR_ARRAY);
 
-        for (auto it = estado_dibujados.begin(); it != estado_dibujados.end(); ++it){
-
-            glPolygonMode(GL_FRONT, *it);
-
-            if (*it == GL_LINE)
-                coloreado_final = ALT1;
-
-            else if (*it == GL_POINT)
-                coloreado_final = ALT2;
-
-            else if (coloreado == AJEDREZ)
-                coloreado_final = AJEDREZ;
-
-            else
-                coloreado_final = RELLENADO;
-
-            if (m != nullptr)
-                m->aplicar();
-
-            if (v == VBO)
-                draw_ModoDiferido(coloreado_final);
-
-            else
-                draw_ModoInmediato(coloreado_final);
-        
+    if (textura != nullptr){
+        glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+        glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
     }
+
+    for (auto it = estado_dibujados.begin(); it != estado_dibujados.end(); ++it){
+
+        glPolygonMode(GL_FRONT, *it);
+
+        if (*it == GL_LINE)
+            coloreado_final = ALT1;
+
+        else if (*it == GL_POINT)
+            coloreado_final = ALT2;
+
+        else if (coloreado == AJEDREZ)
+            coloreado_final = AJEDREZ;
+
+        else
+            coloreado_final = RELLENADO;
+
+        if (m != nullptr)
+            m->aplicar();
+
+        if (v == VBO)
+            draw_ModoDiferido(coloreado_final);
+
+        else
+            draw_ModoInmediato(coloreado_final);
+}
+
+    if (textura != nullptr)
+        glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 
     glDisableClientState(GL_COLOR_ARRAY);
 }

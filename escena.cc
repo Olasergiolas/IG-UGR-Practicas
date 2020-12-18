@@ -32,20 +32,20 @@ Escena::Escena()
     tetraedro = new Tetraedro();
     aux.actualizar(negro, verde, azul);
     tetraedro->setMaterial(aux);
-    tetraedro_presente = true;
+    tetraedro_presente = false;
 
     ply = new ObjPLY("./plys/big_dodge.ply");
     aux.actualizar(negro, celeste, naranja);
     ply->setMaterial(aux);
-    ply_presente = true;
+    ply_presente = false;
 
     inicializarLuces();
 
-    obj_rev_presente = true;
-    obj_rev2_presente = true;
-    cilindro_presente = true;
-    cono_presente = true;
-    esfera_presente = true;
+    obj_rev_presente = false;
+    obj_rev2_presente = false;
+    cilindro_presente = false;
+    cono_presente = false;
+    esfera_presente = false;
 
     actualizar_revolucion = false;
     iluminacion_activa = false;
@@ -107,7 +107,8 @@ void Escena::dibujar()
 
     if (cubo_presente){
         glPushMatrix();
-            glTranslatef(-150.0, 150.0, 0.0);
+            //glTranslatef(-150.0, 150.0, 0.0);
+            glScalef(1.0f, 1.0f, 0.2f);
             cubo->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }

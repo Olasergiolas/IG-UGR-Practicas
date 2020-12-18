@@ -17,13 +17,15 @@
 
 ObjRevolucion::ObjRevolucion() {}
 
-ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancias, bool tapa_sup, bool tapa_inf) :
-    ObjRevolucion(getPerfiloriginal(archivo), num_instancias, tapa_sup, tapa_inf){}
+ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancias, bool tapa_sup, bool tapa_inf,
+                             bool tex_coord) :
+    ObjRevolucion(getPerfiloriginal(archivo), num_instancias, tapa_sup, tapa_inf, tex_coord){}
 
 // *****************************************************************************
 // objeto de revolución obtenido a partir de un perfil (en un vector de puntos)
 
-ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup, bool tapa_inf) {
+ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup, bool tapa_inf,
+                             bool tex_coord) {
     std::vector<Tupla3f> perfil_original;
     Tupla3f p_norte, p_sur;
     perfil_original = perfil;
