@@ -63,11 +63,14 @@ class Escena
    bool ply_presente;
    bool cambiar_ply;
 
-   ObjRevolucion *obj_rev = nullptr;
-   bool obj_rev_presente;
+   ObjRevolucion *lata_cue = nullptr;
+   bool lata_cue_presente;
 
-   ObjRevolucion *obj_rev2 = nullptr;
-   bool obj_rev2_presente;
+   ObjRevolucion *lata_top = nullptr;
+   bool lata_top_presente;
+
+   ObjRevolucion *lata_bot = nullptr;
+   bool lata_bot_presente;
 
    bool esfera_presente;
    Esfera *esfera = nullptr;

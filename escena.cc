@@ -42,8 +42,10 @@ Escena::Escena()
 
     inicializarLuces();
 
-    obj_rev_presente = false;
-    obj_rev2_presente = false;
+    lata_cue_presente = true;
+    lata_bot_presente = false;
+    lata_top_presente = false;
+
     cilindro_presente = false;
     cono_presente = false;
     esfera_presente = false;
@@ -110,6 +112,7 @@ void Escena::dibujar()
     if (cubo_presente){
         cubo->activar_textura();
         glPushMatrix();
+            glTranslatef(150.0f, 0.0f, 0.0f);
             glScalef(1.0f, 1.0f, 0.2f);
             cubo->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -130,21 +133,21 @@ void Escena::dibujar()
         glPopMatrix();
     }
 
-    if (obj_rev_presente){
-        if (actualizar_revolucion || obj_rev == nullptr){
-            obj_rev = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
+    if (lata_cue_presente){
+        if (actualizar_revolucion || lata_cue == nullptr){
+            lata_cue = new ObjRevolucion("lata-pcue.ply", 20, tapas.first, tapas.second);
             Material m1(negro, blanco, negro, 90.0);
-            obj_rev->setMaterial(m1);
+            lata_cue->setMaterial(m1);
         }
 
         glPushMatrix();
-            glTranslatef(150.0, 150.0, 0.0);
-            glScalef(40.0,40.0,40.0);
-            obj_rev->draw(visualizacion, estado_dibujados, coloreado);
+            //glTranslatef(150.0, 150.0, 0.0);
+            glScalef(100.0,100.0,100.0);
+            lata_cue->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
-    if (obj_rev2_presente){
+    /*if (obj_rev2_presente){
         if (actualizar_revolucion || obj_rev2 == nullptr){
             obj_rev2 = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
             Material m2(negro, negro, blanco, 10.0);
@@ -156,7 +159,7 @@ void Escena::dibujar()
             glScalef(40.0,40.0,40.0);
             obj_rev2->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
-    }
+    }*/
 
     if (esfera_presente){
         if (actualizar_revolucion || esfera == nullptr){
@@ -254,8 +257,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
         case 'R':
             if (modoMenu == SELOBJETO){
-               obj_rev_presente = !obj_rev_presente;
-               obj_rev2_presente = !obj_rev2_presente;
+               lata_cue_presente = !lata_cue_presente;
+               //obj_rev2_presente = !obj_rev2_presente;
             }
            break;
 

@@ -63,6 +63,9 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancia
     inicializarColores();
     calcular_normales();
     inicializarMaterial();
+
+    if (tex_coord)
+        calcularTexCoord(num_instancias);
 }
 
 void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte,
@@ -191,4 +194,8 @@ std::vector<Tupla3f> ObjRevolucion::getPerfiloriginal(std::string archivo){
     ply::read_vertices(archivo, perfil);
 
     return perfil;
+}
+
+void ObjRevolucion::calcularTexCoord(unsigned num_instancias){
+
 }
