@@ -10,9 +10,9 @@
 #ifndef OBJPLY_H_INCLUDED
 #define OBJPLY_H_INCLUDED
 
-#include "aux.h"
-#include "ply_reader.h"
-#include "malla.h"
+#include "Include/aux.h"
+#include "Include/ply_reader.h"
+#include "Include/malla.h"
 
  
 

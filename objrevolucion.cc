@@ -1,6 +1,6 @@
-#include "aux.h"
-#include "objrevolucion.h"
-#include "ply_reader.h"
+#include "Include/aux.h"
+#include "Include/objrevolucion.h"
+#include "Include/ply_reader.h"
 #include "math.h"
 
 

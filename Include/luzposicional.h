@@ -1,8 +1,8 @@
 #ifndef LUZPOSICIONAL_H
 #define LUZPOSICIONAL_H
 
-#include "luz.h"
-#include "tuplasg.h"
+#include "Include/luz.h"
+#include "Include/tuplasg.h"
 
 
 class LuzPosicional : public Luz

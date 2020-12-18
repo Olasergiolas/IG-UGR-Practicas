@@ -1,4 +1,4 @@
-#include "esfera.h"
+#include "Include/esfera.h"
 #include "math.h"
 
 Esfera::Esfera(const int num_vert_perfil, const int num_instancias_perf, const float radio, std::pair<bool, bool> tapas)

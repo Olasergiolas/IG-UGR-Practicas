@@ -1,6 +1,6 @@
 #ifndef CONO_H
 #define CONO_H
-#include "objrevolucion.h"
+#include "Include/objrevolucion.h"
 
 
 class Cono : public ObjRevolucion

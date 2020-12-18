@@ -10,7 +10,7 @@
 #ifndef TETRAEDRO_H_INCLUDED
 #define TETRAEDRO_H_INCLUDED
 
-#include "aux.h"
+#include "Include/aux.h"
 
 // *****************************************************************************
 //

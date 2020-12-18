@@ -1,8 +1,8 @@
 #ifndef LUZDIRECCIONAL_H
 #define LUZDIRECCIONAL_H
 
-#include "luz.h"
-#include "tuplasg.h"
+#include "Include/luz.h"
+#include "Include/tuplasg.h"
 
 
 class LuzDireccional : public Luz

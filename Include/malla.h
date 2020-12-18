@@ -10,9 +10,9 @@
 #ifndef MALLA3D_H_INCLUDED
 #define MALLA3D_H_INCLUDED
 
-#include "aux.h"
+#include "Include/aux.h"
 #include "set"
-#include "material.h"
+#include "Include/material.h"
 
 // *****************************************************************************
 //

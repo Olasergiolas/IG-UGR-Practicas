@@ -1,4 +1,4 @@
-#include "aux.h"
+#include "Include/aux.h"
 
 static const Tupla4f blanco(1.0f, 1.0f, 1.0f, 1.0f);
 static const Tupla4f negro(0.0f, 0.0f, 0.0f, 1.0f);

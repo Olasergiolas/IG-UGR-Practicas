@@ -1,6 +1,6 @@
 #ifndef ESFERA_H
 #define ESFERA_H
-#include "objrevolucion.h"
+#include "Include/objrevolucion.h"
 
 
 class Esfera : public ObjRevolucion

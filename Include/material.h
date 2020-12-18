@@ -1,7 +1,7 @@
 #ifndef MATERIAL_H
 #define MATERIAL_H
 
-#include "tuplasg.h"
+#include "Include/tuplasg.h"
 
 class Material
 {

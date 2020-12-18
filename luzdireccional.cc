@@ -1,4 +1,4 @@
-#include "luzdireccional.h"
+#include "Include/luzdireccional.h"
 #include "math.h"
 
 LuzDireccional::LuzDireccional(Tupla2f direccion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorDifuso,

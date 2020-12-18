@@ -1,6 +1,6 @@
 #ifndef CILINDRO_H
 #define CILINDRO_H
-#include "objrevolucion.h"
+#include "Include/objrevolucion.h"
 
 class Cilindro : public ObjRevolucion
 {

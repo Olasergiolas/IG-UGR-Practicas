@@ -1,5 +1,5 @@
-#include "cilindro.h"
-#include "objrevolucion.h"
+#include "Include/cilindro.h"
+#include "Include/objrevolucion.h"
 
 Cilindro::Cilindro(const int num_vert_perfil, const int num_instancias_perf, const float altura,
                    const float radio, std::pair<bool, bool> tapas)

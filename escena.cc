@@ -1,7 +1,7 @@
 
 
-#include "aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
-#include "escena.h"
+#include "Include/aux.h"     // includes de OpenGL/glut/glew, windows, y librería std de C++
+#include "Include/escena.h"
 
 //**************************************************************************
 // constructor de la escena (no puede usar ordenes de OpenGL)

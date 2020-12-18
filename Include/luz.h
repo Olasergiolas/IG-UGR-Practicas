@@ -1,8 +1,8 @@
 #ifndef LUZ_H
 #define LUZ_H
 
-#include "malla.h"
-#include "tuplasg.h"
+#include "Include/malla.h"
+#include "Include/tuplasg.h"
 
 class Luz
 {

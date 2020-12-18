@@ -1,18 +1,18 @@
 #ifndef _ESCENA_H
 #define _ESCENA_H
 
-#include "ejes.h"
-#include "malla.h"
-#include "cubo.h"
-#include "tetraedro.h"
+#include "Include/ejes.h"
+#include "Include/malla.h"
+#include "Include/cubo.h"
+#include "Include/tetraedro.h"
 #include "set"
-#include "objply.h"
-#include "objrevolucion.h"
-#include "esfera.h"
-#include "cilindro.h"
-#include "cono.h"
-#include "luzposicional.h"
-#include "luzdireccional.h"
+#include "Include/objply.h"
+#include "Include/objrevolucion.h"
+#include "Include/esfera.h"
+#include "Include/cilindro.h"
+#include "Include/cono.h"
+#include "Include/luzposicional.h"
+#include "Include/luzdireccional.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION} menu;
 class Escena

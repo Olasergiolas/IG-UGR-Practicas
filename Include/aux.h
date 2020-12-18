@@ -36,7 +36,7 @@
 #  pragma GCC diagnostic ignored "-Wdeprecated-declarations" // ignora advertencias por uso de funciones obsoletas (p.ej. en GLUT)(sirve en OSX)
 #endif
 
-#include "tuplasg.h" // tipos: Tupla3f, Tupla2f, Tupla3d, etc.........
-#include "colors.h"
+#include "Include/tuplasg.h" // tipos: Tupla3f, Tupla2f, Tupla3d, etc.........
+#include "Include/colors.h"
 
 #endif // AUX_H_INCLUDED

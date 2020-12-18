@@ -1,4 +1,4 @@
-#include "luzposicional.h"
+#include "Include/luzposicional.h"
 
 LuzPosicional::LuzPosicional(Tupla3f posicion, GLenum idLuzOpenGL, Tupla4f colorAmbiente, Tupla4f colorDifuso,
                              Tupla4f colorEspecular)
