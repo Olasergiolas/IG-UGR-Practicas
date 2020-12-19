@@ -83,7 +83,7 @@ class Escena
 
 
 
-   bool perfil = false;
+   bool textura = false;
 
 
    

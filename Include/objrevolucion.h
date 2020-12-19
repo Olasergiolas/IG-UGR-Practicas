@@ -46,7 +46,7 @@ class ObjRevolucion : public Malla3D
 
        std::vector<Tupla3f> getPerfiloriginal(std::string archivo);
 
-       void calcularTexCoord(unsigned num_instancias);
+       void calcularTexCoord(unsigned num_instancias, unsigned num_v_perfil);
 } ;
 
 

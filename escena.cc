@@ -27,7 +27,7 @@ Escena::Escena()
     cubo = new Cubo(100);
     Material aux(negro, blanco, blanco, 90.0);
     cubo->setMaterial(aux);
-    cubo->set_textura("text-madera.jpg");
+    //cubo->set_textura("text-madera.jpg");
     cubo_presente = true;
 
     tetraedro = new Tetraedro();
@@ -110,7 +110,7 @@ void Escena::dibujar()
     }
 
     if (cubo_presente){
-        cubo->activar_textura();
+        //cubo->activar_textura();
         glPushMatrix();
             glTranslatef(150.0f, 0.0f, 0.0f);
             glScalef(1.0f, 1.0f, 0.2f);
@@ -135,15 +135,27 @@ void Escena::dibujar()
 
     if (lata_cue_presente){
         if (actualizar_revolucion || lata_cue == nullptr){
-            lata_cue = new ObjRevolucion("lata-pcue.ply", 20, tapas.first, tapas.second);
+            lata_cue = new ObjRevolucion("lata-pcue.ply", 100, false, false, true);
+            lata_bot = new ObjRevolucion("lata-pinf.ply", 100, true, true, true);
+            lata_top = new ObjRevolucion("lata-psup.ply", 100, true, true, true);
             Material m1(negro, blanco, negro, 90.0);
+            Material m2(negro, gris, blanco, 90.0);
             lata_cue->setMaterial(m1);
+            lata_top->setMaterial(m2);
+            lata_bot->setMaterial(m2);
+
+            if (!textura)
+                lata_cue->set_textura("text-lata-1.jpg");
+
+            lata_cue->activar_textura();
         }
 
         glPushMatrix();
             //glTranslatef(150.0, 150.0, 0.0);
             glScalef(100.0,100.0,100.0);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado);
+            lata_bot->draw(visualizacion, estado_dibujados, coloreado);
+            lata_top->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 

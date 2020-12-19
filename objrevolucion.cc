@@ -65,7 +65,7 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancia
     inicializarMaterial();
 
     if (tex_coord)
-        calcularTexCoord(num_instancias);
+        calcularTexCoord(num_instancias, perfil_original.size());
 }
 
 void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte,
@@ -196,6 +196,39 @@ std::vector<Tupla3f> ObjRevolucion::getPerfiloriginal(std::string archivo){
     return perfil;
 }
 
-void ObjRevolucion::calcularTexCoord(unsigned num_instancias){
+void ObjRevolucion::calcularTexCoord(unsigned num_instancias, unsigned num_v_perfil){
+    float s = 0.0f;
+    float t = 0.0f;
+    float distancia = 0.0f;
+    Tupla2f vector_perfil;
+    std::vector<float> distancias;
 
+    for (unsigned i = 0; i < v.size(); ++i)
+        std::cout << v[i] << std::endl;
+
+    for (unsigned i = 0; i < num_instancias; ++i){
+        //calculo la x para todo el perfil
+        s = (float)i/((float)num_instancias - 1);
+        distancias.push_back(0.0f);
+
+        for (unsigned j = 0; j < num_v_perfil; ++j){
+            //relleno el vector de distancias
+            vector_perfil(0) = v[(num_v_perfil * i) + (j + 1)](X) - v[(num_v_perfil * i) + j](X);
+            vector_perfil(1) = v[(num_v_perfil * i) + (j + 1)](Y) - v[(num_v_perfil * i) + j](Y);
+            distancia = vector_perfil.lengthSq();
+            distancia += *(distancias.end() - 1);
+            distancias.push_back(distancia);
+        }
+
+        for (unsigned j = 0; j < num_v_perfil; ++j){
+            //calculo y
+            t = distancias[j]/distancias[num_v_perfil - 1];
+            ct.push_back(Tupla2f(s, 1 - t));
+            //std::cout << "Añadiendo: " << s << ", " << t << std::endl;
+        }
+
+        distancias.clear();
+    }
+
+    //ct.erase(ct.end()-1);
 }
