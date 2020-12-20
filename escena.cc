@@ -55,7 +55,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
     std::cout << "Bienvenido! Seleccione un menú" << std::endl <<
                  "\tV: Selección de modo de visualización" << std::endl <<
-                 "\tD: Selección de dibujado" << std::endl;
+                 "\tD: Selección de dibujado" << std::endl <<
+                 "\tM: Selección de movimiento" << std::endl;
 }
 
 
