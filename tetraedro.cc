@@ -3,7 +3,7 @@
 #include "Include/tetraedro.h"
 #include "vector"
 
-Tetraedro::Tetraedro(bool invertir_normales)
+Tetraedro::Tetraedro()
 {
 
    // inicializar la tabla de vértices
@@ -31,7 +31,7 @@ Tetraedro::Tetraedro(bool invertir_normales)
     std::vector<Tupla3i> auxC{c0, c1, c2, c3};
     f = auxC;
 
-    calcular_normales(invertir_normales);
+    calcular_normales();
     inicializarColores();
     inicializarMaterial();
 }

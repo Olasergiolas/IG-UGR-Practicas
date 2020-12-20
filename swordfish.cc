@@ -5,7 +5,7 @@ Swordfish::Swordfish(){
     reactor = new ReactorDecorado();
     canon = new Canon();
     ala = new Ala();
-    ala1 = new Ala(true);
+    ala1 = new Ala();
     ext_alas = 0.0f;
 }
 
@@ -32,15 +32,16 @@ void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, mo
         glTranslatef(0.0f, 0.0f, ext_alas);
         glTranslatef(-30.0f, 0.0f, -100.0f);
         glRotatef(-90.0f, 0, 1, 0);
-        ala->draw(v, estado_dibujados, coloreado);
+        ala->draw(v, estado_dibujados, coloreado, true);
     glPopMatrix();
 
     glPushMatrix();
         glTranslatef(0.0f, 0.0f, -ext_alas);
-        glScalef(1.0f, 1.0f, -1.0f);
-        glTranslatef(-30.0f, 0.0f, -100.0f);
+        glTranslatef(-30.0f, 0.0f, 100.0f);
+        glRotatef(180.0f, 0, 0, 1);
+        glRotatef(180.0f, 0, 1, 0);
         glRotatef(-90.0f, 0, 1, 0);
-        ala1->draw(v, estado_dibujados, coloreado);
+        ala1->draw(v, estado_dibujados, coloreado, false);
     glPopMatrix();
     //Fin alas
 }

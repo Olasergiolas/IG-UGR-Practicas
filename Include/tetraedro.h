@@ -24,7 +24,7 @@
 class Tetraedro: public Malla3D
 {
    public:
-      Tetraedro(bool invertir_normales=false);
+      Tetraedro();
 
 } ;
 

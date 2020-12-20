@@ -232,8 +232,8 @@ void Malla3D::calcular_normales(bool invertir){
 
         else
             mc = b.cross(a);
-        mc = mc.normalized();
 
+        mc = mc.normalized();
         tabla_normales_c.push_back(mc);
     }
 
