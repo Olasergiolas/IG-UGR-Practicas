@@ -135,7 +135,7 @@ void Escena::dibujar()
 
     if (lata_cue_presente){
         if (actualizar_revolucion || lata_cue == nullptr){
-            lata_cue = new ObjRevolucion("lata-pcue.ply", 100, false, false, true);
+            lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
             lata_bot = new ObjRevolucion("lata-pinf.ply", 100, true, true, true);
             lata_top = new ObjRevolucion("lata-psup.ply", 100, true, true, true);
             Material m1(negro, blanco, negro, 90.0);
@@ -205,7 +205,7 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
-            glTranslatef(150, 0, 0);
+            //glTranslatef(150, 0, 0);
             glScalef(70.0,70.0,70.0);
             cilindro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
