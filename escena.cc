@@ -30,7 +30,7 @@ Escena::Escena()
     cubo->set_textura("text-madera.jpg");
     cubo_presente = true;
 
-    tetraedro = new Tetraedro();
+    /*tetraedro = new Tetraedro();
     aux.actualizar(negro, verde, azul);
     tetraedro->setMaterial(aux);
     tetraedro_presente = false;
@@ -38,7 +38,7 @@ Escena::Escena()
     ply = new ObjPLY("./plys/big_dodge.ply");
     aux.actualizar(negro, celeste, naranja);
     ply->setMaterial(aux);
-    ply_presente = false;
+    ply_presente = false;*/
 
     inicializarLuces();
 
@@ -136,8 +136,8 @@ void Escena::dibujar()
     if (lata_presente){
         if (actualizar_revolucion || lata_cue == nullptr){
             lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
-            lata_bot = new ObjRevolucion("lata-pinf.ply", 100, tapas.first, tapas.second, true);
-            lata_top = new ObjRevolucion("lata-psup.ply", 100, tapas.first, tapas.second, true);
+            lata_bot = new ObjRevolucion("lata-pinf.ply", 100, tapas.first, tapas.second, false);
+            lata_top = new ObjRevolucion("lata-psup.ply", 100, tapas.first, tapas.second, false);
             Material m1(negro, blanco, negro, 90.0);
             Material m2(negro, gris, blanco, 90.0);
             lata_cue->setMaterial(m1);
@@ -152,6 +152,7 @@ void Escena::dibujar()
         glPushMatrix();
             glTranslatef(-50.0f, 0.0f, 0.0f);
             glScalef(100.0,100.0,100.0);
+            glRotatef(-90.0f, 0, 1, 0);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado);
             lata_bot->draw(visualizacion, estado_dibujados, coloreado);
             lata_top->draw(visualizacion, estado_dibujados, coloreado);

@@ -58,10 +58,11 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancia
            perfil_original.erase(perfil_original.end() - 1);
    }
 
-    crearMalla(perfil_original, num_instancias);
+    tam_perfil = perfil_original.size();
+    crearMalla(perfil_original, num_instancias, tex_coord);
     crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size());
     inicializarColores();
-    calcular_normales();
+    calcular_normales(tex_coord);
     inicializarMaterial();
 
     if (tex_coord)
@@ -140,7 +141,8 @@ void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_nort
     }
 }
 
-void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias) {
+void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias,
+                               bool rotacion_completa) {
     Tupla3f vertice_aux;
     float old_x, old_z;
     float angulo;
@@ -157,8 +159,10 @@ void ObjRevolucion::crearMalla(std::vector<Tupla3f> perfil_original, unsigned nu
     }
 
     //Duplicamos la primera costura para completar la rotación
-    v.insert(v.end(), perfil_original.begin(), perfil_original.end());
-    num_instancias++;
+    if (rotacion_completa){
+        v.insert(v.end(), perfil_original.begin(), perfil_original.end());
+        num_instancias++;
+    }
 
 
     Tupla3i cara_aux;
@@ -251,4 +255,43 @@ void ObjRevolucion::calcularTexCoord(unsigned num_instancias, unsigned num_v_per
                 std::cout << "V: " << v[i*num_v_perfil + x]  << std::endl;
         }
     }*/
+}
+
+//Redefinimos el método para obviar la instancia añadida para completar la rotación
+void ObjRevolucion::calcular_normales(bool rotacion_completa){
+    //Tabla de normales de las caras
+    Tupla3f a, b, mc;
+    Tupla3i caraActual;
+
+    unsigned num_vertices = v.size();
+    unsigned num_caras = f.size();
+
+    if (rotacion_completa){
+        num_vertices -= tam_perfil;    //Para no tener en cuenta la última instancia
+        num_caras -= tam_perfil*2 - 2; //Ya que hay dos caras por vértice
+    }
+
+    std::vector<Tupla3f> tabla_normales_c;
+    for (unsigned i = 0; i < num_caras; ++i){
+        caraActual = f[i];
+
+        a = v[caraActual(1)] - v[caraActual(0)];
+        b = v[caraActual(2)] - v[caraActual(0)];
+        mc = a.cross(b);
+        mc = mc.normalized();
+
+        tabla_normales_c.push_back(mc);
+    }
+
+    //Tabla de normales de los vértices
+    nv.assign(num_vertices, Tupla3f(0.0, 0.0, 0.0));
+    for (unsigned i = 0; i < num_caras; ++i){
+        caraActual = f[i];
+        nv[caraActual(0)] = nv[caraActual(0)] + tabla_normales_c[i];
+        nv[caraActual(1)] = nv[caraActual(1)] + tabla_normales_c[i];
+        nv[caraActual(2)] = nv[caraActual(2)] + tabla_normales_c[i];
+    }
+
+    for (unsigned i = 0; i < nv.size(); ++i)
+        nv[i] = nv[i].normalized();
 }
