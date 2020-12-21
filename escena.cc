@@ -27,7 +27,7 @@ Escena::Escena()
     cubo = new Cubo(100);
     Material aux(negro, blanco, blanco, 90.0);
     cubo->setMaterial(aux);
-    //cubo->set_textura("text-madera.jpg");
+    cubo->set_textura("text-madera.jpg");
     cubo_presente = true;
 
     tetraedro = new Tetraedro();
@@ -42,9 +42,7 @@ Escena::Escena()
 
     inicializarLuces();
 
-    lata_cue_presente = true;
-    lata_bot_presente = false;
-    lata_top_presente = false;
+    lata_presente = true;
 
     cilindro_presente = false;
     cono_presente = false;
@@ -99,8 +97,10 @@ void Escena::dibujar()
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
     glDisable(GL_LIGHTING);
+    glDisable(GL_TEXTURE_2D);
     ejes.draw();
 
+    glEnable(GL_TEXTURE_2D);
     if (iluminacion_activa)
         glEnable(GL_LIGHTING);
 
@@ -110,9 +110,9 @@ void Escena::dibujar()
     }
 
     if (cubo_presente){
-        //cubo->activar_textura();
+        cubo->activar_textura();
         glPushMatrix();
-            glTranslatef(150.0f, 0.0f, 0.0f);
+            glTranslatef(100.0f, 0.0f, 0.0f);
             glScalef(1.0f, 1.0f, 0.2f);
             cubo->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -133,11 +133,11 @@ void Escena::dibujar()
         glPopMatrix();
     }
 
-    if (lata_cue_presente){
+    if (lata_presente){
         if (actualizar_revolucion || lata_cue == nullptr){
             lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
-            lata_bot = new ObjRevolucion("lata-pinf.ply", 100, true, true, true);
-            lata_top = new ObjRevolucion("lata-psup.ply", 100, true, true, true);
+            lata_bot = new ObjRevolucion("lata-pinf.ply", 100, tapas.first, tapas.second, true);
+            lata_top = new ObjRevolucion("lata-psup.ply", 100, tapas.first, tapas.second, true);
             Material m1(negro, blanco, negro, 90.0);
             Material m2(negro, gris, blanco, 90.0);
             lata_cue->setMaterial(m1);
@@ -146,32 +146,17 @@ void Escena::dibujar()
 
             if (!textura)
                 lata_cue->set_textura("text-lata-1.jpg");
-
-            lata_cue->activar_textura();
         }
 
+        lata_cue->activar_textura();
         glPushMatrix();
-            //glTranslatef(150.0, 150.0, 0.0);
+            glTranslatef(-50.0f, 0.0f, 0.0f);
             glScalef(100.0,100.0,100.0);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado);
             lata_bot->draw(visualizacion, estado_dibujados, coloreado);
             lata_top->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
-
-    /*if (obj_rev2_presente){
-        if (actualizar_revolucion || obj_rev2 == nullptr){
-            obj_rev2 = new ObjRevolucion("./plys/peonR.ply", 20, tapas.first, tapas.second);
-            Material m2(negro, negro, blanco, 10.0);
-            obj_rev2->setMaterial(m2);
-        }
-
-        glPushMatrix();
-            glTranslatef(150.0, -150.0, 0.0);
-            glScalef(40.0,40.0,40.0);
-            obj_rev2->draw(visualizacion, estado_dibujados, coloreado);
-        glPopMatrix();
-    }*/
 
     if (esfera_presente){
         if (actualizar_revolucion || esfera == nullptr){
@@ -262,34 +247,33 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
 
         case 'B' :
-            if (modoMenu == SELOBJETO){
+            if (modoMenu == SELOBJETO)
                 ply_presente = !ply_presente;
-            }
+
             break;
 
         case 'R':
-            if (modoMenu == SELOBJETO){
-               lata_cue_presente = !lata_cue_presente;
-               //obj_rev2_presente = !obj_rev2_presente;
-            }
+            if (modoMenu == SELOBJETO)
+               lata_presente = !lata_presente;
+
            break;
 
         case '3':
-            if (modoMenu == SELOBJETO){
+            if (modoMenu == SELOBJETO)
               esfera_presente = !esfera_presente;
-            }
+
           break;
 
         case '4':
-            if (modoMenu == SELOBJETO){
+            if (modoMenu == SELOBJETO)
              cono_presente = !cono_presente;
-            }
+
          break;
 
         case '5':
-            if (modoMenu == SELOBJETO){
+            if (modoMenu == SELOBJETO)
              cilindro_presente = !cilindro_presente;
-            }
+
          break;
 
 
@@ -598,6 +582,49 @@ void Escena::inicializarLuces(){
 
     LuzDireccional *luz2 = new LuzDireccional(Tupla2f(0.0, 0.0), GL_LIGHT2, negro, blanco, blanco);
     luces.push_back(luz2);
+}
+
+void Escena::animarIluminacion(){
+    float max_range = 300.0f;
+    float X_increment = 10.0f, Y_increment = 10.0f, Z_increment = 10.0f;
+    Tupla4f current_pos;
+
+    //La luz en la pos 0 es la puntual
+    //current_pos = luces[0]->getPos();
+
+    //Se comprueba si la luz debe avanzar o retroceder
+    /*if (current_pos(0) > max_range)
+        X_increment = -X_increment;
+
+
+    if (current_pos(1) > max_range)
+        Y_increment = -Y_increment;
+
+
+    if (current_pos(2) > max_range)
+        Z_increment = -Z_increment;*/
+
+
+    //Obtenemos las nuevas coordenadas
+    //current_pos(0) += X_increment;
+    //current_pos(1) += Y_increment;
+    //current_pos(2) += Z_increment;
+
+
+    /*if (current_pos(0) <= 0.0f)
+        X_increment = -X_increment;
+
+
+    if (current_pos(1) <= 0.0f)
+        Y_increment = -Y_increment;
+
+
+    if (current_pos(2) <= 0.0f)
+        Z_increment = -Z_increment;*/
+
+
+    //luces[0]->setPos(current_pos);
+    //luces[0]->activar();
 }
 
 Escena::~Escena(){

@@ -35,8 +35,6 @@ class Escena
     // Transformación de cámara
 	void change_projection( const float ratio_xy );
 	void change_observer();
-    
-
 
    void clear_window();
 
@@ -64,13 +62,11 @@ class Escena
    bool cambiar_ply;
 
    ObjRevolucion *lata_cue = nullptr;
-   bool lata_cue_presente;
+   bool lata_presente;
 
    ObjRevolucion *lata_top = nullptr;
-   bool lata_top_presente;
 
    ObjRevolucion *lata_bot = nullptr;
-   bool lata_bot_presente;
 
    bool esfera_presente;
    Esfera *esfera = nullptr;
@@ -81,12 +77,8 @@ class Escena
    bool cilindro_presente;
    Cilindro *cilindro = nullptr;
 
-
-
    bool textura = false;
 
-
-   
    public:
 
     Escena();
@@ -102,6 +94,7 @@ class Escena
 	void teclaEspecial( int Tecla1, int x, int y );
     GLenum getIdLuz(unsigned char c);
     void inicializarLuces();
+    void animarIluminacion();
 
 };
 #endif

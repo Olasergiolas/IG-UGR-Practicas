@@ -87,6 +87,14 @@ void special_keys( int tecla, int x, int y )
 	glutPostRedisplay();
 }
 
+//Función a la que llamar cuando no se pulse ningún botón
+void funcion_idle(){
+    if (escena != nullptr)
+        escena->animarIluminacion();
+    glutPostRedisplay();
+}
+
+
 //***************************************************************************
 // Programa principal
 //
@@ -152,7 +160,8 @@ int main( int argc, char **argv )
    // funcion de inicialización de la escena (necesita que esté la ventana creada)
    escena->inicializar( UI_window_width, UI_window_height );
 
-
+   //Tareas de automatización
+   glutIdleFunc(funcion_idle);
 
    // ejecutar del bucle de eventos
    glutMainLoop();

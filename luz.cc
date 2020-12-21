@@ -6,3 +6,11 @@ void Luz::activar(){
     glLightfv(id, GL_SPECULAR, colorEspecular);
     glLightfv(id, GL_AMBIENT, colorAmbiente);
 }
+
+void Luz::setPos(Tupla4f pos){
+    posicion = pos;
+}
+
+Tupla4f Luz::getPos(){
+    return posicion;
+}

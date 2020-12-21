@@ -15,6 +15,8 @@ protected:
 
 public:
     void activar();
+    void setPos(Tupla4f pos);
+    Tupla4f getPos();
 };
 
 #endif // LUZ_H
