@@ -161,7 +161,7 @@ int main( int argc, char **argv )
    escena->inicializar( UI_window_width, UI_window_height );
 
    //Tareas de automatización
-   //glutIdleFunc(funcion_idle);
+   glutIdleFunc(funcion_idle);
 
    // ejecutar del bucle de eventos
    glutMainLoop();

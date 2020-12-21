@@ -23,6 +23,7 @@ Escena::Escena()
     tapas.second = true;
     rotaciones.first = false;
     rotaciones.second = false;
+    anima_luces = false;
 
     cubo = new Cubo(100);
     Material aux(negro, blanco, blanco, 90.0);
@@ -75,6 +76,9 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
     glEnable(GL_NORMALIZE);
     glEnable(GL_TEXTURE_2D);
     glShadeModel(GL_SMOOTH);
+
+    //Generamos la semilla para los rand utilizados
+    srand(time(0));
 
     std::cout << "Bienvenido! Seleccione un menú" << std::endl <<
                  "\tO: Selección de objeto" << std::endl <<
@@ -136,23 +140,22 @@ void Escena::dibujar()
     if (lata_presente){
         if (actualizar_revolucion || lata_cue == nullptr){
             lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
-            lata_bot = new ObjRevolucion("lata-pinf.ply", 100, tapas.first, tapas.second, false);
-            lata_top = new ObjRevolucion("lata-psup.ply", 100, tapas.first, tapas.second, false);
+            lata_bot = new ObjRevolucion("lata-pinf.ply", 50, tapas.first, tapas.second, false);
+            lata_top = new ObjRevolucion("lata-psup.ply", 50, tapas.first, tapas.second, false);
             Material m1(negro, blanco, negro, 90.0);
             Material m2(negro, gris, blanco, 90.0);
             lata_cue->setMaterial(m1);
             lata_top->setMaterial(m2);
             lata_bot->setMaterial(m2);
 
-            if (!textura)
-                lata_cue->set_textura("text-lata-1.jpg");
+            lata_cue->set_textura("text-lata-1.jpg");
         }
 
         lata_cue->activar_textura();
         glPushMatrix();
             glTranslatef(-50.0f, 0.0f, 0.0f);
             glScalef(100.0,100.0,100.0);
-            glRotatef(-90.0f, 0, 1, 0);
+            glRotatef(90.0f, 0, 1, 0);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado);
             lata_bot->draw(visualizacion, estado_dibujados, coloreado);
             lata_top->draw(visualizacion, estado_dibujados, coloreado);
@@ -352,7 +355,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                         "\tA: Modificar alpha" << endl <<
                         "\tB: Modificar beta" << endl <<
                         "\t>: Incrementar ángulo" << endl <<
-                        "\t<: Reducir ángulo" << endl;
+                        "\t<: Reducir ángulo" << endl <<
+                        "\tP: Animar luz puntual" << endl;
            iluminacion_activa = true;
            modoMenu = ILUMINACION;
            break;
@@ -460,6 +464,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                //std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
            }
 
+           break;
+
+       case 'P':
+            anima_luces = !anima_luces;
            break;
        }
    }
@@ -575,7 +583,7 @@ GLenum Escena::getIdLuz(unsigned char c){
 }
 
 void Escena::inicializarLuces(){
-    Tupla3f pos(0.0f, 150.0f, 150.0f);
+    Tupla3f pos(0.0f, -150.0f, 150.0f);
     estado_luces.assign(8, false);
 
     LuzPosicional *luz1 = new LuzPosicional(pos, GL_LIGHT1, negro, naranja, celeste);
@@ -586,46 +594,22 @@ void Escena::inicializarLuces(){
 }
 
 void Escena::animarIluminacion(){
-    float max_range = 300.0f;
-    float X_increment = 10.0f, Y_increment = 10.0f, Z_increment = 10.0f;
-    Tupla4f current_pos;
+    if (anima_luces){
+        float max_range = 500.0f;
+        float X_increment = rand()%20, Y_increment = rand()%20, Z_increment = rand()%20;
+        Tupla4f current_pos = luces[0]->getPos();
 
-    //La luz en la pos 0 es la puntual
-    //current_pos = luces[0]->getPos();
+        //La luz en la pos 0 es la puntual
+        current_pos = luces[0]->getPos();
 
-    //Se comprueba si la luz debe avanzar o retroceder
-    /*if (current_pos(0) > max_range)
-        X_increment = -X_increment;
+        if (current_pos(X) > max_range || current_pos(Y) > max_range){
+            X_increment = -max_range;
+            Y_increment = -max_range;
+            Z_increment = -rand() % 1000;
+        }
 
-
-    if (current_pos(1) > max_range)
-        Y_increment = -Y_increment;
-
-
-    if (current_pos(2) > max_range)
-        Z_increment = -Z_increment;*/
-
-
-    //Obtenemos las nuevas coordenadas
-    //current_pos(0) += X_increment;
-    //current_pos(1) += Y_increment;
-    //current_pos(2) += Z_increment;
-
-
-    /*if (current_pos(0) <= 0.0f)
-        X_increment = -X_increment;
-
-
-    if (current_pos(1) <= 0.0f)
-        Y_increment = -Y_increment;
-
-
-    if (current_pos(2) <= 0.0f)
-        Z_increment = -Z_increment;*/
-
-
-    //luces[0]->setPos(current_pos);
-    //luces[0]->activar();
+        luces[0]->setPos(X_increment, Y_increment, Z_increment);
+    }
 }
 
 Escena::~Escena(){

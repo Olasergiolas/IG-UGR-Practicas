@@ -15,7 +15,7 @@ protected:
 
 public:
     void activar();
-    void setPos(Tupla4f pos);
+    void setPos(float inc_X, float inc_Y, float inc_Z);
     Tupla4f getPos();
 };
 

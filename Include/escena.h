@@ -77,7 +77,7 @@ class Escena
    bool cilindro_presente;
    Cilindro *cilindro = nullptr;
 
-   bool textura = false;
+   bool anima_luces;
 
    public:
 

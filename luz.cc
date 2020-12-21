@@ -7,8 +7,10 @@ void Luz::activar(){
     glLightfv(id, GL_AMBIENT, colorAmbiente);
 }
 
-void Luz::setPos(Tupla4f pos){
-    posicion = pos;
+void Luz::setPos(float inc_X, float inc_Y, float inc_Z){
+    posicion(X) += inc_X;
+    posicion(Y) += inc_Y;
+    posicion(Z) += inc_Z;
 }
 
 Tupla4f Luz::getPos(){
