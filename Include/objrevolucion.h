@@ -29,6 +29,7 @@ class ObjRevolucion : public Malla3D
 {
     protected:
         sentido s;
+        int tam_perfil;
 
    public:
        ObjRevolucion();
@@ -42,11 +43,13 @@ class ObjRevolucion : public Malla3D
        void crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte, unsigned num_instancias,
                        unsigned num_vertices);
 
-       void crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias);
+       void crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias, bool rotacion_completa=false);
 
        std::vector<Tupla3f> getPerfiloriginal(std::string archivo);
 
        void calcularTexCoord(unsigned num_instancias, unsigned num_v_perfil);
+
+       void calcular_normales(bool rotacion_completa=false);
 } ;
 
 
