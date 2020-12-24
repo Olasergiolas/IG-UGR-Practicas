@@ -284,7 +284,7 @@ void ObjRevolucion::calcular_normales(bool rotacion_completa){
     }
 
     //Tabla de normales de los vértices
-    nv.assign(num_vertices, Tupla3f(0.0, 0.0, 0.0));
+    nv.assign(v.size(), Tupla3f(0.0, 0.0, 0.0));
     for (unsigned i = 0; i < num_caras; ++i){
         caraActual = f[i];
         nv[caraActual(0)] = nv[caraActual(0)] + tabla_normales_c[i];
