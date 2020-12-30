@@ -35,15 +35,16 @@ class ObjRevolucion : public Malla3D
        ObjRevolucion();
 
        ObjRevolucion(const std::string & archivo, unsigned num_instancias, bool tapa_sup=true, bool tapa_inf=true,
-                     bool tex_coord=false) ;
+                     bool tex_coord=false, bool invertir_sentido=false) ;
 
        ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup=true, bool tapa_inf=true,
-                     bool tex_coord=false) ;
+                     bool tex_coord=false, bool invertir_sentido=false) ;
 
        void crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte, unsigned num_instancias,
-                       unsigned num_vertices);
+                       unsigned num_vertices, bool invertir_sentido=false);
 
-       void crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias, bool rotacion_completa=false);
+       void crearMalla(std::vector<Tupla3f> perfil_original, unsigned num_instancias, bool rotacion_completa=false,
+                       bool invertir_sentido=false);
 
        std::vector<Tupla3f> getPerfiloriginal(std::string archivo);
 

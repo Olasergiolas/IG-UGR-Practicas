@@ -50,7 +50,7 @@ Escena::Escena()
     esfera_presente = false;
 
     actualizar_revolucion = false;
-    iluminacion_activa = false;
+    iluminacion_activa = true;
 }
 
 //**************************************************************************
@@ -140,8 +140,8 @@ void Escena::dibujar()
     if (lata_presente){
         if (actualizar_revolucion || lata_cue == nullptr){
             lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
-            lata_bot = new ObjRevolucion("lata-pinf.ply", 50, tapas.first, tapas.second, false);
-            lata_top = new ObjRevolucion("lata-psup.ply", 50, tapas.first, tapas.second, false);
+            lata_bot = new ObjRevolucion("lata-pinf.ply", 50, false, true, false);
+            lata_top = new ObjRevolucion("lata-psup.ply", 50, tapas.first, tapas.second, false, true);
             Material m1(negro, blanco, negro, 90.0);
             Material m2(negro, gris, blanco, 90.0);
             lata_cue->setMaterial(m1);
@@ -157,8 +157,10 @@ void Escena::dibujar()
             glScalef(100.0,100.0,100.0);
             glRotatef(90.0f, 0, 1, 0);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado);
+            glDisable(GL_TEXTURE_2D);
             lata_bot->draw(visualizacion, estado_dibujados, coloreado);
             lata_top->draw(visualizacion, estado_dibujados, coloreado);
+            glEnable(GL_TEXTURE_2D);
         glPopMatrix();
     }
 
