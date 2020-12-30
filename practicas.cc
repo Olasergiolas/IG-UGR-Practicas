@@ -89,8 +89,10 @@ void special_keys( int tecla, int x, int y )
 
 //Función a la que llamar cuando no se pulse ningún botón
 void funcion_idle(){
-    if (escena != nullptr)
+    if (escena != nullptr){
         escena->animarIluminacion();
+        escena->animarModeloJerarquico();
+    }
     glutPostRedisplay();
 }
 

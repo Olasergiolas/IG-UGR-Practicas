@@ -10,7 +10,7 @@
 #ifndef CUBO_H_INCLUDED
 #define CUBO_H_INCLUDED
 
-#include "Include/aux.h"
+#include "Include/malla.h"
 #include "vector"
 
 // *****************************************************************************

@@ -31,7 +31,7 @@ Escena::Escena()
     cubo->set_textura("text-madera.jpg");
     cubo_presente = true;
 
-    /*tetraedro = new Tetraedro();
+    tetraedro = new Tetraedro();
     aux.actualizar(negro, verde, azul);
     tetraedro->setMaterial(aux);
     tetraedro_presente = false;
@@ -39,7 +39,7 @@ Escena::Escena()
     ply = new ObjPLY("./plys/big_dodge.ply");
     aux.actualizar(negro, celeste, naranja);
     ply->setMaterial(aux);
-    ply_presente = false;*/
+    ply_presente = false;
 
     inicializarLuces();
 
@@ -49,8 +49,11 @@ Escena::Escena()
     cono_presente = false;
     esfera_presente = false;
 
+    swordfish_presente = true;
+    swordfish = new Swordfish();
+
     actualizar_revolucion = false;
-    iluminacion_activa = false;
+    iluminacion_activa = true;
 }
 
 //**************************************************************************
@@ -84,7 +87,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
                  "\tO: Selección de objeto" << std::endl <<
                  "\tV: Selección de modo de visualización" << std::endl <<
                  "\tD: Selección de dibujado" << std::endl <<
-                 "\tU: Tapas" << std::endl;
+                 "\tU: Tapas" << std::endl <<
+                 "\tX: Selección de movimiento del M.J" << std::endl;
 }
 
 
@@ -116,7 +120,7 @@ void Escena::dibujar()
     if (cubo_presente){
         cubo->activar_textura();
         glPushMatrix();
-            glTranslatef(100.0f, 0.0f, 0.0f);
+            glTranslatef(0.0f, 150.0f, 0.0f);
             glScalef(1.0f, 1.0f, 0.2f);
             cubo->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -124,7 +128,7 @@ void Escena::dibujar()
 
     if (tetraedro_presente){
         glPushMatrix();
-            glTranslatef(0.0, 150.0, 0.0);
+            glTranslatef(150.0f, 150.0f, 0.0f);
             tetraedro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
@@ -140,8 +144,8 @@ void Escena::dibujar()
     if (lata_presente){
         if (actualizar_revolucion || lata_cue == nullptr){
             lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
-            lata_bot = new ObjRevolucion("lata-pinf.ply", 50, tapas.first, tapas.second, false);
-            lata_top = new ObjRevolucion("lata-psup.ply", 50, tapas.first, tapas.second, false);
+            lata_bot = new ObjRevolucion("lata-pinf.ply", 50, false, true, false);
+            lata_top = new ObjRevolucion("lata-psup.ply", 50, tapas.first, tapas.second, false, true);
             Material m1(negro, blanco, negro, 90.0);
             Material m2(negro, gris, blanco, 90.0);
             lata_cue->setMaterial(m1);
@@ -153,12 +157,14 @@ void Escena::dibujar()
 
         lata_cue->activar_textura();
         glPushMatrix();
-            glTranslatef(-50.0f, 0.0f, 0.0f);
+            glTranslatef(-150.0f, 0.0f, 0.0f);
             glScalef(100.0,100.0,100.0);
             glRotatef(90.0f, 0, 1, 0);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado);
+            glDisable(GL_TEXTURE_2D);
             lata_bot->draw(visualizacion, estado_dibujados, coloreado);
             lata_top->draw(visualizacion, estado_dibujados, coloreado);
+            glEnable(GL_TEXTURE_2D);
         glPopMatrix();
     }
 
@@ -170,7 +176,7 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
-            glTranslatef(0, 0, 0);
+            glTranslatef(0.0f, -150.0f, 0);
             glScalef(70.0,70.0,70.0);
             esfera->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -182,7 +188,7 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
-            glTranslatef(-150, 0, 0);
+            glTranslatef(-150.0f, 150.0f, 0);
             glScalef(70.0,70.0,70.0);
             cono->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -194,10 +200,19 @@ void Escena::dibujar()
         }
 
         glPushMatrix();
-            //glTranslatef(150, 0, 0);
+            glTranslatef(150.0f, 150.0f, 0.0f);
             glScalef(70.0,70.0,70.0);
             cilindro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
+    }
+
+    if (swordfish_presente){
+        glDisable(GL_TEXTURE_2D);
+        glPushMatrix();
+            glTranslatef(150.0f, 0.0f, 0.0f);
+            swordfish->draw(visualizacion, estado_dibujados, coloreado);
+        glPopMatrix();
+        glEnable(GL_TEXTURE_2D);
     }
 
     actualizar_revolucion = false;
@@ -214,7 +229,11 @@ void Escena::dibujar()
 bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 {
    using namespace std ;
-   cout << "Tecla pulsada: '" << tecla << "'" << endl;
+   //Para no inundar la pantalla con la misma tecla
+   if (ultima_tecla != tecla){
+        cout << "Tecla pulsada: '" << tecla << "'" << endl;
+        ultima_tecla = tecla;
+   }
    bool salir=false;
 
    switch( toupper(tecla) )
@@ -378,9 +397,24 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                visualizacion = VBO;
            break;
 
+       case 'X' :
+          std::cout << "Menú de movimiento" << endl <<
+                      "\t3: Rotación en X de alerones" << endl <<
+                      "\t4: Rotación en Z de alerones" << endl <<
+                      "\t5: Extensión de alas" << endl <<
+                      "\t6: Rotación de la cápsula" << endl <<
+                      "\t7: Movimiento automático" << endl;
+           modoMenu = MOVIMIENTO;
+
+           std::cout << std::endl;
+           std::cout << "Interacción con el movimiento" << endl <<
+                       "\t+: Incremento del valor" << endl <<
+                       "\t-: Decremento del valor" << endl;
+
+           break;
+
 
            //Interruptores de las tapaderas
-
         case 'U':
            std::cout << "Modo selección de dibujado" << endl <<
                        "\tN: Tapa inferior" << endl <<
@@ -403,6 +437,140 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
 
    }
+
+   if (modoMenu == MOVIMIENTO){
+       switch (toupper(tecla)) {
+       case '3' :
+           if (modoMenu == MOVIMIENTO)
+               modoMenu = MOVIMIENTO_0;
+
+           break;
+
+      case '4' :
+              if (modoMenu == MOVIMIENTO)
+                  modoMenu = MOVIMIENTO_1;
+
+              break;
+
+      case '5' :
+          if (modoMenu == MOVIMIENTO)
+              modoMenu = MOVIMIENTO_2;
+
+          break;
+
+      case '6' :
+          if (modoMenu == MOVIMIENTO)
+              modoMenu = MOVIMIENTO_3;
+
+          break;
+
+      case '7' :
+          if (modoMenu == MOVIMIENTO)
+              modoMenu = MOVIMIENTO_AUTO;
+
+          else if (modoMenu == MOVIMIENTO_AUTO)
+              modoMenu = MOVIMIENTO;
+
+          break;
+       }
+   }
+
+   if (modoMenu == MOVIMIENTO_0){
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setAlphaAlerones(10);
+           break;
+
+       case '-' :
+           swordfish->setAlphaAlerones(-10);
+           break;
+       }
+   }
+
+   else if (modoMenu == MOVIMIENTO_1){
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setBetaAlerones(10);
+           break;
+
+       case '-' :
+           swordfish->setBetaAlerones(-10);
+           break;
+       }
+   }
+
+   else if (modoMenu == MOVIMIENTO_2){
+       switch (toupper(tecla)){
+       case '-' :
+           if (swordfish->getExtAlas() < 10.0f)
+                swordfish->setExtAlas(10.0f);
+           break;
+
+       case '+' :
+           if (swordfish->getExtAlas() > -50.0f)
+           swordfish->setExtAlas(-10.0f);
+           break;
+       }
+   }
+
+   else if (modoMenu == MOVIMIENTO_3){
+       switch (toupper(tecla)){
+       case '+' :
+           swordfish->setRotacionCapsula(10.0f);
+           break;
+
+       case '-' :
+           swordfish->setRotacionCapsula(-10.0f);
+           break;
+       }
+   }
+
+   else if (modoMenu == MOVIMIENTO_AUTO){
+          std::cout << std::endl << "Modificación de la animación" << endl <<
+                      "\t+: Incrementar velocidad" << endl <<
+                      "\t-: Reducir velocidad" << endl;
+
+          std::cout << std::endl << "Selección del grado de libertad a alterar" << endl <<
+                      "\t0: General" << endl <<
+                      "\t1: Extensión alas" << endl <<
+                      "\t2: Rotación alfa alerones" << endl <<
+                      "\t3: Rotación beta alerones" << endl <<
+                      "\t4: Rotación cápsula" << endl;
+
+          animarModeloJerarquico();
+
+          switch (toupper(tecla)){
+          case '0' :
+              gradoLibertad = 0;
+              break;
+
+          case '1' :
+              gradoLibertad = 1;
+              break;
+
+          case '2' :
+              gradoLibertad = 2;
+              break;
+
+          case '3' :
+              gradoLibertad = 3;
+              break;
+
+          case '4' :
+              gradoLibertad = 4;
+              break;
+          }
+
+          switch (toupper(tecla)){
+          case '+' :
+              swordfish->increaseSpeedUp(gradoLibertad);
+              break;
+
+          case '-' :
+              swordfish->reduceSpeedUp(gradoLibertad);
+              break;
+          }
+      }
 
    if (modoMenu == ILUMINACION){
        char tecla_m = toupper(tecla);
@@ -456,12 +624,10 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        case '<':
            if (rotaciones.first){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(-0.5f);
-               //std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
            }
 
            else if (rotaciones.second){
                static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(-0.5f);
-               //std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
            }
 
            break;
@@ -609,6 +775,43 @@ void Escena::animarIluminacion(){
         }
 
         luces[0]->setPos(X_increment, Y_increment, Z_increment);
+    }
+}
+
+void Escena::animarModeloJerarquico(){
+    if (modoMenu == MOVIMIENTO_AUTO){
+
+        if (gradoLibertad == 0){
+            if ((swordfish->getExtAlas() -
+                 (swordfish->getSpeedUp())) > -50.0f){
+                swordfish->setExtAlas(-swordfish->getSpeedUp());
+            }
+
+            else{
+                while (swordfish->getExtAlas() < 0)
+                    swordfish->setExtAlas(swordfish->getSpeedUp());
+            }
+
+            swordfish->setAlphaAlerones(swordfish->getSpeedUp() * 10.0f);
+            swordfish->setBetaAlerones(swordfish->getSpeedUp() * 10.0f);
+            swordfish->setRotacionCapsula(swordfish->getSpeedUp() * 10.0f);
+        }
+
+        else{
+            if ((swordfish->getExtAlas() -
+                 (swordfish->getSpeedUp(1))) > -50.0f){
+                swordfish->setExtAlas(-swordfish->getSpeedUp(1));
+            }
+
+            else{
+                while (swordfish->getExtAlas() < 0)
+                    swordfish->setExtAlas(swordfish->getSpeedUp(1));
+            }
+
+            swordfish->setAlphaAlerones(swordfish->getSpeedUp(2) * 10.0f);
+            swordfish->setBetaAlerones(swordfish->getSpeedUp(3) * 10.0f);
+            swordfish->setRotacionCapsula(swordfish->getSpeedUp(4) * 10.0f);
+        }
     }
 }
 
