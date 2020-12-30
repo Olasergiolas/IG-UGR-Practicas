@@ -13,8 +13,11 @@
 #include "Include/cono.h"
 #include "Include/luzposicional.h"
 #include "Include/luzdireccional.h"
+#include "Include/swordfish.h"
 
-typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION} menu;
+typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION,
+             MOVIMIENTO, MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2,
+             MOVIMIENTO_3, MOVIMIENTO_AUTO} menu;
 class Escena
 {
 
@@ -38,6 +41,8 @@ class Escena
 
    void clear_window();
 
+   unsigned char ultima_tecla = ' ';
+   unsigned gradoLibertad = 0;
    std::vector<Luz*> luces;
    std::vector<bool> estado_luces;
    menu modoMenu=NADA;
@@ -77,6 +82,9 @@ class Escena
    bool cilindro_presente;
    Cilindro *cilindro = nullptr;
 
+   bool swordfish_presente;
+   Swordfish *swordfish = nullptr;
+
    bool anima_luces;
 
    public:
@@ -95,6 +103,7 @@ class Escena
     GLenum getIdLuz(unsigned char c);
     void inicializarLuces();
     void animarIluminacion();
+    void animarModeloJerarquico();
 
 };
 #endif
