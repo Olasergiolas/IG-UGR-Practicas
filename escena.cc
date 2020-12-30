@@ -19,6 +19,8 @@ Escena::Escena()
 
     visualizacion = INMEDIATO;
     coloreado = RELLENADO;
+    ultima_tecla = ' ';
+    gradoLibertad = 0;
     tapas.first = true;
     tapas.second = true;
     rotaciones.first = false;
@@ -145,7 +147,7 @@ void Escena::dibujar()
         if (actualizar_revolucion || lata_cue == nullptr){
             lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
             lata_bot = new ObjRevolucion("lata-pinf.ply", 50, false, true, false);
-            lata_top = new ObjRevolucion("lata-psup.ply", 50, tapas.first, tapas.second, false, true);
+            lata_top = new ObjRevolucion("lata-psup.ply", 50, true, false, false, true);
             Material m1(negro, blanco, negro, 90.0);
             Material m2(negro, gris, blanco, 90.0);
             lata_cue->setMaterial(m1);

@@ -14,6 +14,7 @@
 #include "Include/luzposicional.h"
 #include "Include/luzdireccional.h"
 #include "Include/swordfish.h"
+#include "Include/camara.h"
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION,
              MOVIMIENTO, MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2,
@@ -41,8 +42,10 @@ class Escena
 
    void clear_window();
 
-   unsigned char ultima_tecla = ' ';
-   unsigned gradoLibertad = 0;
+   unsigned char ultima_tecla;
+   unsigned gradoLibertad;
+   unsigned camara_activa;
+   std::vector<Camara> camaras;
    std::vector<Luz*> luces;
    std::vector<bool> estado_luces;
    menu modoMenu=NADA;
