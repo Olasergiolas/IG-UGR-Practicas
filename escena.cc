@@ -817,6 +817,15 @@ void Escena::animarModeloJerarquico(){
     }
 }
 
+void Escena::clickRaton(int boton, int estado, int x, int y){
+    if (boton == GLUT_LEFT_BUTTON && estado == GLUT_DOWN)
+        std::cout << "CLICK IZQUIERDOOOO" << std::endl;
+}
+
+void Escena::ratonMovido(int x, int y){
+    std::cout << "X: " << x << " Y: " << y << std::endl;
+}
+
 Escena::~Escena(){
     for (unsigned i = 0; i < luces.size(); ++i)
         delete luces[i];

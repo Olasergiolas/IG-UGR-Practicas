@@ -96,6 +96,19 @@ void funcion_idle(){
     glutPostRedisplay();
 }
 
+//Función a llamar cuando se utilice un botón del ratón
+void clickRaton(int boton, int estado, int x, int y){
+    if (escena != nullptr)
+        escena->clickRaton(boton, estado, x, y);
+    glutPostRedisplay();
+}
+
+void ratonMovido(int x, int y){
+    if (escena != nullptr)
+        escena->ratonMovido(x, y);
+    glutPostRedisplay();
+}
+
 
 //***************************************************************************
 // Programa principal
@@ -164,6 +177,10 @@ int main( int argc, char **argv )
 
    //Tareas de automatización
    glutIdleFunc(funcion_idle);
+
+   //Gestionar acciones del ratón
+   glutMouseFunc(clickRaton);
+   glutMotionFunc(ratonMovido);
 
    // ejecutar del bucle de eventos
    glutMainLoop();

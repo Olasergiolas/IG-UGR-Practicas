@@ -107,6 +107,7 @@ class Escena
     void inicializarLuces();
     void animarIluminacion();
     void animarModeloJerarquico();
-
+    void clickRaton(int boton, int estado, int x, int y);
+    void ratonMovido(int x, int y);
 };
 #endif
