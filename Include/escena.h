@@ -19,6 +19,9 @@
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION,
              MOVIMIENTO, MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2,
              MOVIMIENTO_3, MOVIMIENTO_AUTO} menu;
+
+typedef enum {ESTATICA, FP, EXAMINAR} estadoCamara;
+
 class Escena
 {
 
@@ -46,9 +49,11 @@ class Escena
    unsigned gradoLibertad;
    unsigned camara_activa;
    std::vector<Camara> camaras;
+   int old_x = 0; int old_y = 0;
    std::vector<Luz*> luces;
    std::vector<bool> estado_luces;
    menu modoMenu=NADA;
+   estadoCamara modoCamara=ESTATICA;
    modo_visualizacion visualizacion;
    modo_coloreado coloreado;
    std::set<GLenum> estado_dibujados;

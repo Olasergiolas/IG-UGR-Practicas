@@ -705,9 +705,7 @@ void Escena::change_observer()
    // posicion del observador
    glMatrixMode(GL_MODELVIEW);
    glLoadIdentity();
-   glTranslatef( 0.0, 0.0, -Observer_distance );
-   glRotatef( Observer_angle_y, 0.0 ,1.0, 0.0 );
-   glRotatef( Observer_angle_x, 1.0, 0.0, 0.0 );
+   camaras[camara_activa].setObserver();
 }
 
 GLenum Escena::getIdLuz(unsigned char c){
@@ -818,12 +816,31 @@ void Escena::animarModeloJerarquico(){
 }
 
 void Escena::clickRaton(int boton, int estado, int x, int y){
-    if (boton == GLUT_LEFT_BUTTON && estado == GLUT_DOWN)
-        std::cout << "CLICK IZQUIERDOOOO" << std::endl;
+    if (boton == GLUT_RIGHT_BUTTON && estado == GLUT_DOWN){
+        modoCamara = EXAMINAR;
+        old_x = x;
+        old_y = y;
+    }
+    else
+        modoCamara = ESTATICA;
 }
 
 void Escena::ratonMovido(int x, int y){
-    std::cout << "X: " << x << " Y: " << y << std::endl;
+    if (modoCamara == EXAMINAR){
+        std::cout << "X: " << x << " Y: " << y << std::endl;
+        camaras[camara_activa].rotarXExaminar(x-old_x);
+        camaras[camara_activa].rotarYExaminar(y-old_y);
+        old_x = x;
+        old_y = y;
+    }
+
+    else if (modoCamara == FP){
+        std::cout << "X: " << x << " Y: " << y << std::endl;
+        camaras[camara_activa].rotarXFirstPerson(x-old_x);
+        camaras[camara_activa].rotarYFirstPerson(y-old_y);
+        old_x = x;
+        old_y = y;
+    }
 }
 
 Escena::~Escena(){

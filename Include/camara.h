@@ -6,14 +6,13 @@
 class Camara
 {
 private:
-    Tupla3f eye;
-    Tupla3f at;
-    Tupla3f up;
+    Tupla3f eye, at, up;
+    Tupla3f direccion;
 
     int tipo;
-    float left, right, near, far;
+    float left, right, top, bottom, near, far, aspect, fov;
 public:
-    Camara();
+    Camara(Tupla3f eye, Tupla3f at, Tupla3f up);
     void rotarXExaminar(float angle);
     void rotarYExaminar(float angle);
     void rotarZExaminar(float angle);
