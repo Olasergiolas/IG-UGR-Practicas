@@ -652,16 +652,16 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
    switch ( Tecla1 )
    {
        case GLUT_KEY_LEFT:
-         Observer_angle_y -= 5;
+         camaras[camara_activa].rotarYExaminar(-0.001*(y-old_y));
          break;
        case GLUT_KEY_RIGHT:
-         Observer_angle_y += 5;
+         camaras[camara_activa].rotarYExaminar(0.001*(y-old_y));
          break;
        case GLUT_KEY_UP:
-         Observer_angle_x -= 5 ;
+         camaras[camara_activa].rotarXExaminar(-0.001*(x-old_x));
          break;
        case GLUT_KEY_DOWN:
-         Observer_angle_x += 5 ;
+         camaras[camara_activa].rotarXExaminar(0.001*(x-old_x));
          break;
        case GLUT_KEY_PAGE_UP:
          Observer_distance *=1.2 ;
@@ -825,15 +825,24 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
         old_x = x;
         old_y = y;
     }
+
     else
         modoCamara = ESTATICA;
+
+    if (boton == 3){
+        std::cout << "ZOOM IN"<<std::endl;
+    }
+
+    if (boton == 4){
+        std::cout << "ZOOM OUT"<<std::endl;
+    }
 }
 
 void Escena::ratonMovido(int x, int y){
     if (modoCamara == EXAMINAR){
         std::cout << "X: " << x << " Y: " << y << std::endl;
-        //camaras[camara_activa].rotarXExaminar(x-old_x);
-        //camaras[camara_activa].rotarYExaminar(y-old_y);
+        camaras[camara_activa].rotarXExaminar(0.01*(y-old_y));
+        camaras[camara_activa].rotarYExaminar(0.01*(x-old_x));
         old_x = x;
         old_y = y;
     }

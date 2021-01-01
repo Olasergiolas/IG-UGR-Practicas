@@ -26,17 +26,23 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     y_axis = z_axis.cross(x_axis);
 }
 
-/*void Camara::rotarXExaminar(float angle){
-
+void Camara::rotarXExaminar(float angle){
+    Tupla3f eyeAux = eye;
+    eye(Y) = eyeAux(Y) * cos(angle) - eyeAux(Z) * sin(angle);
+    eye(Z) = eyeAux(Y) * sin(angle) + eyeAux(Z) * cos(angle);
 }
 
 void Camara::rotarYExaminar(float angle){
-
+    Tupla3f eyeAux = eye;
+    eye(X) = eyeAux(X) * cos(angle) + eyeAux(Z) * sin(angle);
+    eye(Z) = eyeAux(X) * -sin(angle) + eyeAux(Z) * cos(angle);
 }
 
 void Camara::rotarZExaminar(float angle){
-
-}*/
+    Tupla3f eyeAux = eye;
+    eye(X) = eyeAux(X) * cos(angle) - eyeAux(Z) * sin(angle);
+    eye(Y) = eyeAux(X) * sin(angle) + eyeAux(Z) * cos(angle);
+}
 
 
 void Camara::setObserver(){

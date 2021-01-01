@@ -109,7 +109,6 @@ void ratonMovido(int x, int y){
     glutPostRedisplay();
 }
 
-
 //***************************************************************************
 // Programa principal
 //
