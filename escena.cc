@@ -60,6 +60,10 @@ Escena::Escena()
     Camara c1(0, Tupla3f(0.0f, 0.0f, 300.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
               Front_plane, Back_plane);
     camaras.push_back(c1);
+
+    Camara c2(1, Tupla3f(0.0f, 0.0f, 300.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
+              Front_plane, Back_plane);
+    camaras.push_back(c2);
     camara_activa = 0;
 }
 
@@ -95,7 +99,8 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
                  "\tV: Selección de modo de visualización" << std::endl <<
                  "\tD: Selección de dibujado" << std::endl <<
                  "\tU: Tapas" << std::endl <<
-                 "\tX: Selección de movimiento del M.J" << std::endl;
+                 "\tX: Selección de movimiento del M.J" << std::endl <<
+                 "\tC: Menú de Cámara" << std::endl;
 }
 
 
@@ -264,48 +269,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                         "\t4: Activar Cono" << endl <<
                         "\t5: Activar Cilindro" << endl;
            modoMenu=SELOBJETO;
-           break ;
-
-        case 'C' :
-           if (modoMenu == SELOBJETO)
-               cubo_presente = !cubo_presente;
-           break;
-
-        case 'T' :
-           if (modoMenu == SELOBJETO)
-               tetraedro_presente = !tetraedro_presente;
-           break;
-
-        case 'B' :
-            if (modoMenu == SELOBJETO)
-                ply_presente = !ply_presente;
-
-            break;
-
-        case 'R':
-            if (modoMenu == SELOBJETO)
-               lata_presente = !lata_presente;
-
-           break;
-
-        case '3':
-            if (modoMenu == SELOBJETO)
-              esfera_presente = !esfera_presente;
-
-          break;
-
-        case '4':
-            if (modoMenu == SELOBJETO)
-             cono_presente = !cono_presente;
-
-         break;
-
-        case '5':
-            if (modoMenu == SELOBJETO)
-             cilindro_presente = !cilindro_presente;
-
-         break;
-
+        break ;
 
            // ESTAMOS EN MODO SELECCION DE MODO DE VISUALIZACION
        case 'V' :
@@ -317,75 +281,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                        "\tI: Activar iluminación" << endl;
            modoMenu=SELVISUALIZACION;
            break ;
-       case 'P':
-           if (modoMenu == SELVISUALIZACION){
-               iluminacion_activa = false;
-               glDisable(GL_LIGHTING);
-
-               if (estado_dibujados.find(GL_POINT) != estado_dibujados.end())
-                   estado_dibujados.erase(GL_POINT);
-
-               else
-                   estado_dibujados.insert(GL_POINT);
-           }
-
-           break;
-       case 'L':
-           if (modoMenu == SELVISUALIZACION){
-               iluminacion_activa = false;
-               glDisable(GL_LIGHTING);
-
-               if (estado_dibujados.find(GL_LINE) != estado_dibujados.end())
-                   estado_dibujados.erase(GL_LINE);
-
-               else
-                   estado_dibujados.insert(GL_LINE);
-           }
-           break;
-       case 'S':
-           if (modoMenu == SELVISUALIZACION){
-               iluminacion_activa = false;
-               glDisable(GL_LIGHTING);
-
-               if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
-                       coloreado != AJEDREZ)
-                   estado_dibujados.erase(GL_FILL);
-
-               else
-                   estado_dibujados.insert(GL_FILL);
-
-               coloreado = RELLENADO;
-           }
-           break;
-       case 'A':
-           if (modoMenu == SELVISUALIZACION){
-               iluminacion_activa = false;
-               glDisable(GL_LIGHTING);
-
-               if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
-                       coloreado != RELLENADO)
-                   estado_dibujados.clear();
-
-               else{
-                   estado_dibujados.clear();
-                   estado_dibujados.insert(GL_FILL);
-               }
-
-               coloreado = AJEDREZ;
-           }
-           break;
-
-        case 'I':
-            std::cout << "Modo de iluminación" << endl <<
-                        "\t0-7 Activar la luz i" << endl <<
-                        "\tA: Modificar alpha" << endl <<
-                        "\tB: Modificar beta" << endl <<
-                        "\t>: Incrementar ángulo" << endl <<
-                        "\t<: Reducir ángulo" << endl <<
-                        "\tP: Animar luz puntual" << endl;
-           iluminacion_activa = true;
-           modoMenu = ILUMINACION;
-           break;
 
            // ESTAMOS EN MODO SELECCION DE DIBUJADO
        case 'D' :
@@ -394,15 +289,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                        "\t2: Modo diferido" << endl;
            modoMenu=SELDIBUJADO;
            break ;
-           // COMPLETAR con los diferentes opciones de teclado
-       case '1' :
-           if (modoMenu == SELDIBUJADO)
-               visualizacion = INMEDIATO;
-           break;
-       case '2' :
-           if (modoMenu == SELDIBUJADO)
-               visualizacion = VBO;
-           break;
 
        case 'X' :
           std::cout << "Menú de movimiento" << endl <<
@@ -429,44 +315,159 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            modoMenu = TAPAS;
            break;
 
-        case 'M':
-            if (modoMenu == TAPAS){
-                tapas.first = !tapas.first;
-                actualizar_revolucion = true;
-            }
+       case 'C':
+           modoMenu = CAMARA;
+           break;
+   }
+
+   if (modoMenu == SELOBJETO){
+       switch(toupper(tecla)){
+       case 'C' :
+              cubo_presente = !cubo_presente;
+          break;
+
+       case 'T' :
+              tetraedro_presente = !tetraedro_presente;
+          break;
+
+       case 'B' :
+               ply_presente = !ply_presente;
            break;
 
-        case 'N':
-            if (modoMenu == TAPAS){
-                tapas.second = !tapas.second;
-                actualizar_revolucion = true;
-            }
+       case 'R':
+              lata_presente = !lata_presente;
+          break;
+
+       case '3':
+             esfera_presente = !esfera_presente;
+
+         break;
+
+       case '4':
+            cono_presente = !cono_presente;
+
+        break;
+
+       case '5':
+            cilindro_presente = !cilindro_presente;
+
+        break;
+       }
+   }
+
+   if (modoMenu == SELVISUALIZACION){
+       switch(toupper(tecla)){
+       case 'P':
+               iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
+
+               if (estado_dibujados.find(GL_POINT) != estado_dibujados.end())
+                   estado_dibujados.erase(GL_POINT);
+
+               else
+                   estado_dibujados.insert(GL_POINT);
+
+
+           break;
+       case 'L':
+               iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
+
+               if (estado_dibujados.find(GL_LINE) != estado_dibujados.end())
+                   estado_dibujados.erase(GL_LINE);
+
+               else
+                   estado_dibujados.insert(GL_LINE);
+
+           break;
+       case 'S':
+               iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
+
+               if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
+                       coloreado != AJEDREZ)
+                   estado_dibujados.erase(GL_FILL);
+
+               else
+                   estado_dibujados.insert(GL_FILL);
+
+               coloreado = RELLENADO;
+
+           break;
+       case 'A':
+               iluminacion_activa = false;
+               glDisable(GL_LIGHTING);
+
+               if (estado_dibujados.find(GL_FILL) != estado_dibujados.end() &&
+                       coloreado != RELLENADO)
+                   estado_dibujados.clear();
+
+               else{
+                   estado_dibujados.clear();
+                   estado_dibujados.insert(GL_FILL);
+               }
+
+               coloreado = AJEDREZ;
+
            break;
 
+        case 'I':
+            std::cout << "Modo de iluminación" << endl <<
+                        "\t0-7 Activar la luz i" << endl <<
+                        "\tA: Modificar alpha" << endl <<
+                        "\tB: Modificar beta" << endl <<
+                        "\t>: Incrementar ángulo" << endl <<
+                        "\t<: Reducir ángulo" << endl <<
+                        "\tP: Animar luz puntual" << endl;
+           iluminacion_activa = true;
+           modoMenu = ILUMINACION;
+           break;
+       }
+   }
+
+   if (modoMenu == SELDIBUJADO){
+       switch (toupper(tecla)) {
+       case '1' :
+               visualizacion = INMEDIATO;
+           break;
+       case '2' :
+               visualizacion = VBO;
+           break;
+       }
+   }
+
+   if (modoMenu == TAPAS){
+       switch (toupper(tecla)) {
+       case 'M':
+               tapas.first = !tapas.first;
+               actualizar_revolucion = true;
+          break;
+
+       case 'N':
+               tapas.second = !tapas.second;
+               actualizar_revolucion = true;
+          break;
+       }
    }
 
    if (modoMenu == MOVIMIENTO){
        switch (toupper(tecla)) {
        case '3' :
-           if (modoMenu == MOVIMIENTO)
                modoMenu = MOVIMIENTO_0;
 
            break;
 
       case '4' :
-              if (modoMenu == MOVIMIENTO)
                   modoMenu = MOVIMIENTO_1;
 
               break;
 
       case '5' :
-          if (modoMenu == MOVIMIENTO)
               modoMenu = MOVIMIENTO_2;
 
           break;
 
       case '6' :
-          if (modoMenu == MOVIMIENTO)
               modoMenu = MOVIMIENTO_3;
 
           break;
@@ -644,6 +645,13 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
        }
    }
+
+   if (modoMenu == CAMARA){
+       if (tecla >= '0' && tecla <= '2'){
+           camara_activa = tecla - '0';
+           camaras[camara_activa].setProyeccion();
+       }
+   }
    return salir;
 }
 //**************************************************************************
@@ -684,8 +692,6 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
 
 void Escena::change_projection( const float ratio_xy )
 {
-   glMatrixMode( GL_PROJECTION );
-   glLoadIdentity();
    //const float wx = float(Height)*ratio_xy ;
    //glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
    camaras[camara_activa].setProyeccion();
@@ -831,27 +837,24 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
     else
         modoCamara = ESTATICA;
 
-    if (boton == GLUT_MIDDLE_BUTTON){
+    if (boton == 3)
         camaras[camara_activa].zoom(10.0f);
-        std::cout << "ZOOM"<<std::endl;
-    }
 
-    if (boton == 4){
-        std::cout << "ZOOM OUT"<<std::endl;
-    }
+
+    if (boton == 4)
+        camaras[camara_activa].zoom(-10.0f);
+
 }
 
 void Escena::ratonMovido(int x, int y){
     if (modoCamara == EXAMINAR){
-        std::cout << "X: " << x << " Y: " << y << std::endl;
-        camaras[camara_activa].rotarXExaminar(0.01*(y-old_y));
-        camaras[camara_activa].rotarYExaminar(0.01*(x-old_x));
+        camaras[camara_activa].rotarXExaminar(-0.005*(y-old_y));
+        camaras[camara_activa].rotarYExaminar(0.005*(x-old_x));
         old_x = x;
         old_y = y;
     }
 
     else if (modoCamara == FP){
-        std::cout << "X: " << x << " Y: " << y << std::endl;
         //camaras[camara_activa].rotarXFirstPerson(x-old_x);
         //camaras[camara_activa].rotarYFirstPerson(y-old_y);
         old_x = x;

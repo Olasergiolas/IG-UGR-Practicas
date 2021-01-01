@@ -52,6 +52,9 @@ void Camara::setObserver(){
 }
 
 void Camara::setProyeccion(){
+    glMatrixMode( GL_PROJECTION );
+    glLoadIdentity();
+
     if (tipo == 0)
         glFrustum(left, right, bottom, top, near, far);
 
@@ -64,8 +67,10 @@ void Camara::mover(float x, float y, float z){
 }
 
 void Camara::zoom(float factor){
-    right = right * factor;
-    left = left * factor;
-    top = top * factor;
-    bottom = bottom * factor;
+    right -= factor;
+    left += factor;
+    top -= factor;
+    bottom += factor;
+
+    setProyeccion();
 }
