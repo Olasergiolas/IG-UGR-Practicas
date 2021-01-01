@@ -56,6 +56,10 @@ Escena::Escena()
 
     actualizar_revolucion = false;
     iluminacion_activa = true;
+
+    Camara c1(0, Tupla3f(0.0f, 0.0f, 400.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 300, 300);
+    camaras.push_back(c1);
+    camara_activa = 0;
 }
 
 //**************************************************************************
@@ -828,16 +832,16 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
 void Escena::ratonMovido(int x, int y){
     if (modoCamara == EXAMINAR){
         std::cout << "X: " << x << " Y: " << y << std::endl;
-        camaras[camara_activa].rotarXExaminar(x-old_x);
-        camaras[camara_activa].rotarYExaminar(y-old_y);
+        //camaras[camara_activa].rotarXExaminar(x-old_x);
+        //camaras[camara_activa].rotarYExaminar(y-old_y);
         old_x = x;
         old_y = y;
     }
 
     else if (modoCamara == FP){
         std::cout << "X: " << x << " Y: " << y << std::endl;
-        camaras[camara_activa].rotarXFirstPerson(x-old_x);
-        camaras[camara_activa].rotarYFirstPerson(y-old_y);
+        //camaras[camara_activa].rotarXFirstPerson(x-old_x);
+        //camaras[camara_activa].rotarYFirstPerson(y-old_y);
         old_x = x;
         old_y = y;
     }

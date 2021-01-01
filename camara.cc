@@ -26,6 +26,19 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     y_axis = z_axis.cross(x_axis);
 }
 
+/*void Camara::rotarXExaminar(float angle){
+
+}
+
+void Camara::rotarYExaminar(float angle){
+
+}
+
+void Camara::rotarZExaminar(float angle){
+
+}*/
+
+
 void Camara::setObserver(){
     gluLookAt(eye(X), eye(Y), eye(Z),
               at(X), at(Y), at(Z),
@@ -34,7 +47,7 @@ void Camara::setObserver(){
 
 void Camara::setProyeccion(){
     if (tipo == 0)
-        gluPerspective(fov, aspect, near, far);
+        gluPerspective(fovy, aspect, near, far);
 
     else if (tipo == 1)
         glOrtho(left, right, bottom, top, near, far);

@@ -14,12 +14,12 @@ private:
 public:
     Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned height,
            unsigned width);
-    void rotarXExaminar(float angle);
+    /*void rotarXExaminar(float angle);
     void rotarYExaminar(float angle);
-    void rotarZExaminar(float angle);
-    void rotarXFirstPerson(float angle);
+    void rotarZExaminar(float angle);*/
+    /*void rotarXFirstPerson(float angle);
     void rotarYFirstPerson(float angle);
-    void rotarZFirstPerson(float angle);
+    void rotarZFirstPerson(float angle);*/
     void mover(float x, float y, float z);
     void zoom(float factor);
     void setObserver();
