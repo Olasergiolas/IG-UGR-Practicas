@@ -57,7 +57,8 @@ Escena::Escena()
     actualizar_revolucion = false;
     iluminacion_activa = true;
 
-    Camara c1(0, Tupla3f(0.0f, 0.0f, 400.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 300, 300);
+    Camara c1(0, Tupla3f(0.0f, 0.0f, 300.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
+              Front_plane, Back_plane);
     camaras.push_back(c1);
     camara_activa = 0;
 }
@@ -685,8 +686,9 @@ void Escena::change_projection( const float ratio_xy )
 {
    glMatrixMode( GL_PROJECTION );
    glLoadIdentity();
-   const float wx = float(Height)*ratio_xy ;
-   glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
+   //const float wx = float(Height)*ratio_xy ;
+   //glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
+   camaras[camara_activa].setProyeccion();
 }
 //**************************************************************************
 // Funcion que se invoca cuando cambia el tamaño de la ventana
@@ -829,8 +831,9 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
     else
         modoCamara = ESTATICA;
 
-    if (boton == 3){
-        std::cout << "ZOOM IN"<<std::endl;
+    if (boton == GLUT_MIDDLE_BUTTON){
+        camaras[camara_activa].zoom(10.0f);
+        std::cout << "ZOOM"<<std::endl;
     }
 
     if (boton == 4){

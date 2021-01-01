@@ -1,7 +1,7 @@
 #include "Include/camara.h"
 
 Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heigth,
-               unsigned width)
+               unsigned width, int near, int far)
 {
     this->tipo = tipo;
     this->eye = eye;
@@ -9,12 +9,12 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     this->up = up;
 
     aspect = width/heigth;
-    top = heigth/2;
-    bottom = -top;
+    top = (heigth/2);
+    bottom = (-top);
     right = width/2;
     left = -right;
-    near = 50.0f;
-    far = 2000.0f;
+    this->near = near;
+    this->far = far;
     fovy = 2*atan((width/2)/aspect) * (180/M_PI);
 
     z_axis = eye - at;
@@ -53,7 +53,7 @@ void Camara::setObserver(){
 
 void Camara::setProyeccion(){
     if (tipo == 0)
-        gluPerspective(fovy, aspect, near, far);
+        glFrustum(left, right, bottom, top, near, far);
 
     else if (tipo == 1)
         glOrtho(left, right, bottom, top, near, far);
@@ -61,4 +61,11 @@ void Camara::setProyeccion(){
 
 void Camara::mover(float x, float y, float z){
     eye(X) = x; eye(Y) = y; eye(Z) = z;
+}
+
+void Camara::zoom(float factor){
+    right = right * factor;
+    left = left * factor;
+    top = top * factor;
+    bottom = bottom * factor;
 }
