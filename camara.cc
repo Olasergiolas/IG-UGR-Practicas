@@ -1,13 +1,29 @@
 #include "Include/camara.h"
 
-Camara::Camara(Tupla3f eye, Tupla3f at, Tupla3f up)
+Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heigth,
+               unsigned width)
 {
+    this->tipo = tipo;
     this->eye = eye;
     this->at = at;
     this->up = up;
 
-    direccion = at - eye;   //o es eye - at?
+    aspect = width/heigth;
+    top = heigth/2;
+    bottom = -top;
+    right = width/2;
+    left = -right;
+    near = 50.0f;
+    far = 2000.0f;
+    fovy = 2*atan((width/2)/aspect) * (180/M_PI);
 
+    z_axis = eye - at;
+    z_axis = z_axis.normalized();
+
+    x_axis = up.cross(z_axis);
+    x_axis = x_axis.normalized();
+
+    y_axis = z_axis.cross(x_axis);
 }
 
 void Camara::setObserver(){
