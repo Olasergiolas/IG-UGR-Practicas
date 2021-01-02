@@ -94,6 +94,7 @@ class Escena
    Swordfish *swordfish = nullptr;
 
    bool anima_luces;
+   bool texturas;
 
    public:
 
@@ -103,7 +104,8 @@ class Escena
 	void redimensionar( int newWidth, int newHeight ) ;
 
 	// Dibujar
-	void dibujar() ;
+    void dibujar(bool color_coding_mode=false) ;
+    void dibuja_seleccion();
 
 	// Interacción con la escena
 	bool teclaPulsada( unsigned char Tecla1, int x, int y ) ;
@@ -114,5 +116,6 @@ class Escena
     void animarModeloJerarquico();
     void clickRaton(int boton, int estado, int x, int y);
     void ratonMovido(int x, int y);
+    void processPick(int x, int y);
 };
 #endif

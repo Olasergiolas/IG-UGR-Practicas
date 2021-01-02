@@ -12,6 +12,8 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     this->near = near;
     this->far = far;
 
+    examinando = false;
+
     /*fovy = 2*atan((width/2)/aspect) * (180/M_PI);
 
     z_axis = eye - at;

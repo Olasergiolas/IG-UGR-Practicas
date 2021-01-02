@@ -56,6 +56,7 @@ Escena::Escena()
 
     actualizar_revolucion = false;
     iluminacion_activa = true;
+    texturas = true;
 
     Camara c1(0, Tupla3f(0.0f, 0.0f, 800.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
               Front_plane, Back_plane);
@@ -117,7 +118,7 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 //
 // **************************************************************************
 
-void Escena::dibujar()
+void Escena::dibujar(bool color_coding_mode)
 {
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
@@ -125,7 +126,8 @@ void Escena::dibujar()
     glDisable(GL_TEXTURE_2D);
     ejes.draw();
 
-    glEnable(GL_TEXTURE_2D);
+    if (texturas)
+        glEnable(GL_TEXTURE_2D);
     if (iluminacion_activa)
         glEnable(GL_LIGHTING);
 
@@ -181,7 +183,8 @@ void Escena::dibujar()
             glDisable(GL_TEXTURE_2D);
             lata_bot->draw(visualizacion, estado_dibujados, coloreado);
             lata_top->draw(visualizacion, estado_dibujados, coloreado);
-            glEnable(GL_TEXTURE_2D);
+            if (texturas)
+                glEnable(GL_TEXTURE_2D);
         glPopMatrix();
     }
 
@@ -229,7 +232,8 @@ void Escena::dibujar()
             glTranslatef(150.0f, 0.0f, 0.0f);
             swordfish->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
-        glEnable(GL_TEXTURE_2D);
+        if (texturas)
+            glEnable(GL_TEXTURE_2D);
     }
 
     actualizar_revolucion = false;
@@ -268,7 +272,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            std::cout << "Modo selección de objeto" << endl <<
                         "\tC: Activar cubo" << endl <<
                         "\tT: Activar tetraedro" << endl <<
-                        "\tB: Activar Beethoven" << endl <<
+                        "\tB: Activar Coche" << endl <<
                         "\tR: Activar ObjRevolucion" << endl <<
                         "\t3: Activar Esfera" << endl <<
                         "\t4: Activar Cono" << endl <<
@@ -865,19 +869,27 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
     old_y = y;
 
     if (boton == GLUT_RIGHT_BUTTON && estado == GLUT_DOWN){
-        modoCamara = EXAMINAR;
+        if (camaras[camara_activa].getExaminando())
+            modoCamara = EXAMINAR;
+
+        else
+            modoCamara = FP;
     }
 
-    else
-        modoCamara = FP;
-
-    if (boton == 3)
+    else if (boton == 3)
         camaras[camara_activa].zoom(0.8f);
 
 
-    if (boton == 4)
+    else if (boton == 4)
         camaras[camara_activa].zoom(1.2f);
 
+    else if (boton == GLUT_LEFT_BUTTON && estado == GLUT_DOWN){
+        dibuja_seleccion();
+        processPick(x, y);
+    }
+
+    else
+        modoCamara = ESTATICA;
 }
 
 void Escena::ratonMovido(int x, int y){
@@ -893,6 +905,26 @@ void Escena::ratonMovido(int x, int y){
         old_x = x;
         old_y = y;
     }
+}
+
+void Escena::dibuja_seleccion(){
+    glDisable(GL_DITHER);
+    glDisable(GL_LIGHTING);
+    iluminacion_activa = false;
+    glDisable(GL_TEXTURE);
+    texturas = false;
+
+    dibujar();
+
+    glEnable(GL_DITHER);
+    glEnable(GL_LIGHTING);
+    iluminacion_activa = true;
+    glEnable(GL_TEXTURE);
+    texturas = true;
+}
+
+void Escena::processPick(int x, int y){
+
 }
 
 Escena::~Escena(){
