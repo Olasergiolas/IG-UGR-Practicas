@@ -717,8 +717,6 @@ void Escena::teclaEspecial( int Tecla1, int x, int y )
 
 void Escena::change_projection( const float ratio_xy )
 {
-   //const float wx = float(Height)*ratio_xy ;
-   //glFrustum( -wx, wx, -Height, Height, Front_plane, Back_plane );
    camaras[camara_activa].setProyeccion();
 }
 //**************************************************************************
@@ -729,7 +727,9 @@ void Escena::redimensionar( int newWidth, int newHeight )
 {
    Width  = newWidth/10;
    Height = newHeight/10;
-   camaras[camara_activa].setAspect(Height, Width);
+   for (unsigned i = 0; i < camaras.size(); ++i)
+        camaras[i].setAspect(Height, Width);
+
    change_projection( float(newHeight)/float(newWidth) );
    glViewport( 0, 0, newWidth, newHeight );
 }
@@ -865,11 +865,11 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
         modoCamara = FP;
 
     if (boton == 3)
-        camaras[camara_activa].zoom(10.0f);
+        camaras[camara_activa].zoom(0.8f);
 
 
     if (boton == 4)
-        camaras[camara_activa].zoom(-10.0f);
+        camaras[camara_activa].zoom(1.2f);
 
 }
 

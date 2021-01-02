@@ -112,7 +112,7 @@ void Camara::setProyeccion(){
         glFrustum(left * aspect, right * aspect, bottom * aspect, top * aspect, near, far);
 
     else if (tipo == 1)
-        glOrtho(left * aspect, right * aspect, bottom , top , near, far);
+        glOrtho(left * aspect, right * aspect, bottom * aspect , top * aspect , near, far);
 }
 
 void Camara::mover(float x, float y, float z){
@@ -120,10 +120,10 @@ void Camara::mover(float x, float y, float z){
 }
 
 void Camara::zoom(float factor){
-    right -= factor;
-    left += factor;
-    top -= factor;
-    bottom += factor;
+    right *= factor;
+    left *= factor;
+    top *= factor;
+    bottom *= factor;
 
     setProyeccion();
 }
