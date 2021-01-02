@@ -8,14 +8,10 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     this->at = at;
     this->up = up;
 
-    aspect = width/heigth;
-    top = (heigth/2);
-    bottom = (-top);
-    right = width/2;
-    left = -right;
+    setAspect(heigth, width);
     this->near = near;
     this->far = far;
-    fovy = 2*atan((width/2)/aspect) * (180/M_PI);
+    //fovy = 2*atan((width/2)/aspect) * (180/M_PI);
 
     z_axis = eye - at;
     z_axis = z_axis.normalized();
@@ -24,6 +20,14 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     x_axis = x_axis.normalized();
 
     y_axis = z_axis.cross(x_axis);
+}
+
+void Camara::setAspect(float heigth, float width){
+    aspect = width/heigth;
+    top = (heigth/2);
+    bottom = (-top);
+    right = width/2;
+    left = -right;
 }
 
 void Camara::rotarXExaminar(float angle){
@@ -44,6 +48,34 @@ void Camara::rotarZExaminar(float angle){
     eye(Y) = eyeAux(X) * sin(angle) + eyeAux(Z) * cos(angle);
 }
 
+void Camara::rotarXFirstPerson(float angle){
+    at = at - up;
+    Tupla3f atAux = at;
+    at(Y) = atAux(Y) * cos(angle) - atAux(Z) * sin(angle);
+    at(Z) = atAux(Y) * sin(angle) + atAux(Z) * cos(angle);
+    //at = at + eye;
+}
+
+void Camara::rotarYFirstPerson(float angle){
+    //at = at - eye;
+    Tupla3f atAux = at;
+    at(X) = atAux(X) * cos(angle) + atAux(Z) * sin(angle);
+    at(Z) = atAux(X) * -sin(angle) + atAux(Z) * cos(angle);
+    //at = at + eye;
+}
+
+void Camara::rotarZFirstPerson(float angle){
+    at = at - eye;
+    Tupla3f atAux = at;
+    at(X) = atAux(X) * cos(angle) - atAux(Z) * sin(angle);
+    at(Y) = atAux(X) * sin(angle) + atAux(Z) * cos(angle);
+    at = at + eye;
+}
+
+void Camara::girar(float x, float y){
+    rotarXFirstPerson(-y*0.25*M_PI/180.0);
+    rotarYFirstPerson(-x*0.25*M_PI/180.0);
+}
 
 void Camara::setObserver(){
     gluLookAt(eye(X), eye(Y), eye(Z),
@@ -56,10 +88,10 @@ void Camara::setProyeccion(){
     glLoadIdentity();
 
     if (tipo == 0)
-        glFrustum(left, right, bottom, top, near, far);
+        glFrustum(left * aspect, right * aspect, bottom * aspect, top * aspect, near, far);
 
     else if (tipo == 1)
-        glOrtho(left, right, bottom, top, near, far);
+        glOrtho(left * aspect, right * aspect, bottom , top , near, far);
 }
 
 void Camara::mover(float x, float y, float z){

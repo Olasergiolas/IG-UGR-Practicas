@@ -17,13 +17,17 @@ public:
     void rotarXExaminar(float angle);
     void rotarYExaminar(float angle);
     void rotarZExaminar(float angle);
-    /*void rotarXFirstPerson(float angle);
+    void rotarXFirstPerson(float angle);
     void rotarYFirstPerson(float angle);
-    void rotarZFirstPerson(float angle);*/
+    void rotarZFirstPerson(float angle);
+    void girar(float x, float y);
     void mover(float x, float y, float z);
     void zoom(float factor);
     void setObserver();
     void setProyeccion();
+    void setAt(Tupla3f newAt){at = newAt;}
+    Tupla3f getEye(){return eye;}
+    void setAspect(float height, float width);
 };
 
 #endif // CAMARA_H

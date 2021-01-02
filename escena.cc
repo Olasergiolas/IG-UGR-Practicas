@@ -57,11 +57,11 @@ Escena::Escena()
     actualizar_revolucion = false;
     iluminacion_activa = true;
 
-    Camara c1(0, Tupla3f(0.0f, 0.0f, 300.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
+    Camara c1(0, Tupla3f(0.0f, 0.0f, 800.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
               Front_plane, Back_plane);
     camaras.push_back(c1);
 
-    Camara c2(1, Tupla3f(0.0f, 0.0f, 300.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
+    Camara c2(1, Tupla3f(0.0f, 0.0f, 800.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
               Front_plane, Back_plane);
     camaras.push_back(c2);
     camara_activa = 0;
@@ -617,26 +617,22 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
 
        case '>':
-           if (rotaciones.first){
+           if (rotaciones.first)
                static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(0.5f);
-               std::cout << static_cast<LuzDireccional*>(luces[1])->getAlpha() << endl;
-           }
 
-           else if (rotaciones.second){
+
+           else if (rotaciones.second)
                static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(0.5f);
-               std::cout << static_cast<LuzDireccional*>(luces[1])->getBeta() << endl;
-           }
 
            break;
 
        case '<':
-           if (rotaciones.first){
+           if (rotaciones.first)
                static_cast<LuzDireccional*>(luces[1])->variarAnguloAlpha(-0.5f);
-           }
 
-           else if (rotaciones.second){
+
+           else if (rotaciones.second)
                static_cast<LuzDireccional*>(luces[1])->variarAnguloBeta(-0.5f);
-           }
 
            break;
 
@@ -650,6 +646,35 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        if (tecla >= '0' && tecla <= '2'){
            camara_activa = tecla - '0';
            camaras[camara_activa].setProyeccion();
+       }
+
+       if (toupper(tecla) == 'G'){
+           std::cout << "GODMODE" << std::endl;
+           modoCamara = GODMODE;
+       }
+   }
+
+   if (modoCamara == GODMODE){
+       Tupla3f eyeAux = camaras[camara_activa].getEye();
+       switch (toupper(tecla)) {
+       case 'W':
+           camaras[camara_activa].mover(eyeAux(X), eyeAux(Y), eyeAux(Z) - 10.0f);
+           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+           break;
+       case 'A':
+           camaras[camara_activa].mover(eyeAux(X) - 10.0f, eyeAux(Y), eyeAux(Z));
+           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+           break;
+
+       case 'S':
+           camaras[camara_activa].mover(eyeAux(X), eyeAux(Y), eyeAux(Z) + 10.0f);
+           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+           break;
+
+       case 'D':
+           camaras[camara_activa].mover(eyeAux(X) + 10.0f, eyeAux(Y), eyeAux(Z));
+           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+           break;
        }
    }
    return salir;
@@ -704,6 +729,7 @@ void Escena::redimensionar( int newWidth, int newHeight )
 {
    Width  = newWidth/10;
    Height = newHeight/10;
+   camaras[camara_activa].setAspect(Height, Width);
    change_projection( float(newHeight)/float(newWidth) );
    glViewport( 0, 0, newWidth, newHeight );
 }
@@ -835,7 +861,7 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
     }
 
     else
-        modoCamara = ESTATICA;
+        modoCamara = FP;
 
     if (boton == 3)
         camaras[camara_activa].zoom(10.0f);
@@ -854,9 +880,8 @@ void Escena::ratonMovido(int x, int y){
         old_y = y;
     }
 
-    else if (modoCamara == FP){
-        //camaras[camara_activa].rotarXFirstPerson(x-old_x);
-        //camaras[camara_activa].rotarYFirstPerson(y-old_y);
+    if (modoCamara == FP){
+        camaras[camara_activa].girar(x-old_x, y-old_y);
         old_x = x;
         old_y = y;
     }
