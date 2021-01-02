@@ -11,20 +11,19 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     setAspect(heigth, width);
     this->near = near;
     this->far = far;
-    //fovy = 2*atan((width/2)/aspect) * (180/M_PI);
+
+    /*fovy = 2*atan((width/2)/aspect) * (180/M_PI);
 
     z_axis = eye - at;
     z_axis = z_axis.normalized();
-
     x_axis = up.cross(z_axis);
     x_axis = x_axis.normalized();
-
-    y_axis = z_axis.cross(x_axis);
+    y_axis = z_axis.cross(x_axis);*/
 }
 
-void Camara::setAspect(float heigth, float width){
-    aspect = width/heigth;
-    top = (heigth/2);
+void Camara::setAspect(float height, float width){
+    aspect = width/height;
+    top = (height/2);
     bottom = (-top);
     right = width/2;
     left = -right;

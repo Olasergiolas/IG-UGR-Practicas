@@ -64,6 +64,11 @@ Escena::Escena()
     Camara c2(1, Tupla3f(0.0f, 0.0f, 800.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 200, 200,
               Front_plane, Back_plane);
     camaras.push_back(c2);
+
+    Camara c3(0, Tupla3f(0.0f, 500.0f, 300.0f), Tupla3f(0.0f, 0.0f, 0.0f), Tupla3f(0.0f, 1.0f, 0.0f), 600, 200,
+              Front_plane, Back_plane);
+    camaras.push_back(c3);
+
     camara_activa = 0;
 }
 
@@ -284,10 +289,12 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
            // ESTAMOS EN MODO SELECCION DE DIBUJADO
        case 'D' :
-           std::cout << "Modo selección de dibujado" << endl <<
-                       "\t1: Modo directo" << endl <<
-                       "\t2: Modo diferido" << endl;
-           modoMenu=SELDIBUJADO;
+            if (modoMenu == NADA){
+               std::cout << "Modo selección de dibujado" << endl <<
+                           "\t1: Modo directo" << endl <<
+                           "\t2: Modo diferido" << endl;
+               modoMenu=SELDIBUJADO;
+            }
            break ;
 
        case 'X' :
