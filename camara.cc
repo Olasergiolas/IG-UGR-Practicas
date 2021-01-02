@@ -31,45 +31,66 @@ void Camara::setAspect(float heigth, float width){
 }
 
 void Camara::rotarXExaminar(float angle){
-    Tupla3f eyeAux = eye;
-    eye(Y) = eyeAux(Y) * cos(angle) - eyeAux(Z) * sin(angle);
-    eye(Z) = eyeAux(Y) * sin(angle) + eyeAux(Z) * cos(angle);
+    //Obtenemos el vector direccion que va del at hacia el eye
+    Tupla3f direccion = eye - at;
+    Tupla3f direccionAux = direccion;
+
+    //Rotamos el vector
+    direccion(Y) = direccionAux(Y) * cos(angle) - direccionAux(Z) * sin(angle);
+    direccion(Z) = direccionAux(Y) * sin(angle) + direccionAux(Z) * cos(angle);
+
+    //Actualizamos eye
+    eye = direccion + at;
 }
 
 void Camara::rotarYExaminar(float angle){
-    Tupla3f eyeAux = eye;
-    eye(X) = eyeAux(X) * cos(angle) + eyeAux(Z) * sin(angle);
-    eye(Z) = eyeAux(X) * -sin(angle) + eyeAux(Z) * cos(angle);
+    Tupla3f direccion = eye - at;
+    Tupla3f direccionAux = direccion;
+
+    direccion(X) = direccionAux(X) * cos(angle) + direccionAux(Z) * sin(angle);
+    direccion(Z) = direccionAux(X) * -sin(angle) + direccionAux(Z) * cos(angle);
+
+    eye = direccion + at;
 }
 
 void Camara::rotarZExaminar(float angle){
-    Tupla3f eyeAux = eye;
-    eye(X) = eyeAux(X) * cos(angle) - eyeAux(Z) * sin(angle);
-    eye(Y) = eyeAux(X) * sin(angle) + eyeAux(Z) * cos(angle);
+    Tupla3f direccion = eye - at;
+    Tupla3f direccionAux = direccion;
+
+    direccion(X) = direccionAux(X) * cos(angle) - direccionAux(Z) * sin(angle);
+    direccion(Y) = direccionAux(X) * sin(angle) + direccionAux(Z) * cos(angle);
+
+    eye = direccion + at;
 }
 
 void Camara::rotarXFirstPerson(float angle){
-    at = at - up;
-    Tupla3f atAux = at;
-    at(Y) = atAux(Y) * cos(angle) - atAux(Z) * sin(angle);
-    at(Z) = atAux(Y) * sin(angle) + atAux(Z) * cos(angle);
-    //at = at + eye;
+    Tupla3f direccion = eye - at;
+    Tupla3f direccionAux = direccion;
+
+    direccion(Y) = direccionAux(Y) * cos(angle) - direccionAux(Z) * sin(angle);
+    direccion(Z) = direccionAux(Y) * sin(angle) + direccionAux(Z) * cos(angle);
+
+    at = direccion + eye;
 }
 
 void Camara::rotarYFirstPerson(float angle){
-    //at = at - eye;
-    Tupla3f atAux = at;
-    at(X) = atAux(X) * cos(angle) + atAux(Z) * sin(angle);
-    at(Z) = atAux(X) * -sin(angle) + atAux(Z) * cos(angle);
-    //at = at + eye;
+    Tupla3f direccion = eye - at;
+    Tupla3f direccionAux = direccion;
+
+    direccion(X) = direccionAux(X) * cos(angle) + direccionAux(Z) * sin(angle);
+    direccion(Z) = direccionAux(X) * -sin(angle) + direccionAux(Z) * cos(angle);
+
+    at = direccion + eye;
 }
 
 void Camara::rotarZFirstPerson(float angle){
-    at = at - eye;
-    Tupla3f atAux = at;
-    at(X) = atAux(X) * cos(angle) - atAux(Z) * sin(angle);
-    at(Y) = atAux(X) * sin(angle) + atAux(Z) * cos(angle);
-    at = at + eye;
+    Tupla3f direccion = eye - at;
+    Tupla3f direccionAux = direccion;
+
+    direccion(X) = direccionAux(X) * cos(angle) - direccionAux(Z) * sin(angle);
+    direccion(Y) = direccionAux(X) * sin(angle) + direccionAux(Z) * cos(angle);
+
+    at = direccion + eye;
 }
 
 void Camara::girar(float x, float y){

@@ -854,10 +854,11 @@ void Escena::animarModeloJerarquico(){
 }
 
 void Escena::clickRaton(int boton, int estado, int x, int y){
+    old_x = x;
+    old_y = y;
+
     if (boton == GLUT_RIGHT_BUTTON && estado == GLUT_DOWN){
         modoCamara = EXAMINAR;
-        old_x = x;
-        old_y = y;
     }
 
     else
