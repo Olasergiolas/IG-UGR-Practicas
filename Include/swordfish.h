@@ -19,7 +19,8 @@ private:
 
 public:
     Swordfish();
-    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
+    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+              Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
     void setExtAlas(float value);
     void setAlphaAlerones(float value);
     void setBetaAlerones(float value);

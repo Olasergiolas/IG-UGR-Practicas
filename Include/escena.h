@@ -15,6 +15,7 @@
 #include "Include/luzdireccional.h"
 #include "Include/swordfish.h"
 #include "Include/camara.h"
+#include <map>
 
 typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION,
              MOVIMIENTO, MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2,
@@ -45,6 +46,8 @@ class Escena
 
    void clear_window();
 
+   //std::vector<std::pair<std::string, Tupla3f>> scene_arrangement;
+   std::map<std::string, Tupla3f> scene_arrangement;
    unsigned char ultima_tecla;
    unsigned gradoLibertad;
    unsigned camara_activa;

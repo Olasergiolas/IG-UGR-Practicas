@@ -9,7 +9,8 @@ Swordfish::Swordfish(){
     ext_alas = 0.0f;
 }
 
-void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){
+void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+                     Tupla3f color){
     //Inicio tronco principal
     cuerpo->draw(v, estado_dibujados, coloreado);
 

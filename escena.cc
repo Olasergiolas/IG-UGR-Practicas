@@ -27,34 +27,54 @@ Escena::Escena()
     rotaciones.second = false;
     anima_luces = false;
 
+    std::pair<std::string, Tupla3f> aux_pair;
+
     cubo = new Cubo(100);
     Material aux(negro, blanco, blanco, 90.0);
     cubo->setMaterial(aux);
     cubo->set_textura("text-madera.jpg");
     cubo_presente = true;
+    aux_pair = std::make_pair("cubo", Tupla3f(0.0f, 150.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
 
     tetraedro = new Tetraedro();
     aux.actualizar(negro, verde, azul);
     tetraedro->setMaterial(aux);
     tetraedro_presente = false;
+    aux_pair = std::make_pair("tetraedro", Tupla3f(150.0f, 150.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
 
     ply = new ObjPLY("./plys/big_dodge.ply");
     aux.actualizar(negro, celeste, naranja);
     ply->setMaterial(aux);
     ply_presente = false;
+    aux_pair = std::make_pair("ply", Tupla3f(-150.0f, -150.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
 
-    inicializarLuces();
+    swordfish_presente = true;
+    swordfish = new Swordfish();
+    aux_pair = std::make_pair("swordfish", Tupla3f(150.0f, 0.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
+
+    aux_pair = std::make_pair("lata", Tupla3f(-150.0f, 0.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
+
+    aux_pair = std::make_pair("esfera", Tupla3f(0.0f, -150.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
+
+    aux_pair = std::make_pair("cono", Tupla3f(-150.0f, 150.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
+
+    aux_pair = std::make_pair("cilindro", Tupla3f(150.0f, 150.0f, 0.0f));
+    scene_arrangement.insert(aux_pair);
 
     lata_presente = true;
-
     cilindro_presente = false;
     cono_presente = true;
     esfera_presente = false;
 
-    swordfish_presente = true;
-    swordfish = new Swordfish();
-
     actualizar_revolucion = false;
+    inicializarLuces();
     iluminacion_activa = true;
     texturas = true;
 
@@ -143,7 +163,8 @@ void Escena::dibujar(bool color_coding_mode)
     if (cubo_presente){
         cubo->activar_textura();
         glPushMatrix();
-            glTranslatef(0.0f, 150.0f, 0.0f);
+            Tupla3f pos = scene_arrangement.find("cubo")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(1.0f, 1.0f, 0.2f);
             cubo->draw(visualizacion, estado_dibujados, coloreado, rojo_flat3);
         glPopMatrix();
@@ -151,14 +172,16 @@ void Escena::dibujar(bool color_coding_mode)
 
     if (tetraedro_presente){
         glPushMatrix();
-            glTranslatef(150.0f, 150.0f, 0.0f);
+            Tupla3f pos = scene_arrangement.find("tetraedro")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             tetraedro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
     }
 
     if (ply_presente){
         glPushMatrix();
-            glTranslatef(-150.0, -150.0, 0.0);
+            Tupla3f pos = scene_arrangement.find("ply")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(20.0,20.0,20.0);
             ply->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -180,7 +203,8 @@ void Escena::dibujar(bool color_coding_mode)
 
         lata_cue->activar_textura();
         glPushMatrix();
-            glTranslatef(-150.0f, 0.0f, 0.0f);
+            Tupla3f pos = scene_arrangement.find("lata")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(100.0,100.0,100.0);
             glRotatef(90.0f, 0, 1, 0);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado, azul_flat3);
@@ -200,7 +224,8 @@ void Escena::dibujar(bool color_coding_mode)
         }
 
         glPushMatrix();
-            glTranslatef(0.0f, -150.0f, 0);
+            Tupla3f pos = scene_arrangement.find("esfera")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
             esfera->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -212,7 +237,8 @@ void Escena::dibujar(bool color_coding_mode)
         }
 
         glPushMatrix();
-            glTranslatef(-150.0f, 150.0f, 0);
+            Tupla3f pos = scene_arrangement.find("cono")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
             cono->draw(visualizacion, estado_dibujados, coloreado, verde_flat3);
         glPopMatrix();
@@ -224,7 +250,8 @@ void Escena::dibujar(bool color_coding_mode)
         }
 
         glPushMatrix();
-            glTranslatef(150.0f, 150.0f, 0.0f);
+            Tupla3f pos = scene_arrangement.find("cilindro")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
             cilindro->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
@@ -233,7 +260,8 @@ void Escena::dibujar(bool color_coding_mode)
     if (swordfish_presente){
         glDisable(GL_TEXTURE_2D);
         glPushMatrix();
-            glTranslatef(150.0f, 0.0f, 0.0f);
+            Tupla3f pos = scene_arrangement.find("swordfish")->second;
+            glTranslatef(pos(X), pos(Y), pos(Z));
             swordfish->draw(visualizacion, estado_dibujados, coloreado);
         glPopMatrix();
         if (texturas)
@@ -955,9 +983,18 @@ void Escena::processPick(int x, int y){
         camaras[camara_activa].setExaminando(false);
     }
 
-    else if (pixel[1] == 255){
-        std:: cout << cono->getPrimerVertice() << std::endl;
-        camaras[camara_activa].setAt(Tupla3f(-150.0f, 150.0f, 0.0f));
+    else if (pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 0){
+        camaras[camara_activa].setAt(scene_arrangement.find("cono")->second);
+        camaras[camara_activa].setExaminando(true);
+    }
+
+    else if (pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0){
+        camaras[camara_activa].setAt(scene_arrangement.find("cubo")->second);
+        camaras[camara_activa].setExaminando(true);
+    }
+
+    else if (pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 255){
+        camaras[camara_activa].setAt(scene_arrangement.find("lata")->second);
         camaras[camara_activa].setExaminando(true);
     }
 
