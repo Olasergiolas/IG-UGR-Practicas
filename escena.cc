@@ -48,7 +48,7 @@ Escena::Escena()
     lata_presente = true;
 
     cilindro_presente = false;
-    cono_presente = false;
+    cono_presente = true;
     esfera_presente = false;
 
     swordfish_presente = true;
@@ -145,7 +145,7 @@ void Escena::dibujar(bool color_coding_mode)
         glPushMatrix();
             glTranslatef(0.0f, 150.0f, 0.0f);
             glScalef(1.0f, 1.0f, 0.2f);
-            cubo->draw(visualizacion, estado_dibujados, coloreado);
+            cubo->draw(visualizacion, estado_dibujados, coloreado, rojo_flat3);
         glPopMatrix();
     }
 
@@ -183,10 +183,10 @@ void Escena::dibujar(bool color_coding_mode)
             glTranslatef(-150.0f, 0.0f, 0.0f);
             glScalef(100.0,100.0,100.0);
             glRotatef(90.0f, 0, 1, 0);
-            lata_cue->draw(visualizacion, estado_dibujados, coloreado);
+            lata_cue->draw(visualizacion, estado_dibujados, coloreado, azul_flat3);
             glDisable(GL_TEXTURE_2D);
-            lata_bot->draw(visualizacion, estado_dibujados, coloreado);
-            lata_top->draw(visualizacion, estado_dibujados, coloreado);
+            lata_bot->draw(visualizacion, estado_dibujados, coloreado, azul_flat3);
+            lata_top->draw(visualizacion, estado_dibujados, coloreado, azul_flat3);
             if (texturas)
                 glEnable(GL_TEXTURE_2D);
         glPopMatrix();
@@ -214,7 +214,7 @@ void Escena::dibujar(bool color_coding_mode)
         glPushMatrix();
             glTranslatef(-150.0f, 150.0f, 0);
             glScalef(70.0,70.0,70.0);
-            cono->draw(visualizacion, estado_dibujados, coloreado);
+            cono->draw(visualizacion, estado_dibujados, coloreado, verde_flat3);
         glPopMatrix();
     }
 
@@ -891,8 +891,12 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
         camaras[camara_activa].zoom(1.2f);
 
     else if (boton == GLUT_LEFT_BUTTON && estado == GLUT_DOWN){
+        modo_coloreado coloreado_old = coloreado;
+        coloreado = COLOR_CODING;
+
         dibuja_seleccion();
         processPick(x, y);
+        coloreado = coloreado_old;
     }
 
     else
@@ -915,6 +919,7 @@ void Escena::ratonMovido(int x, int y){
 }
 
 void Escena::dibuja_seleccion(){
+    std::pair<bool, bool> estadoAnterior(iluminacion_activa, texturas);
     glDisable(GL_DITHER);
     glDisable(GL_LIGHTING);
     iluminacion_activa = false;
@@ -922,15 +927,29 @@ void Escena::dibuja_seleccion(){
     texturas = false;
 
     dibujar();
+    //glutSwapBuffers();
 
     glEnable(GL_DITHER);
-    glEnable(GL_LIGHTING);
-    iluminacion_activa = true;
-    glEnable(GL_TEXTURE);
-    texturas = true;
+    if (estadoAnterior.first){
+        glEnable(GL_LIGHTING);
+        iluminacion_activa = true;
+    }
+
+    if (estadoAnterior.second){
+        glEnable(GL_TEXTURE);
+        texturas = true;
+    }
 }
 
 void Escena::processPick(int x, int y){
+    GLint viewport[4];
+    GLubyte pixel[3];
+
+    glGetIntegerv(GL_VIEWPORT,viewport);
+    glReadPixels(x, viewport[3]-y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void *)pixel);
+
+    printf("Color leído: %d %d %d\n", pixel[0], pixel[1], pixel[2]);
+
 
 }
 

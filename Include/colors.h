@@ -12,7 +12,9 @@ static const Tupla4f gris(0.7f, 0.7f, 0.7f, 1.0f);
 static const Tupla4f cobre(0.8f, 0.5f, 0.3f, 1.0f);
 
 
-static const Tupla3f rojo3(1.0f, 0.0f, 0.0f);
+static const Tupla3f rojo_flat3(1.0f, 0.0f, 0.0f);
+static const Tupla3f verde_flat3(0.0f, 1.0f, 0.0f);
+static const Tupla3f azul_flat3(0.0f, 0.0f, 1.0f);
 static const Tupla3f negro3(0.0f, 0.0f, 0.0f);
 static const Tupla3f celeste3(0.0f, 0.8f, 0.8f);
 static const Tupla3f verde3(0.5f, 0.0f, 1.0f);
