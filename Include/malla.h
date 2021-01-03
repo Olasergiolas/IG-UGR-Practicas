@@ -50,6 +50,8 @@ class Malla3D
    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
              Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
 
+   Tupla3f getPrimerVertice(){return v[0];}
+
    protected:
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)

@@ -949,6 +949,17 @@ void Escena::processPick(int x, int y){
     glReadPixels(x, viewport[3]-y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void *)pixel);
 
     printf("Color leído: %d %d %d\n", pixel[0], pixel[1], pixel[2]);
+    fflush(stdout);
+
+    if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255 && camaras[camara_activa].getExaminando()){
+        camaras[camara_activa].setExaminando(false);
+    }
+
+    else if (pixel[1] == 255){
+        std:: cout << cono->getPrimerVertice() << std::endl;
+        camaras[camara_activa].setAt(Tupla3f(-150.0f, 150.0f, 0.0f));
+        camaras[camara_activa].setExaminando(true);
+    }
 
 
 }
