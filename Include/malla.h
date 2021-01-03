@@ -22,7 +22,7 @@
 // *****************************************************************************
 
 typedef enum {INMEDIATO, VBO} modo_visualizacion;
-typedef enum {AJEDREZ, RELLENADO, ALT1, ALT2} modo_coloreado;  //Para decidir si utilizamos los colores por defecto (c y c_ajedrez)
+typedef enum {AJEDREZ, RELLENADO, ALT1, ALT2, COLOR_CODING} modo_coloreado;  //Para decidir si utilizamos los colores por defecto (c y c_ajedrez)
                                                                //o utilizamos colores alternativos. Útil para el dibujado simultáneo en modo alambre, fill...
 
 class Malla3D
@@ -39,15 +39,16 @@ class Malla3D
    void activar_textura();
 
    // dibuja el objeto en modo inmediato
-   void draw_ModoInmediato(modo_coloreado coloreado=RELLENADO);
+   void draw_ModoInmediato(modo_coloreado coloreado=RELLENADO, Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
 
    // dibuja el objeto en modo diferido (usando VBOs)
-   void draw_ModoDiferido(modo_coloreado coloreado=RELLENADO);
+   void draw_ModoDiferido(modo_coloreado coloreado=RELLENADO, Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
 
    // función que redibuja el objeto
    // está función llama a 'draw_ModoInmediato' (modo inmediato)
    // o bien a 'draw_ModoDiferido' (modo diferido, VBOs)
-   void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
+   void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+             Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
 
    protected:
 
@@ -68,6 +69,7 @@ class Malla3D
    std::vector<Tupla3f> c_ajedrez1;
    std::vector<Tupla3f> c_alt_1;
    std::vector<Tupla3f> c_alt_2;
+   std::vector<Tupla3f> c_code;
    std::vector<Tupla3f> nv;
    std::vector<Tupla2f> ct;
    GLuint id_ver_buffer = 0;

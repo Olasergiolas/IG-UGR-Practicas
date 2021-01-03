@@ -120,6 +120,10 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
 void Escena::dibujar(bool color_coding_mode)
 {
+    modo_coloreado coloreado_old = coloreado;
+    if (color_coding_mode)
+        coloreado = COLOR_CODING;
+
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
     glDisable(GL_LIGHTING);
@@ -237,6 +241,9 @@ void Escena::dibujar(bool color_coding_mode)
     }
 
     actualizar_revolucion = false;
+
+    if (color_coding_mode)
+        coloreado = coloreado_old;
 }
 
 //**************************************************************************
