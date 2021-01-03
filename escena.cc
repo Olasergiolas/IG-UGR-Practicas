@@ -174,7 +174,7 @@ void Escena::dibujar(bool color_coding_mode)
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("tetraedro")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
-            tetraedro->draw(visualizacion, estado_dibujados, coloreado);
+            tetraedro->draw(visualizacion, estado_dibujados, coloreado, gris3);
         glPopMatrix();
     }
 
@@ -183,7 +183,7 @@ void Escena::dibujar(bool color_coding_mode)
             Tupla3f pos = scene_arrangement.find("ply")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(20.0,20.0,20.0);
-            ply->draw(visualizacion, estado_dibujados, coloreado);
+            ply->draw(visualizacion, estado_dibujados, coloreado, verde3);
         glPopMatrix();
     }
 
@@ -227,7 +227,7 @@ void Escena::dibujar(bool color_coding_mode)
             Tupla3f pos = scene_arrangement.find("esfera")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
-            esfera->draw(visualizacion, estado_dibujados, coloreado);
+            esfera->draw(visualizacion, estado_dibujados, coloreado, celeste3);
         glPopMatrix();
     }
 
@@ -253,7 +253,7 @@ void Escena::dibujar(bool color_coding_mode)
             Tupla3f pos = scene_arrangement.find("cilindro")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
-            cilindro->draw(visualizacion, estado_dibujados, coloreado);
+            cilindro->draw(visualizacion, estado_dibujados, coloreado, marron3);
         glPopMatrix();
     }
 
@@ -262,7 +262,7 @@ void Escena::dibujar(bool color_coding_mode)
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("swordfish")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
-            swordfish->draw(visualizacion, estado_dibujados, coloreado);
+            swordfish->draw(visualizacion, estado_dibujados, coloreado, naranja3);
         glPopMatrix();
         if (texturas)
             glEnable(GL_TEXTURE_2D);
@@ -998,7 +998,30 @@ void Escena::processPick(int x, int y){
         camaras[camara_activa].setExaminando(true);
     }
 
+    else if (pixel[0] == 255 && pixel[1] == 128 && pixel[2] == 0){
+        camaras[camara_activa].setAt(scene_arrangement.find("swordfish")->second);
+        camaras[camara_activa].setExaminando(true);
+    }
 
+    else if (pixel[0] == 178 && pixel[1] == 178 && pixel[2] == 178){
+        camaras[camara_activa].setAt(scene_arrangement.find("tetraedro")->second);
+        camaras[camara_activa].setExaminando(true);
+    }
+
+    else if (pixel[0] == 128 && pixel[1] == 0 && pixel[2] == 255){
+        camaras[camara_activa].setAt(scene_arrangement.find("ply")->second);
+        camaras[camara_activa].setExaminando(true);
+    }
+
+    else if (pixel[0] == 0 && pixel[1] == 204 && pixel[2] == 204){
+        camaras[camara_activa].setAt(scene_arrangement.find("esfera")->second);
+        camaras[camara_activa].setExaminando(true);
+    }
+
+    else if (pixel[0] == 76 && pixel[1] == 51 && pixel[2] == 0){
+        camaras[camara_activa].setAt(scene_arrangement.find("cilindro")->second);
+        camaras[camara_activa].setExaminando(true);
+    }
 }
 
 Escena::~Escena(){

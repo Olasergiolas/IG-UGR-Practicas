@@ -11,7 +11,8 @@ Ala::Ala(){
     pico->setMaterial(m);
 }
 
-void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado, bool sentido){
+void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado, bool sentido,
+               Tupla3f color){
     glPushMatrix();
 
     if (sentido){
@@ -26,13 +27,13 @@ void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_col
 
         glPushMatrix();
             glScalef(1.0f, 5.0f, 2.5f);
-            cubo->draw(v, estado_dibujados, coloreado);
+            cubo->draw(v, estado_dibujados, coloreado, color);
         glPopMatrix();
 
         glPushMatrix();
             glRotatef(90.0f, 1, 0, 0);
             glScalef(0.05f, 0.3f, 0.05f);
-            pico->draw(v, estado_dibujados, coloreado);
+            pico->draw(v, estado_dibujados, coloreado, color);
         glPopMatrix();
     glPopMatrix();
 
@@ -40,7 +41,7 @@ void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_col
     glPushMatrix();
         glTranslatef(62.5f, 0.0f, 0.0f);
         glScalef(12.0f, 0.5f, 2.0f);
-        cubo->draw(v, estado_dibujados, coloreado);
+        cubo->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 }
 

@@ -9,25 +9,26 @@ Canon::Canon(){
     cilindro->setMaterial(m);
 }
 
-void Canon::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){
+void Canon::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+                 Tupla3f color){
     glMatrixMode(GL_MODELVIEW);
 
     glPushMatrix();
         glTranslatef(-15.0f, 0.0f, 0.0f);
         glRotatef(90.0f, 0, 0, 1);
         glScalef(1.0f, 15.0f, 1.0f);
-        cilindro->draw(v, estado_dibujados, coloreado);
+        cilindro->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 
     glPushMatrix();
         glRotatef(90.0f, 0, 0, 1);
         glScalef(3.0f, 3.0f, 3.0f);
-        base->draw(v, estado_dibujados, coloreado);
+        base->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 
     glPushMatrix();
         glTranslatef(-20.0f, -20.0f, 10.0);
         glRotatef(-90.0f, 1, 0, 0);
-        cilindro->draw(v, estado_dibujados, coloreado);
+        cilindro->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 }

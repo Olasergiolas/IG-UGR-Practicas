@@ -12,17 +12,18 @@ Cabina::Cabina(){
     semiesfera->setMaterial(m1);
 }
 
-void Cabina::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){
+void Cabina::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+                  Tupla3f color){
     glPushMatrix();
         glScalef(4.0f, 3.0f, 4.0f);
-        cabina->draw(v, estado_dibujados, coloreado);
+        cabina->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 
     glPushMatrix();
         glTranslatef(0.0f, 40.0f, 0.0f);
         glRotatef(-alpha, 0, 0, 1);
         glScalef(3.5f, 3.5f, 3.5f);
-        semiesfera->draw(v, estado_dibujados, coloreado);
+        semiesfera->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 }
 
