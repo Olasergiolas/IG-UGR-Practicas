@@ -4,9 +4,7 @@ Canon::Canon(){
     cilindro = new Cilindro(25, 25, 20, 10, std::pair<bool, bool>(true, true));
     base = new Cono(20, 50, 20, 10, std::pair<bool, bool>(true, true));
 
-    Material m(negro, gris, blanco, 90.0f);
-    base->setMaterial(m);
-    cilindro->setMaterial(m);
+    paint();
 }
 
 void Canon::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
@@ -41,4 +39,10 @@ void Canon::setColor(Tupla3f color){
 void Canon::setMaterial(Material m){
     cilindro->setMaterial(m);
     base->setMaterial(m);
+}
+
+void Canon::paint(){
+    Material m(negro, gris, blanco, 90.0f);
+    base->setMaterial(m);
+    cilindro->setMaterial(m);
 }

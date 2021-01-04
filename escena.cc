@@ -961,7 +961,6 @@ void Escena::dibuja_seleccion(){
     texturas = false;
 
     dibujar();
-    //glutSwapBuffers();
 
     glEnable(GL_DITHER);
     if (estadoAnterior.first){
@@ -1006,7 +1005,7 @@ void Escena::processPick(int x, int y){
         }
     }
 
-    //Si se selecciona el vacío
+    //Comprobamos qué ha sido seleccionado, si es un objeto guardamos su estado anterior y lo pintamos de amarillo
     if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255 && camaras[camara_activa].getExaminando()){
         camaras[camara_activa].setExaminando(false);
 
@@ -1066,7 +1065,7 @@ void Escena::processPick(int x, int y){
         old_color_material.first = nullptr;
         camaras[camara_activa].setAt(scene_arrangement.find("swordfish")->second);
         camaras[camara_activa].setExaminando(true);
-        swordfish->setMaterial(amarillo, amarillo);
+        swordfish->setMaterial(amarillo);
         swordfish->setColor(amarillo3);
     }
 

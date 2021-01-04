@@ -5,11 +5,7 @@ Cabina::Cabina(){
     semiesfera = new Esfera(20, 50, 10, std::pair<bool, bool>(true, true) ,false);
     alpha = 0.0f;
 
-    Material m(negro, rojo, blanco, 90.0f);
-    Material m1(negro, cobre, negro, 90.0f);
-
-    cabina->setMaterial(m);
-    semiesfera->setMaterial(m1);
+    paint();
 }
 
 void Cabina::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
@@ -39,4 +35,12 @@ void Cabina::setColor(Tupla3f color){
 void Cabina::setMaterial(Material m){
     cabina->setMaterial(m);
     semiesfera->setMaterial(m);
+}
+
+void Cabina::paint(){
+    Material m(negro, rojo, blanco, 90.0f);
+    Material m1(negro, cobre, negro, 90.0f);
+
+    cabina->setMaterial(m);
+    semiesfera->setMaterial(m1);
 }

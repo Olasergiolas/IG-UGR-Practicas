@@ -29,8 +29,7 @@ public:
     int getSpeedUp(unsigned ind=0);
     void increaseSpeedUp(unsigned ind=0);
     void reduceSpeedUp(unsigned ind=0);
-    void setMaterial(std::vector<Material> materiales);
-    void setMaterial(Material m, Material mat_aleron);
+    void setMaterial(Material m);
     void setColor(Tupla3f color);
     void paint();
 };

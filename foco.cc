@@ -5,10 +5,7 @@ Foco::Foco()
     cono = new Cono(20, 50, 20, 10, std::pair<bool, bool>(true, true));
     esfera = new Esfera(20, 50, 10, std::pair<bool, bool>(true, true), true);
 
-    Material m(negro, gris, blanco, 90.0f);
-    Material m1(negro, blanco, blanco, 90.0f);
-    cono->setMaterial(m);
-    esfera->setMaterial(m1);
+    paint();
 }
 
 
@@ -37,4 +34,11 @@ void Foco::setColor(Tupla3f color){
 void Foco::setMaterial(Material m){
     cono->setMaterial(m);
     esfera->setMaterial(m);
+}
+
+void Foco::paint(){
+    Material m(negro, gris, blanco, 90.0f);
+    Material m1(negro, blanco, blanco, 90.0f);
+    cono->setMaterial(m);
+    esfera->setMaterial(m1);
 }

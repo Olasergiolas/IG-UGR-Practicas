@@ -5,11 +5,7 @@ ReactorDecorado::ReactorDecorado()
     reactor = new Cilindro(25, 25, 50, 25, std::pair<bool, bool>(true, true));
     aleron = new Tetraedro();
 
-    Material m(negro, gris, gris, 90.0f);
-    Material m1(negro, rojo, blanco, 90.0f);
-
-    reactor->setMaterial(m);
-    aleron->setMaterial(m1);
+    paint();
 }
 
 void ReactorDecorado::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
@@ -40,7 +36,15 @@ void ReactorDecorado::setColor(Tupla3f color){
     aleron->setColor(color);
 }
 
-void ReactorDecorado::setMaterial(Material m1, Material m2){
-    reactor->setMaterial(m1);
-    aleron->setMaterial(m2);
+void ReactorDecorado::setMaterial(Material m){
+    reactor->setMaterial(m);
+    aleron->setMaterial(m);
+}
+
+void ReactorDecorado::paint(){
+    Material m(negro, gris, gris, 90.0f);
+    Material m1(negro, rojo, blanco, 90.0f);
+
+    reactor->setMaterial(m);
+    aleron->setMaterial(m1);
 }

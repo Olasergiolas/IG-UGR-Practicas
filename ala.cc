@@ -6,9 +6,7 @@ Ala::Ala(){
     alpha = 0.0f;
     beta = 0.0f;
 
-    Material m(negro, rojo, blanco, 90.0f);
-    cubo->setMaterial(m);
-    pico->setMaterial(m);
+    paint();
 }
 
 void Ala::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado, bool sentido,
@@ -59,6 +57,12 @@ void Ala::setColor(Tupla3f color){
 }
 
 void Ala::setMaterial(Material m){
+    cubo->setMaterial(m);
+    pico->setMaterial(m);
+}
+
+void Ala::paint(){
+    Material m(negro, rojo, blanco, 90.0f);
     cubo->setMaterial(m);
     pico->setMaterial(m);
 }

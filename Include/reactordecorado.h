@@ -14,8 +14,9 @@ public:
     ReactorDecorado();
     void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
               Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
-    void setMaterial(Material m1, Material m2);
+    void paint();
     void setColor(Tupla3f color);
+    void setMaterial(Material m);
 };
 
 #endif // REACTORDECORADO_H

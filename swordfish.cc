@@ -95,30 +95,18 @@ void Swordfish::setColor(Tupla3f color){
     ala1->setColor(color);
 }
 
-void Swordfish::setMaterial(Material m, Material mat_aleron){
+void Swordfish::setMaterial(Material m){
     cuerpo->setMaterial(m);
-    reactor->setMaterial(m, mat_aleron);
+    reactor->setMaterial(m);
     canon->setMaterial(m);
     ala->setMaterial(m);
     ala1->setMaterial(m);
 }
 
 void Swordfish::paint(){
-    Material rojo_mat(negro, rojo, blanco, 90.0f);
-    Material gris_mat(negro, gris, blanco, 90.0f);
-    Material gris_mat1(negro, gris, gris, 90.0f);
-
-
-    cuerpo->setColor(gris3);
-    reactor->setColor(gris3);
-    canon->setColor(gris3);
-    ala->setColor(gris3);
-    ala1->setColor(gris3);
-
-    cuerpo->setMaterial(rojo_mat);
-    reactor->setMaterial(gris_mat1, rojo_mat);
-    canon->setMaterial(gris_mat);
-    ala->setMaterial(rojo_mat);
-    ala1->setMaterial(rojo_mat);
-
+    cuerpo->paint();
+    reactor->paint();
+    canon->paint();
+    ala->paint();
+    ala1->paint();
 }
