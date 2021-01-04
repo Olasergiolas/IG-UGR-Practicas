@@ -54,7 +54,7 @@ void Malla3D::comprobarVBOs(){
         id_norm_buffer = crearVBO(GL_ARRAY_BUFFER, nv.size()*sizeof(float)*3, nv.data());
 }
 
-void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
+void Malla3D::draw_ModoInmediato(modo_coloreado coloreado, Tupla3f color)
 {
   // visualizar la malla usando glDrawElements,
   // completar (práctica 1)
@@ -90,6 +90,11 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
         else if (coloreado == ALT1)
             glColorPointer(3, GL_FLOAT, 0, c_alt_1.data());
 
+        else if (coloreado == COLOR_CODING){
+            c_code.assign(v.size(), color);
+            glColorPointer(3, GL_FLOAT, 0, c_code.data());
+        }
+
         else
             glColorPointer(3, GL_FLOAT, 0, c_alt_2.data());
 
@@ -103,7 +108,7 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado)
 // -----------------------------------------------------------------------------
 // Visualización en modo diferido con 'glDrawElements' (usando VBOs)
 
-void Malla3D::draw_ModoDiferido(modo_coloreado coloreado)
+void Malla3D::draw_ModoDiferido(modo_coloreado coloreado, Tupla3f color)
 {
     if (f0.empty() || f1.empty()){
         for (unsigned i = 0; i < f.size(); ++i){
@@ -173,7 +178,8 @@ void Malla3D::draw_ModoDiferido(modo_coloreado coloreado)
 // Función de visualización de la malla,
 // puede llamar a  draw_ModoInmediato o bien a draw_ModoDiferido
 
-void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado)    //Según parámetro llama a los dos anteriores
+void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+                   Tupla3f color)    //Según parámetro llama a los dos anteriores
 {
     modo_coloreado coloreado_final = coloreado;
 
@@ -184,31 +190,38 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
         glTexCoordPointer(2, GL_FLOAT, 0, ct.data());
     }
 
-    for (auto it = estado_dibujados.begin(); it != estado_dibujados.end(); ++it){
+    if (coloreado == COLOR_CODING){
+        glPolygonMode(GL_FRONT, GL_FILL);
+        draw_ModoInmediato(coloreado, color);
+    }
 
-        glPolygonMode(GL_FRONT, *it);
+    else{
+        for (auto it = estado_dibujados.begin(); it != estado_dibujados.end(); ++it){
 
-        if (*it == GL_LINE)
-            coloreado_final = ALT1;
+            glPolygonMode(GL_FRONT, *it);
 
-        else if (*it == GL_POINT)
-            coloreado_final = ALT2;
+            if (*it == GL_LINE)
+                coloreado_final = ALT1;
 
-        else if (coloreado == AJEDREZ)
-            coloreado_final = AJEDREZ;
+            else if (*it == GL_POINT)
+                coloreado_final = ALT2;
 
-        else
-            coloreado_final = RELLENADO;
+            else if (coloreado == AJEDREZ)
+                coloreado_final = AJEDREZ;
 
-        if (m != nullptr)
-            m->aplicar();
+            else
+                coloreado_final = RELLENADO;
 
-        if (v == VBO)
-            draw_ModoDiferido(coloreado_final);
+            if (m != nullptr)
+                m->aplicar();
 
-        else
-            draw_ModoInmediato(coloreado_final);
-}
+            if (v == VBO)
+                draw_ModoDiferido(coloreado_final);
+
+            else
+                draw_ModoInmediato(coloreado_final);
+        }
+    }
 
     if (textura != nullptr)
         glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -269,4 +282,9 @@ void Malla3D::set_textura(std::string archivo){
 
 void Malla3D::activar_textura(){
     textura->activar();
+}
+
+void Malla3D::setColor(Tupla3f color){
+    c.clear();
+    c.assign(v.size(), color);
 }

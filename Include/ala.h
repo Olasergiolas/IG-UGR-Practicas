@@ -13,9 +13,13 @@ private:
 
 public:
     Ala();
-    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado, bool sentido);
+    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado, bool sentido,
+              Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
     void setAlpha(float value);
     void setBeta(float value);
+    void paint();
+    void setColor(Tupla3f color);
+    void setMaterial(Material m);
 };
 
 #endif // ALA_H

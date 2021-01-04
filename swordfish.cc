@@ -9,20 +9,21 @@ Swordfish::Swordfish(){
     ext_alas = 0.0f;
 }
 
-void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado){
+void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+                     Tupla3f color){
     //Inicio tronco principal
-    cuerpo->draw(v, estado_dibujados, coloreado);
+    cuerpo->draw(v, estado_dibujados, coloreado, color);
 
     glPushMatrix();
         glTranslatef(50.0f, 0.0f, 0.0f);
         glScalef(0.25f, 0.25f, 0.25f);
-        reactor->draw(v, estado_dibujados, coloreado);
+        reactor->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 
     glPushMatrix();
         glTranslatef(-70.0f, -70.0f, 0.0f);
         glScalef(0.75f, 0.75f, 0.75f);
-        canon->draw(v, estado_dibujados, coloreado);
+        canon->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
     //Fin tronco
 
@@ -32,7 +33,7 @@ void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, mo
         glTranslatef(0.0f, 0.0f, ext_alas);
         glTranslatef(-30.0f, 0.0f, -100.0f);
         glRotatef(-90.0f, 0, 1, 0);
-        ala->draw(v, estado_dibujados, coloreado, true);
+        ala->draw(v, estado_dibujados, coloreado, true, color);
     glPopMatrix();
 
     glPushMatrix();
@@ -41,7 +42,7 @@ void Swordfish::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, mo
         glRotatef(180.0f, 0, 0, 1);
         glRotatef(180.0f, 0, 1, 0);
         glRotatef(-90.0f, 0, 1, 0);
-        ala1->draw(v, estado_dibujados, coloreado, false);
+        ala1->draw(v, estado_dibujados, coloreado, false, color);
     glPopMatrix();
     //Fin alas
 }
@@ -84,4 +85,28 @@ void Swordfish::reduceSpeedUp(unsigned ind){
 
 
     std::cout << std::endl << partSpeedUp[ind] << std::endl;
+}
+
+void Swordfish::setColor(Tupla3f color){
+    cuerpo->setColor(color);
+    reactor->setColor(color);
+    canon->setColor(color);
+    ala->setColor(color);
+    ala1->setColor(color);
+}
+
+void Swordfish::setMaterial(Material m){
+    cuerpo->setMaterial(m);
+    reactor->setMaterial(m);
+    canon->setMaterial(m);
+    ala->setMaterial(m);
+    ala1->setMaterial(m);
+}
+
+void Swordfish::paint(){
+    cuerpo->paint();
+    reactor->paint();
+    canon->paint();
+    ala->paint();
+    ala1->paint();
 }

@@ -29,6 +29,7 @@ public:
     Tupla3f getEye(){return eye;}
     void setAspect(float height, float width);
     bool getExaminando(){return examinando;}
+    void setExaminando(bool estado){examinando = estado;}
 };
 
 #endif // CAMARA_H

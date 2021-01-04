@@ -15,8 +15,12 @@ private:
 
 public:
     Cuerpo();
-    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado);
+    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
+              Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
     void setRotacionCabina(float value);
+    void paint();
+    void setColor(Tupla3f color);
+    void setMaterial(Material m);
 };
 
 #endif // CUERPO_H
