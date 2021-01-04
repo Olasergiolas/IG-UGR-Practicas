@@ -1013,7 +1013,7 @@ void Escena::processPick(int x, int y){
         if (elegido == nullptr)
             first_pick = true;
 
-        elegido == nullptr;
+        elegido = nullptr;
     }
 
     else if (pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 0){
@@ -1059,7 +1059,7 @@ void Escena::processPick(int x, int y){
 
     else if (pixel[0] == 255 && pixel[1] == 128 && pixel[2] == 0){
         swordfish_elegido = true;
-        elegido == nullptr;
+        elegido = nullptr;
         first_pick = false;
 
         old_color_material.first = nullptr;
