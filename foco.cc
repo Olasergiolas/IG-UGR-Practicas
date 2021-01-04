@@ -28,3 +28,13 @@ void Foco::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_co
     glPopMatrix();
 
 }
+
+void Foco::setColor(Tupla3f color){
+    cono->setColor(color);
+    esfera->setColor(color);
+}
+
+void Foco::setMaterial(Material m){
+    cono->setMaterial(m);
+    esfera->setMaterial(m);
+}

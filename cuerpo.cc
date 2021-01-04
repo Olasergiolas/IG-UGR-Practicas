@@ -49,3 +49,17 @@ void Cuerpo::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_
 void Cuerpo::setRotacionCabina(float value){
     cabina->setAlpha(value);
 }
+
+void Cuerpo::setColor(Tupla3f color){
+    morro->setColor(color);
+    foco->setColor(color);
+    esfera->setColor(color);
+    cabina->setColor(color);
+}
+
+void Cuerpo::setMaterial(Material m){
+    morro->setMaterial(m);
+    foco->setMaterial(m);
+    esfera->setMaterial(m);
+    cabina->setMaterial(m);
+}

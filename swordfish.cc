@@ -86,3 +86,39 @@ void Swordfish::reduceSpeedUp(unsigned ind){
 
     std::cout << std::endl << partSpeedUp[ind] << std::endl;
 }
+
+void Swordfish::setColor(Tupla3f color){
+    cuerpo->setColor(color);
+    reactor->setColor(color);
+    canon->setColor(color);
+    ala->setColor(color);
+    ala1->setColor(color);
+}
+
+void Swordfish::setMaterial(Material m, Material mat_aleron){
+    cuerpo->setMaterial(m);
+    reactor->setMaterial(m, mat_aleron);
+    canon->setMaterial(m);
+    ala->setMaterial(m);
+    ala1->setMaterial(m);
+}
+
+void Swordfish::paint(){
+    Material rojo_mat(negro, rojo, blanco, 90.0f);
+    Material gris_mat(negro, gris, blanco, 90.0f);
+    Material gris_mat1(negro, gris, gris, 90.0f);
+
+
+    cuerpo->setColor(gris3);
+    reactor->setColor(gris3);
+    canon->setColor(gris3);
+    ala->setColor(gris3);
+    ala1->setColor(gris3);
+
+    cuerpo->setMaterial(rojo_mat);
+    reactor->setMaterial(gris_mat1, rojo_mat);
+    canon->setMaterial(gris_mat);
+    ala->setMaterial(rojo_mat);
+    ala1->setMaterial(rojo_mat);
+
+}

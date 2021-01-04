@@ -14,6 +14,8 @@ public:
     Foco();
     void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
               Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
+    void setMaterial(Material m);
+    void setColor(Tupla3f color);
 };
 
 #endif // FOCO_H

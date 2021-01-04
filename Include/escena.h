@@ -46,7 +46,9 @@ class Escena
 
    void clear_window();
 
-   //std::vector<std::pair<std::string, Tupla3f>> scene_arrangement;
+   std::pair<Malla3D*, std::pair<std::vector<Tupla3f>, Material>> old_color_material;
+   bool first_pick = true;
+   bool swordfish_elegido = false;
    std::map<std::string, Tupla3f> scene_arrangement;
    unsigned char ultima_tecla;
    unsigned gradoLibertad;

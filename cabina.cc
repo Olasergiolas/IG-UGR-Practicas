@@ -30,3 +30,13 @@ void Cabina::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_
 void Cabina::setAlpha(float value){
     alpha += value;
 }
+
+void Cabina::setColor(Tupla3f color){
+    cabina->setColor(color);
+    semiesfera->setColor(color);
+}
+
+void Cabina::setMaterial(Material m){
+    cabina->setMaterial(m);
+    semiesfera->setMaterial(m);
+}

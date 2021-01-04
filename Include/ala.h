@@ -17,6 +17,8 @@ public:
               Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
     void setAlpha(float value);
     void setBeta(float value);
+    void setMaterial(Material m);
+    void setColor(Tupla3f color);
 };
 
 #endif // ALA_H

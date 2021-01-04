@@ -52,3 +52,13 @@ void Ala::setAlpha(float value){
 void Ala::setBeta(float value){
     beta += value;
 }
+
+void Ala::setColor(Tupla3f color){
+    cubo->setColor(color);
+    pico->setColor(color);
+}
+
+void Ala::setMaterial(Material m){
+    cubo->setMaterial(m);
+    pico->setMaterial(m);
+}

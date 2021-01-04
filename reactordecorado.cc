@@ -34,3 +34,13 @@ void ReactorDecorado::draw(modo_visualizacion v, std::set<GLenum> estado_dibujad
         aleron->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 }
+
+void ReactorDecorado::setColor(Tupla3f color){
+    reactor->setColor(color);
+    aleron->setColor(color);
+}
+
+void ReactorDecorado::setMaterial(Material m1, Material m2){
+    reactor->setMaterial(m1);
+    aleron->setMaterial(m2);
+}

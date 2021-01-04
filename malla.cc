@@ -283,3 +283,8 @@ void Malla3D::set_textura(std::string archivo){
 void Malla3D::activar_textura(){
     textura->activar();
 }
+
+void Malla3D::setColor(Tupla3f color){
+    c.clear();
+    c.assign(v.size(), color);
+}

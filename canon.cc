@@ -32,3 +32,13 @@ void Canon::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_c
         cilindro->draw(v, estado_dibujados, coloreado, color);
     glPopMatrix();
 }
+
+void Canon::setColor(Tupla3f color){
+    cilindro->setColor(color);
+    base->setColor(color);
+}
+
+void Canon::setMaterial(Material m){
+    cilindro->setMaterial(m);
+    base->setMaterial(m);
+}

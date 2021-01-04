@@ -161,7 +161,9 @@ void Escena::dibujar(bool color_coding_mode)
     }
 
     if (cubo_presente){
-        cubo->activar_textura();
+        if (texturas)
+            cubo->activar_textura();
+
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("cubo")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
@@ -201,7 +203,8 @@ void Escena::dibujar(bool color_coding_mode)
             lata_cue->set_textura("text-lata-1.jpg");
         }
 
-        lata_cue->activar_textura();
+        if (texturas)
+            lata_cue->activar_textura();
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("lata")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
@@ -240,7 +243,10 @@ void Escena::dibujar(bool color_coding_mode)
             Tupla3f pos = scene_arrangement.find("cono")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
+            glDisable(GL_TEXTURE_2D);
             cono->draw(visualizacion, estado_dibujados, coloreado, verde_flat3);
+            if (texturas)
+                glEnable(GL_TEXTURE_2D);
         glPopMatrix();
     }
 
@@ -972,55 +978,144 @@ void Escena::dibuja_seleccion(){
 void Escena::processPick(int x, int y){
     GLint viewport[4];
     GLubyte pixel[3];
+    Malla3D* elegido;
+    Material amarillo(Tupla4f(1.0f, 1.0f, 0.0f, 1.0f), Tupla4f(1.0f, 1.0f, 0.0f, 1.0f), Tupla4f(0.0f, 0.0f, 0.0f, 1.0f), 90.0f);
 
     glGetIntegerv(GL_VIEWPORT,viewport);
     glReadPixels(x, viewport[3]-y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void *)pixel);
 
-    printf("Color leído: %d %d %d\n", pixel[0], pixel[1], pixel[2]);
-    fflush(stdout);
+    //restauro el color y material anteriores en caso de haber elegido algo antes
+    if (!first_pick){
+        if (old_color_material.first == lata_cue){
+            lata_cue->setColor(old_color_material.second.first);
+            lata_cue->setMaterial(old_color_material.second.second);
+            lata_bot->setColor(old_color_material.second.first);
+            lata_bot->setMaterial(old_color_material.second.second);
+            lata_top->setColor(old_color_material.second.first);
+            lata_top->setMaterial(old_color_material.second.second);
+        }
 
+        else if (swordfish_elegido){
+            swordfish_elegido = false;
+            swordfish->paint();
+        }
+
+        else if (old_color_material.first != nullptr){
+            old_color_material.first->setColor(old_color_material.second.first);
+            old_color_material.first->setMaterial(old_color_material.second.second);
+        }
+    }
+
+    //Si se selecciona el vacío
     if (pixel[0] == 255 && pixel[1] == 255 && pixel[2] == 255 && camaras[camara_activa].getExaminando()){
         camaras[camara_activa].setExaminando(false);
+
+        //No restaurar estado si se selecciona más de una vez el vacío
+        if (elegido == nullptr)
+            first_pick = true;
+
+        elegido == nullptr;
     }
 
     else if (pixel[0] == 0 && pixel[1] == 255 && pixel[2] == 0){
+        elegido = cono;
+        first_pick = false;
+
+        old_color_material.first = cono;
+        old_color_material.second = std::make_pair(cono->getColor(), cono->getMaterial());
         camaras[camara_activa].setAt(scene_arrangement.find("cono")->second);
         camaras[camara_activa].setExaminando(true);
+        cono->setMaterial(amarillo);
+        cono->setColor(amarillo3);
     }
 
     else if (pixel[0] == 255 && pixel[1] == 0 && pixel[2] == 0){
+        elegido = cubo;
+        first_pick = false;
+
+        old_color_material.first = cubo;
+        old_color_material.second = std::make_pair(cubo->getColor(), cubo->getMaterial());
         camaras[camara_activa].setAt(scene_arrangement.find("cubo")->second);
         camaras[camara_activa].setExaminando(true);
+        cubo->setMaterial(amarillo);
+        cubo->setColor(amarillo3);
     }
 
     else if (pixel[0] == 0 && pixel[1] == 0 && pixel[2] == 255){
+        elegido = lata_cue;
+        first_pick = false;
+
+        old_color_material.first = lata_cue;
+        old_color_material.second = std::make_pair(lata_cue->getColor(), lata_cue->getMaterial());
         camaras[camara_activa].setAt(scene_arrangement.find("lata")->second);
         camaras[camara_activa].setExaminando(true);
+        lata_cue->setMaterial(amarillo);
+        lata_bot->setMaterial(amarillo);
+        lata_top->setMaterial(amarillo);
+
+        lata_cue->setColor(amarillo3);
+        lata_bot->setColor(amarillo3);
+        lata_top->setColor(amarillo3);
     }
 
     else if (pixel[0] == 255 && pixel[1] == 128 && pixel[2] == 0){
+        swordfish_elegido = true;
+        elegido == nullptr;
+        first_pick = false;
+
+        old_color_material.first = nullptr;
         camaras[camara_activa].setAt(scene_arrangement.find("swordfish")->second);
         camaras[camara_activa].setExaminando(true);
+        swordfish->setMaterial(amarillo, amarillo);
+        swordfish->setColor(amarillo3);
     }
 
     else if (pixel[0] == 178 && pixel[1] == 178 && pixel[2] == 178){
+        elegido = tetraedro;
+        first_pick = false;
+
+        old_color_material.first = tetraedro;
+        old_color_material.second = std::make_pair(tetraedro->getColor(), tetraedro->getMaterial());
         camaras[camara_activa].setAt(scene_arrangement.find("tetraedro")->second);
         camaras[camara_activa].setExaminando(true);
+        tetraedro->setMaterial(amarillo);
+        tetraedro->setColor(amarillo3);
     }
 
     else if (pixel[0] == 128 && pixel[1] == 0 && pixel[2] == 255){
+        elegido = ply;
+        first_pick = false;
+
+        old_color_material.first = ply;
+        old_color_material.second = std::make_pair(ply->getColor(), ply->getMaterial());
         camaras[camara_activa].setAt(scene_arrangement.find("ply")->second);
         camaras[camara_activa].setExaminando(true);
+        ply->setMaterial(amarillo);
+        ply->setColor(amarillo3);
     }
 
     else if (pixel[0] == 0 && pixel[1] == 204 && pixel[2] == 204){
+        elegido = esfera;
+        first_pick = false;
+
+        old_color_material.first = esfera;
+        old_color_material.second = std::make_pair(esfera->getColor(), esfera->getMaterial());
         camaras[camara_activa].setAt(scene_arrangement.find("esfera")->second);
         camaras[camara_activa].setExaminando(true);
+        esfera->setMaterial(amarillo);
+        esfera->setColor(amarillo3);
     }
 
     else if (pixel[0] == 76 && pixel[1] == 51 && pixel[2] == 0){
+        elegido = cilindro;
+        first_pick = false;
+
+        old_color_material.first = cilindro;
+        old_color_material.second = std::make_pair(cilindro->getColor(), cilindro->getMaterial());
         camaras[camara_activa].setAt(scene_arrangement.find("cilindro")->second);
         camaras[camara_activa].setExaminando(true);
+        cilindro->setMaterial(amarillo);
+        cilindro->setColor(amarillo3);
     }
 }
 

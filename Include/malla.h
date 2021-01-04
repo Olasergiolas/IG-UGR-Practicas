@@ -50,7 +50,13 @@ class Malla3D
    void draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo_coloreado coloreado,
              Tupla3f color = Tupla3f(0.0f, 0.0f, 0.0f));
 
-   Tupla3f getPrimerVertice(){return v[0];}
+   std::vector<Tupla3f> getColor(){return c;}
+
+   Material getMaterial(){return *m;}
+
+   void setColor(std::vector<Tupla3f> c){this->c = c;}
+
+   void setColor(Tupla3f color);
 
    protected:
 
