@@ -47,4 +47,6 @@ void ReactorDecorado::paint(){
 
     reactor->setMaterial(m);
     aleron->setMaterial(m1);
+    reactor->setColor(gris3);
+    aleron->setColor(rojo_flat3);
 }

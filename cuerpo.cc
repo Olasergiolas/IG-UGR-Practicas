@@ -68,4 +68,7 @@ void Cuerpo::paint(){
     esfera->setMaterial(m);
     foco->paint();
     cabina->paint();
+
+    morro->setColor(rojo_flat3);
+    esfera->setColor(rojo_flat3);
 }

@@ -23,3 +23,4 @@ static const Tupla3f blanco3(1.0f, 1.0f, 1.0f);
 static const Tupla3f gris3(0.7f, 0.7f, 0.7f);
 static const Tupla3f marron3(0.3f, 0.2f, 0.0f);
 static const Tupla3f amarillo3(1.0f, 1.0f, 0.0f);
+static const Tupla3f cobre3(0.8f, 0.5f, 0.3f);

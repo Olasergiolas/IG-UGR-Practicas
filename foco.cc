@@ -41,4 +41,7 @@ void Foco::paint(){
     Material m1(negro, blanco, blanco, 90.0f);
     cono->setMaterial(m);
     esfera->setMaterial(m1);
+
+    esfera->setColor(azul_flat3);
+    cono->setColor(gris3);
 }

@@ -65,4 +65,6 @@ void Ala::paint(){
     Material m(negro, rojo, blanco, 90.0f);
     cubo->setMaterial(m);
     pico->setMaterial(m);
+    cubo->setColor(rojo_flat3);
+    pico->setColor(rojo_flat3);
 }

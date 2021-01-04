@@ -43,4 +43,6 @@ void Cabina::paint(){
 
     cabina->setMaterial(m);
     semiesfera->setMaterial(m1);
+    cabina->setColor(rojo_flat3);
+    semiesfera->setColor(cobre3);
 }

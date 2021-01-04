@@ -45,4 +45,7 @@ void Canon::paint(){
     Material m(negro, gris, blanco, 90.0f);
     base->setMaterial(m);
     cilindro->setMaterial(m);
+
+    base->setColor(gris3);
+    cilindro->setColor(gris3);
 }
