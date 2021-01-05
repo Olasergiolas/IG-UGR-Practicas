@@ -7,7 +7,7 @@ class Cono : public ObjRevolucion
 {
 public:
     Cono(const int num_vert_perfil, const int num_instancias_perf, const float altura,
-         const float radio, std::pair<bool, bool> tapas);
+         const float radio, bool tapas);
 };
 
 #endif // CONO_H

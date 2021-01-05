@@ -30,6 +30,10 @@ class ObjRevolucion : public Malla3D
     protected:
         sentido s;
         int tam_perfil;
+        bool tapa_sup;
+        bool tapa_inf;
+        unsigned num_caras_total;
+        unsigned num_caras_no_tapas;
 
    public:
        ObjRevolucion();
@@ -51,6 +55,10 @@ class ObjRevolucion : public Malla3D
        void calcularTexCoord(unsigned num_instancias, unsigned num_v_perfil);
 
        void calcular_normales(bool rotacion_completa=false);
+
+       unsigned getNumCaras();
+
+       void setTapas(bool estado){tapa_sup = estado; tapa_inf = estado;}
 } ;
 
 

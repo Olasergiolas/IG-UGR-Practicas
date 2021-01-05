@@ -2,7 +2,7 @@
 
 ReactorDecorado::ReactorDecorado()
 {
-    reactor = new Cilindro(25, 25, 50, 25, std::pair<bool, bool>(true, true));
+    reactor = new Cilindro(25, 25, 50, 25, true);
     aleron = new Tetraedro();
 
     paint();

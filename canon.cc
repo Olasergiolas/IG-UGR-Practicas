@@ -1,8 +1,8 @@
 #include "Include/canon.h"
 
 Canon::Canon(){
-    cilindro = new Cilindro(25, 25, 20, 10, std::pair<bool, bool>(true, true));
-    base = new Cono(20, 50, 20, 10, std::pair<bool, bool>(true, true));
+    cilindro = new Cilindro(25, 25, 20, 10, true);
+    base = new Cono(20, 50, 20, 10, true);
 
     paint();
 }

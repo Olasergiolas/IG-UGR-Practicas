@@ -26,6 +26,8 @@ ObjRevolucion::ObjRevolucion(const std::string & archivo, unsigned num_instancia
 
 ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancias, bool tapa_sup, bool tapa_inf,
                              bool tex_coord, bool invertir_sentido) {
+    this->tapa_sup = tapa_sup;
+    this->tapa_inf = tapa_inf;
     std::vector<Tupla3f> perfil_original;
     Tupla3f p_norte, p_sur;
     perfil_original = perfil;
@@ -60,13 +62,19 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancia
 
     tam_perfil = perfil_original.size();
     crearMalla(perfil_original, num_instancias, tex_coord, invertir_sentido);
+    std::cout << "Creando malla: " << f.size() << std::endl;
+    num_caras_no_tapas = f.size();
     crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size(), invertir_sentido);
+    std::cout << "Creando tapadera: " << f.size() << std::endl;
+    num_caras_total = f.size();
     inicializarColores();
     calcular_normales(tex_coord);
     inicializarMaterial();
 
     if (tex_coord)
         calcularTexCoord(num_instancias, perfil_original.size());
+
+    std::cout << "Final: " << f.size() << std::endl;
 }
 
 void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte,
@@ -295,4 +303,14 @@ void ObjRevolucion::calcular_normales(bool rotacion_completa){
 
     for (unsigned i = 0; i < nv.size(); ++i)
         nv[i] = nv[i].normalized();
+}
+
+unsigned ObjRevolucion::getNumCaras(){
+    unsigned caras = num_caras_no_tapas;
+
+    if (tapa_sup)
+        caras = num_caras_total;
+
+    //std::cout << f.size() << ' ' << num_caras_total << ' ' << num_caras_no_tapas << std::endl;
+    return caras;
 }
