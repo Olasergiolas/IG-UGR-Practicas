@@ -140,9 +140,9 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
 void Escena::dibujar(bool color_coding_mode)
 {
-    modo_coloreado coloreado_old = coloreado;
+    /*modo_coloreado coloreado_old = coloreado;
     if (color_coding_mode)
-        coloreado = COLOR_CODING;
+        coloreado = COLOR_CODING;*/
 
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
@@ -155,7 +155,7 @@ void Escena::dibujar(bool color_coding_mode)
     if (iluminacion_activa)
         glEnable(GL_LIGHTING);
 
-    for (unsigned i = 0; i < luces.size(); ++i){
+    for (unsigned i = 0; i < luces.size() && iluminacion_activa; ++i){
         if (estado_luces[i+1])
             luces[i]->activar();
     }
@@ -276,8 +276,8 @@ void Escena::dibujar(bool color_coding_mode)
 
     actualizar_revolucion = false;
 
-    if (color_coding_mode)
-        coloreado = coloreado_old;
+    /*if (color_coding_mode)
+        coloreado = coloreado_old;*/
 }
 
 //**************************************************************************
@@ -929,6 +929,7 @@ void Escena::clickRaton(int boton, int estado, int x, int y){
         coloreado = COLOR_CODING;
 
         dibuja_seleccion();
+        //glutSwapBuffers();
         processPick(x, y);
         coloreado = coloreado_old;
     }
@@ -982,6 +983,9 @@ void Escena::processPick(int x, int y){
 
     glGetIntegerv(GL_VIEWPORT,viewport);
     glReadPixels(x, viewport[3]-y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, (void *)pixel);
+
+    /*printf("%d %d %d\n", pixel[0], pixel[1], pixel[2]);
+    fflush(stdout);*/
 
     //restauro el color y material anteriores en caso de haber elegido algo antes
     if (!first_pick){
