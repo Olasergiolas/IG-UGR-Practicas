@@ -85,6 +85,7 @@ class Malla3D
    GLuint id_tri0_buffer = 0;
    GLuint id_tri1_buffer = 0;
    GLuint id_c_buffer = 0;
+   GLuint id_c_code_buffer = 0;
    GLuint id_ajedrez0_buffer = 0;
    GLuint id_ajedrez1_buffer = 0;
    GLuint id_ALT1_buffer = 0;

@@ -38,6 +38,10 @@ void Malla3D::comprobarVBOs(){
     if (id_c_buffer == 0)
         id_c_buffer = crearVBO(GL_ARRAY_BUFFER, c.size()*sizeof(float)*3, c.data());
 
+    if (id_c_code_buffer == 0){
+        id_c_code_buffer = crearVBO(GL_ARRAY_BUFFER, c_code.size()*sizeof(float)*3, c_code.data());
+    }
+
     if (id_ajedrez0_buffer == 0)
         id_ajedrez0_buffer = crearVBO(GL_ARRAY_BUFFER, c_ajedrez0.size()*sizeof(float)*3, c_ajedrez0.data());
 
@@ -91,7 +95,6 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado, Tupla3f color)
             glColorPointer(3, GL_FLOAT, 0, c_alt_1.data());
 
         else if (coloreado == COLOR_CODING){
-            c_code.assign(v.size(), color);
             glColorPointer(3, GL_FLOAT, 0, c_code.data());
         }
 
@@ -159,6 +162,9 @@ void Malla3D::draw_ModoDiferido(modo_coloreado coloreado, Tupla3f color)
         else if (coloreado == ALT1)
             glBindBuffer(GL_ARRAY_BUFFER, id_ALT1_buffer);
 
+        else if (coloreado == COLOR_CODING)
+            glBindBuffer(GL_ARRAY_BUFFER, id_c_code_buffer);
+
         else
             glBindBuffer(GL_ARRAY_BUFFER, id_ALT2_buffer);
 
@@ -183,6 +189,9 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
 {
     modo_coloreado coloreado_final = coloreado;
 
+    if (c_code.empty())
+        c_code.assign(this->v.size(), color);
+
     glEnableClientState(GL_COLOR_ARRAY);
 
     if (textura != nullptr){
@@ -192,7 +201,12 @@ void Malla3D::draw(modo_visualizacion v, std::set<GLenum> estado_dibujados, modo
 
     if (coloreado == COLOR_CODING){
         glPolygonMode(GL_FRONT, GL_FILL);
-        draw_ModoInmediato(coloreado, color);
+
+        if (v == VBO)
+            draw_ModoDiferido(coloreado, color);
+
+        else
+            draw_ModoInmediato(coloreado, color);
     }
 
     else{
