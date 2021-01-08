@@ -304,4 +304,10 @@ void Malla3D::activar_textura(){
 void Malla3D::setColor(Tupla3f color){
     c.clear();
     c.assign(v.size(), color);
+    id_c_buffer = 0;
+}
+
+void Malla3D::setColor(std::vector<Tupla3f> c){
+    this->c = c;
+    id_c_buffer = 0;
 }

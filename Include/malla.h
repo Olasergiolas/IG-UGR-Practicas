@@ -54,7 +54,7 @@ class Malla3D
 
    Material getMaterial(){return *m;}
 
-   void setColor(std::vector<Tupla3f> c){this->c = c;}
+   void setColor(std::vector<Tupla3f> c);
 
    void setColor(Tupla3f color);
 
