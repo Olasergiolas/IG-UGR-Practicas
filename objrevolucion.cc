@@ -279,7 +279,8 @@ void ObjRevolucion::calcular_normales(bool rotacion_completa){
         a = v[caraActual(1)] - v[caraActual(0)];
         b = v[caraActual(2)] - v[caraActual(0)];
         mc = a.cross(b);
-        mc = mc.normalized();
+        if (mc.lengthSq() > 0)
+            mc = mc.normalized();
 
         tabla_normales_c.push_back(mc);
     }
@@ -293,6 +294,8 @@ void ObjRevolucion::calcular_normales(bool rotacion_completa){
         nv[caraActual(2)] = nv[caraActual(2)] + tabla_normales_c[i];
     }
 
-    for (unsigned i = 0; i < nv.size(); ++i)
-        nv[i] = nv[i].normalized();
+    for (unsigned i = 0; i < nv.size(); ++i){
+        if (nv[i].lengthSq() > 0)
+            nv[i] = nv[i].normalized();
+    }
 }
