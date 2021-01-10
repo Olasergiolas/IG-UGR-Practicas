@@ -152,10 +152,6 @@ void Escena::inicializar( int UI_window_width, int UI_window_height )
 
 void Escena::dibujar(bool color_coding_mode)
 {
-    /*modo_coloreado coloreado_old = coloreado;
-    if (color_coding_mode)
-        coloreado = COLOR_CODING;*/
-
     glClear( GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT ); // Limpiar la pantalla
     change_observer();
     glDisable(GL_LIGHTING);
@@ -349,8 +345,7 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            //Interruptores de las tapaderas
         case 'U':
            std::cout << "Modo selección de dibujado" << endl <<
-                       "\tN: Tapa inferior" << endl <<
-                       "\tM: Tapa superior" << endl;
+                       "\tM: Activar/Desactivar tapas" << endl;
            modoMenu = TAPAS;
            break;
 
@@ -484,7 +479,6 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
        switch (toupper(tecla)) {
        case 'M':
                tapas = !tapas;
-               //actualizar_revolucion = true;
           break;
        }
    }
