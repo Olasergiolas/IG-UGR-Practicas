@@ -21,8 +21,7 @@ Escena::Escena()
     coloreado = RELLENADO;
     ultima_tecla = ' ';
     gradoLibertad = 0;
-    tapas.first = true;
-    tapas.second = true;
+    tapas = true;
     rotaciones.first = false;
     rotaciones.second = false;
     anima_luces = false;
@@ -56,24 +55,37 @@ Escena::Escena()
     aux_pair = std::make_pair("swordfish", Tupla3f(150.0f, 0.0f, 0.0f));
     scene_arrangement.insert(aux_pair);
 
+    lata_presente = true;
+    lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
+    lata_bot = new ObjRevolucion("lata-pinf.ply", 50, false, true, false);
+    lata_top = new ObjRevolucion("lata-psup.ply", 50, true, false, false, true);
+    Material m1(negro, blanco, negro, 90.0);
+    Material m2(negro, gris, blanco, 90.0);
+    lata_cue->setMaterial(m1);
+    lata_top->setMaterial(m2);
+    lata_bot->setMaterial(m2);
+    lata_cue->set_textura("text-lata-1.jpg");
     aux_pair = std::make_pair("lata", Tupla3f(-150.0f, 0.0f, 0.0f));
     scene_arrangement.insert(aux_pair);
 
+    esfera = new Esfera(20, 200, 0.5, tapas);
+    Material m3(negro, naranja, blanco, 90.0f);
+    esfera->setMaterial(m3);
     aux_pair = std::make_pair("esfera", Tupla3f(0.0f, -150.0f, 0.0f));
     scene_arrangement.insert(aux_pair);
 
+    cono = new Cono(12, 50, 1, 0.35, tapas);
     aux_pair = std::make_pair("cono", Tupla3f(-150.0f, 150.0f, 0.0f));
     scene_arrangement.insert(aux_pair);
 
+    cilindro = new Cilindro(12, 50, 1, 0.35, tapas);
     aux_pair = std::make_pair("cilindro", Tupla3f(150.0f, 150.0f, 0.0f));
     scene_arrangement.insert(aux_pair);
 
-    lata_presente = true;
     cilindro_presente = false;
     cono_presente = true;
     esfera_presente = false;
 
-    actualizar_revolucion = false;
     inicializarLuces();
     iluminacion_activa = true;
     texturas = true;
@@ -190,29 +202,20 @@ void Escena::dibujar(bool color_coding_mode)
     }
 
     if (lata_presente){
-        if (actualizar_revolucion || lata_cue == nullptr){
-            lata_cue = new ObjRevolucion("lata-pcue.ply", 50, false, false, true);
-            lata_bot = new ObjRevolucion("lata-pinf.ply", 50, false, true, false);
-            lata_top = new ObjRevolucion("lata-psup.ply", 50, true, false, false, true);
-            Material m1(negro, blanco, negro, 90.0);
-            Material m2(negro, gris, blanco, 90.0);
-            lata_cue->setMaterial(m1);
-            lata_top->setMaterial(m2);
-            lata_bot->setMaterial(m2);
-
-            lata_cue->set_textura("text-lata-1.jpg");
-        }
-
         if (texturas)
             lata_cue->activar_textura();
+
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("lata")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(100.0,100.0,100.0);
             glRotatef(90.0f, 0, 1, 0);
+            lata_cue->setTapas(false);
             lata_cue->draw(visualizacion, estado_dibujados, coloreado, azul_flat3);
             glDisable(GL_TEXTURE_2D);
+            lata_bot->setTapas(tapas);
             lata_bot->draw(visualizacion, estado_dibujados, coloreado, azul_flat3);
+            lata_top->setTapas(tapas);
             lata_top->draw(visualizacion, estado_dibujados, coloreado, azul_flat3);
             if (texturas)
                 glEnable(GL_TEXTURE_2D);
@@ -220,30 +223,22 @@ void Escena::dibujar(bool color_coding_mode)
     }
 
     if (esfera_presente){
-        if (actualizar_revolucion || esfera == nullptr){
-            esfera = new Esfera(20, 200, 0.5, tapas);
-            Material m3(negro, naranja, blanco, 90.0f);
-            esfera->setMaterial(m3);
-        }
-
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("esfera")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
+            esfera->setTapas(tapas);
             esfera->draw(visualizacion, estado_dibujados, coloreado, celeste3);
         glPopMatrix();
     }
 
     if (cono_presente){
-        if (actualizar_revolucion || cono == nullptr){
-            cono = new Cono(12, 50, 1, 0.35, tapas);
-        }
-
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("cono")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
             glDisable(GL_TEXTURE_2D);
+            cono->setTapas(tapas);
             cono->draw(visualizacion, estado_dibujados, coloreado, verde_flat3);
             if (texturas)
                 glEnable(GL_TEXTURE_2D);
@@ -251,14 +246,11 @@ void Escena::dibujar(bool color_coding_mode)
     }
 
     if (cilindro_presente){
-        if (actualizar_revolucion || cilindro == nullptr){
-            cilindro = new Cilindro(12, 50, 1, 0.35, tapas);
-        }
-
         glPushMatrix();
             Tupla3f pos = scene_arrangement.find("cilindro")->second;
             glTranslatef(pos(X), pos(Y), pos(Z));
             glScalef(70.0,70.0,70.0);
+            cilindro->setTapas(tapas);
             cilindro->draw(visualizacion, estado_dibujados, coloreado, marron3);
         glPopMatrix();
     }
@@ -273,11 +265,6 @@ void Escena::dibujar(bool color_coding_mode)
         if (texturas)
             glEnable(GL_TEXTURE_2D);
     }
-
-    actualizar_revolucion = false;
-
-    /*if (color_coding_mode)
-        coloreado = coloreado_old;*/
 }
 
 //**************************************************************************
@@ -496,13 +483,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
    if (modoMenu == TAPAS){
        switch (toupper(tecla)) {
        case 'M':
-               tapas.first = !tapas.first;
-               actualizar_revolucion = true;
-          break;
-
-       case 'N':
-               tapas.second = !tapas.second;
-               actualizar_revolucion = true;
+               tapas = !tapas;
+               //actualizar_revolucion = true;
           break;
        }
    }

@@ -58,6 +58,8 @@ class Malla3D
 
    void setColor(Tupla3f color);
 
+   virtual unsigned getNumCaras(){return f.size();}
+
    protected:
 
    void calcular_normales() ; // calcula tabla de normales de vértices (práctica 3)

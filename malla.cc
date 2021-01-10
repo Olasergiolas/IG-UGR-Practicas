@@ -101,7 +101,7 @@ void Malla3D::draw_ModoInmediato(modo_coloreado coloreado, Tupla3f color)
         else
             glColorPointer(3, GL_FLOAT, 0, c_alt_2.data());
 
-        glDrawElements(GL_TRIANGLES, f.size()*3, GL_UNSIGNED_INT, f.data());
+        glDrawElements(GL_TRIANGLES, getNumCaras()*3, GL_UNSIGNED_INT, f.data());
     }
 
     glDisableClientState(GL_VERTEX_ARRAY);
@@ -172,7 +172,7 @@ void Malla3D::draw_ModoDiferido(modo_coloreado coloreado, Tupla3f color)
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, id_tri_buffer);
-        glDrawElements(GL_TRIANGLES, 3*f.size(), GL_UNSIGNED_INT, 0);
+        glDrawElements(GL_TRIANGLES, 3*getNumCaras(), GL_UNSIGNED_INT, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
 

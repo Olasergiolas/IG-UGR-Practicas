@@ -1,8 +1,8 @@
 #include "Include/cabina.h"
 
 Cabina::Cabina(){
-    cabina = new Cilindro(25, 25, 15, 10, std::pair<bool, bool>(true, true));
-    semiesfera = new Esfera(20, 50, 10, std::pair<bool, bool>(true, true) ,false);
+    cabina = new Cilindro(25, 25, 15, 10, true);
+    semiesfera = new Esfera(20, 50, 10, true ,false);
     alpha = 0.0f;
 
     paint();

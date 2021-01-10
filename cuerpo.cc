@@ -3,7 +3,7 @@
 Cuerpo::Cuerpo(){
     morro = new Tetraedro();
     foco = new Foco();
-    esfera = new Esfera(25, 50, 10, std::pair<bool, bool>(true, true));
+    esfera = new Esfera(25, 50, 10, true);
     cabina = new Cabina();
 
     paint();
