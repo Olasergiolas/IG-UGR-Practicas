@@ -368,6 +368,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            break;
 
        case 'C':
+           std::cout << "Menú de Cámara" << endl <<
+                       "\t0-2: Activar la cámara i" << endl <<
+                       "\tRueda del ratón: Zoom" << endl <<
+                       "\tClick izq.: Seleccionar objeto" << endl <<
+                       "\tClick der.: Rotar cámara" << endl;
            modoMenu = CAMARA;
            break;
    }
