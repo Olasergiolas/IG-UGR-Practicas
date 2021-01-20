@@ -25,6 +25,7 @@ Escena::Escena()
     rotaciones.first = false;
     rotaciones.second = false;
     anima_luces = false;
+    godmode = false;
 
     std::pair<std::string, Tupla3f> aux_pair;
 
@@ -683,11 +684,11 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
 
        if (toupper(tecla) == 'G'){
            std::cout << "GODMODE" << std::endl;
-           modoCamara = GODMODE;
+           godmode = !godmode;
        }
    }
 
-   if (modoCamara == GODMODE){
+   if (godmode){
        Tupla3f eyeAux = camaras[camara_activa].getEye();
        switch (toupper(tecla)) {
        case 'W':

@@ -13,7 +13,6 @@ Camara::Camara(unsigned tipo, Tupla3f eye, Tupla3f at, Tupla3f up, unsigned heig
     this->far = far;
 
     examinando = false;
-
     /*fovy = 2*atan((width/2)/aspect) * (180/M_PI);
 
     z_axis = eye - at;
@@ -35,16 +34,27 @@ void Camara::rotarXExaminar(float angle){
     //Obtenemos el vector direccion que va del at hacia el eye
     Tupla3f direccion = eye - at;
     Tupla3f direccionAux = direccion;
+    float rotation_top_threshold = 80.0f;
+    float rotation_bot_threshold = 0.0f;
+
+    //Invertimos el ángulo si la Z es negativa para mantener los controles
+    if (direccion(Z) < 0.0f)
+        angle = -angle;
 
     //Rotamos el vector
     direccion(Y) = direccionAux(Y) * cos(angle) - direccionAux(Z) * sin(angle);
     direccion(Z) = direccionAux(Y) * sin(angle) + direccionAux(Z) * cos(angle);
 
-    //Actualizamos eye
-    eye = direccion + at;
+    //Dado que el producto vectorial de dos vectores paralelos es 0, no aplicamos
+    //la rotación si estamos cerca de llegar a 0
+    direccion = direccion + at;
+    Tupla3f p_vec = direccion.cross(Tupla3f(0.0f,1.0f,0.0f));
+    if (!(abs(p_vec(X)) >= rotation_bot_threshold && abs(p_vec(X)) <= rotation_top_threshold))
+        eye = direccion;
 }
 
 void Camara::rotarYExaminar(float angle){
+
     Tupla3f direccion = eye - at;
     Tupla3f direccionAux = direccion;
 

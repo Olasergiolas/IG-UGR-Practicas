@@ -62,10 +62,8 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancia
 
     tam_perfil = perfil_original.size();
     crearMalla(perfil_original, num_instancias, tex_coord, invertir_sentido);
-    std::cout << "Creando malla: " << f.size() << std::endl;
     num_caras_no_tapas = f.size();
     crearTapas(tapa_sup, tapa_inf, p_sur, p_norte, num_instancias, perfil_original.size(), invertir_sentido);
-    std::cout << "Creando tapadera: " << f.size() << std::endl;
     num_caras_total = f.size();
     inicializarColores();
     calcular_normales(tex_coord);
@@ -73,8 +71,6 @@ ObjRevolucion::ObjRevolucion(std::vector<Tupla3f> perfil, unsigned num_instancia
 
     if (tex_coord)
         calcularTexCoord(num_instancias, perfil_original.size());
-
-    std::cout << "Final: " << f.size() << std::endl;
 }
 
 void ObjRevolucion::crearTapas(bool sup, bool inf, Tupla3f p_sur, Tupla3f p_norte,

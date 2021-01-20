@@ -21,7 +21,7 @@ typedef enum {NADA, SELOBJETO,SELVISUALIZACION,SELDIBUJADO, TAPAS, ILUMINACION,
              MOVIMIENTO, MOVIMIENTO_0, MOVIMIENTO_1, MOVIMIENTO_2,
              MOVIMIENTO_3, MOVIMIENTO_AUTO, CAMARA} menu;
 
-typedef enum {ESTATICA, FP, EXAMINAR, GODMODE} estadoCamara;
+typedef enum {ESTATICA, FP, EXAMINAR} estadoCamara;
 
 class Escena
 {
@@ -63,6 +63,7 @@ class Escena
    modo_coloreado coloreado;
    std::set<GLenum> estado_dibujados;
    bool tapas;
+   bool godmode;
    std::pair<bool, bool> rotaciones;
    bool iluminacion_activa;
    // Objetos de la escena

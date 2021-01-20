@@ -27,6 +27,7 @@ public:
     void setProyeccion();
     void setAt(Tupla3f newAt){at = newAt;}
     Tupla3f getEye(){return eye;}
+    Tupla3f getAt(){return at;}
     void setAspect(float height, float width);
     bool getExaminando(){return examinando;}
     void setExaminando(bool estado){examinando = estado;}
