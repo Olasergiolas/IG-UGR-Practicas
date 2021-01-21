@@ -355,7 +355,8 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
                        "\t0-2: Activar la cámara i" << endl <<
                        "\tRueda del ratón: Zoom" << endl <<
                        "\tClick izq.: Seleccionar objeto" << endl <<
-                       "\tClick der.: Rotar cámara" << endl;
+                       "\tClick der.: Rotar cámara" << endl <<
+                       "\tG: GODMODE" << endl;
            modoMenu = CAMARA;
            break;
    }
@@ -682,32 +683,26 @@ bool Escena::teclaPulsada( unsigned char tecla, int x, int y )
            camaras[camara_activa].setProyeccion();
        }
 
-       if (toupper(tecla) == 'G'){
-           std::cout << "GODMODE" << std::endl;
+       if (toupper(tecla) == 'G')
            godmode = !godmode;
-       }
    }
 
    if (godmode){
-       Tupla3f eyeAux = camaras[camara_activa].getEye();
+       float incremento = 0.05f;
        switch (toupper(tecla)) {
        case 'W':
-           camaras[camara_activa].mover(eyeAux(X), eyeAux(Y), eyeAux(Z) - 10.0f);
-           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+           camaras[camara_activa].avance_retroceso(-incremento);
            break;
        case 'A':
-           camaras[camara_activa].mover(eyeAux(X) - 10.0f, eyeAux(Y), eyeAux(Z));
-           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+            camaras[camara_activa].desplazamiento_lateral(incremento);
            break;
 
        case 'S':
-           camaras[camara_activa].mover(eyeAux(X), eyeAux(Y), eyeAux(Z) + 10.0f);
-           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+            camaras[camara_activa].avance_retroceso(incremento);
            break;
 
        case 'D':
-           camaras[camara_activa].mover(eyeAux(X) + 10.0f, eyeAux(Y), eyeAux(Z));
-           camaras[camara_activa].setAt(camaras[camara_activa].getEye() + Tupla3f(0.0f, 0.0f,-1.0f));
+            camaras[camara_activa].desplazamiento_lateral(-incremento);
            break;
        }
    }

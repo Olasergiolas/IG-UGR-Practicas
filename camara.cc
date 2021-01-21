@@ -126,10 +126,6 @@ void Camara::setProyeccion(){
         glOrtho(left * aspect, right * aspect, bottom * aspect , top * aspect , near, far);
 }
 
-void Camara::mover(float x, float y, float z){
-    eye(X) = x; eye(Y) = y; eye(Z) = z;
-}
-
 void Camara::zoom(float factor){
     right *= factor;
     left *= factor;
@@ -137,4 +133,23 @@ void Camara::zoom(float factor){
     bottom *= factor;
 
     setProyeccion();
+}
+
+void Camara::avance_retroceso(float value){
+    //Obtenemos el vector dirección
+    Tupla3f vector_direccion = eye - at;
+
+    //Actualizamos el eye y el at para desplazarnos en la dirección deseada
+    eye = eye + vector_direccion*value;
+    at = at + vector_direccion*value;
+}
+
+void Camara::desplazamiento_lateral(float value){
+    //Obtenemos el vector u(representa la "derecha") mediante un producto vectorial
+    Tupla3f vector_direccion = eye - at;
+    Tupla3f u_vector = vector_direccion.cross(up);
+
+    //Actualizamos el eye y el at para desplazarnos en la dirección de u
+    eye = eye + u_vector*value;
+    at = at + u_vector*value;
 }

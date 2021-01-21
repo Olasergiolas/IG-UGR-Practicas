@@ -21,7 +21,8 @@ public:
     void rotarYFirstPerson(float angle);
     void rotarZFirstPerson(float angle);
     void girar(float x, float y);
-    void mover(float x, float y, float z);
+    void avance_retroceso(float value);
+    void desplazamiento_lateral(float value);
     void zoom(float factor);
     void setObserver();
     void setProyeccion();
